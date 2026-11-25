@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0f766e" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <title>همیار جنوب | هواشناسی، قطعی برق، ۱۱۸، دیوار و مصالح</title>
+  <title>جنوب‌یار | هواشناسی، قطعی برق، ۱۱۸، دیوار و مصالح</title>
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" type="image/svg+xml" href="./icon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -732,8 +732,8 @@
     <!-- HEADER -->
     <header class="top-header">
       <div class="header-row">
-        <div class="brand-box" id="secretAdminTrigger" title="همیار جنوب">
-          <div class="brand-title">🌴 همیار جنوب</div>
+        <div class="brand-box" id="secretAdminTrigger" title="جنوب‌یار">
+          <div class="brand-title">🌴 جنوب‌یار</div>
           <div class="brand-sub" id="headerRegionSubtitle">شهرستان مُهر، گله‌دار و اسیر</div>
         </div>
         <div class="header-meta">
@@ -1154,7 +1154,7 @@
   <div class="modal-backdrop" id="adminModal">
     <div class="modal-box">
       <div class="card-title">
-        <span>🔐 پنل مدیریت کل همیار جنوب</span>
+        <span>🔐 پنل مدیریت کل جنوب‌یار</span>
         <button class="btn btn-outline btn-sm" onclick="closeModal('adminModal')">✕</button>
       </div>
 
@@ -2233,7 +2233,7 @@
       const regName = REGIONS[ad.region]?.name || '';
       const cleanPhone = String(ad.phone).replace(/[^0-9+]/g, '');
       const waPhone = cleanPhone.startsWith('0') ? '98' + cleanPhone.slice(1) : cleanPhone.replace('+', '');
-      const waText = encodeURIComponent(`سلام، درباره آگهی «${ad.title}» در همیار جنوب پیام می‌دهم.`);
+      const waText = encodeURIComponent(`سلام، درباره آگهی «${ad.title}» در جنوب‌یار پیام می‌دهم.`);
 
       document.getElementById('adDetailContent').innerHTML = `
         <div class="card-title"><span>جزئیات آگهی</span><button class="btn btn-outline btn-sm" onclick="closeModal('adDetailModal')">✕</button></div>
@@ -2365,7 +2365,7 @@
       const lines = [
         '==============================',
         '   فاکتور سفارش مصالح ساختمانی',
-        '          (همیار جنوب)',
+        '           (جنوب‌یار)',
         '==============================',
         `تاریخ: ${inv.dateStr}`,
         inv.custName ? `سفارش‌دهنده: ${inv.custName}` : '',
@@ -2438,7 +2438,7 @@
       ctx.fillStyle = '#ffffff';
       ctx.font = 'bold 28px Vazirmatn, Tahoma, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('فاکتور سفارش مصالح ساختمانی — همیار جنوب', W / 2, 50);
+      ctx.fillText('فاکتور سفارش مصالح ساختمانی — جنوب‌یار', W / 2, 50);
       ctx.font = '18px Vazirmatn, Tahoma, sans-serif';
       ctx.fillText(inv.dateStr, W / 2, 84);
 

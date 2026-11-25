@@ -1,14 +1,14 @@
 {
-  "name": "همیار جنوب - هواشناسی، قطعی برق، ۱۱۸ و مصالح",
-  "short_name": "همیار جنوب",
-  "description": "اپلیکیشن جامع روزمره شهرستان مُهر، گله‌دار، اسیر، جم، لامرد و عسلویه",
+  "name": "جنوب‌یار | هواشناسی، قطعی برق، ۱۱۸، دیوار و مصالح",
+  "short_name": "جنوب‌یار",
+  "description": "اپلیکیشن بومی هواشناسی و کشاورزی، برنامه قطعی برق، ۱۱۸ منطقه، دیوار محلی و مصالح ساختمانی جنوب",
   "start_url": "./index.html",
   "display": "standalone",
+  "orientation": "portrait",
   "dir": "rtl",
   "lang": "fa",
-  "background_color": "#f1f5f9",
   "theme_color": "#0f766e",
-  "orientation": "portrait",
+  "background_color": "#f1f5f9",
   "icons": [
     {
       "src": "./icon.svg",
