@@ -638,9 +638,43 @@
       box-shadow: 0 20px 45px rgba(0,0,0,0.28);
     }
 
+    .phone-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 6px 8px;
+      margin-top: 6px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+    }
+    .phone-actions {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .adm-118-row {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 9px 10px;
+      margin-bottom: 7px;
+      background: #f8fafc;
+      font-size: 0.77rem;
+    }
+    .adm-118-row.is-deleted {
+      opacity: 0.6;
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+    .adm-118-row.is-edited {
+      border-color: #38bdf8;
+      background: #f0f9ff;
+    }
+
     .admin-subtabs {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 5px;
       margin-bottom: 12px;
     }
@@ -849,7 +883,7 @@
         <div class="card" style="background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%); border-color: #67e8f9;">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
             <div>
-              <div style="font-weight: 900; font-size: 0.96rem; color: #155e75;">📞 بانک اطلاعاتی ۱۱۸ منطقه</div>
+              <div style="font-weight: 900; font-size: 0.96rem; color: #155e75;" id="dirHeaderTitle">📞 بانک اطلاعاتی ۱۱۸ منطقه</div>
               <div style="font-size: 0.75rem; color: #0e7490;" id="dirStatsText">در حال بارگذاری شماره‌ها...</div>
             </div>
             <button class="btn btn-primary btn-sm" onclick="openSuggestContactModal()">+ ثبت شغل در ۱۱۸</button>
@@ -857,7 +891,7 @@
         </div>
 
         <div class="card" style="padding:12px;">
-          <input type="text" class="input" id="dirSearchInput" placeholder="جستجوی شغل، نام، روستا یا شماره (مثلاً: تعمیر کولر، دکتر، وانت، کلیدساز...)" oninput="resetAndRenderDirectory()" style="margin-bottom:8px;" />
+          <input type="text" class="input" id="dirSearchInput" placeholder="جستجوی شغل، نام، روستا یا شماره (مثلاً: معاینه فنی، تعمیر کولر، دکتر، وانت...)" oninput="resetAndRenderDirectory()" style="margin-bottom:8px;" />
           <div style="display:flex; gap:8px;">
             <select class="select" id="dirCategoryFilter" onchange="resetAndRenderDirectory()" style="margin-bottom:0;">
               <option value="all">همه مشاغل و خدمات</option>
@@ -869,17 +903,9 @@
               <option value="خوراکی، رستوران و فروشگاه">خوراکی، رستوران و فروشگاه</option>
               <option value="کشاورزی و دام">کشاورزی و دام</option>
               <option value="اینترنت، موبایل و خدمات فنی">اینترنت، موبایل و خدمات فنی</option>
+              <option value="سایر / عمومی">سایر / عمومی</option>
             </select>
-            <select class="select" id="dirRegionFilter" onchange="resetAndRenderDirectory()" style="margin-bottom:0;">
-              <option value="all">همه شهرها و روستاها</option>
-              <option value="گله‌دار و حومه">گله‌دار و حومه</option>
-              <option value="گله‌دار و فال">گله‌دار و فال</option>
-              <option value="اسیر و حومه">اسیر و حومه</option>
-              <option value="مُهر و وراوی">مُهر و وراوی</option>
-              <option value="لامرد">لامرد</option>
-              <option value="عسلویه، کنگان و جم">عسلویه، کنگان و جم</option>
-              <option value="شیراز / شهرهای همجوار">شیراز / شهرهای همجوار</option>
-            </select>
+            <select class="select" id="dirRegionFilter" onchange="resetAndRenderDirectory()" style="margin-bottom:0;"></select>
           </div>
         </div>
 
@@ -1038,7 +1064,8 @@
         <button class="btn btn-outline btn-sm" onclick="closeModal('suggest118Modal')">✕</button>
       </div>
       <input type="text" class="input" id="sug118Name" placeholder="نام و عنوان شغل (مثلاً: تعمیر کولر گازی در اسیر)" />
-      <input type="tel" class="input" id="sug118Phone" placeholder="شماره تماس (مثلاً: 09170000000)" />
+      <textarea class="textarea" id="sug118Phones" rows="2" dir="ltr" placeholder="شماره تماس (اگر چند شماره دارید هر کدام را در یک خط بنویسید)"></textarea>
+      <label style="font-size:0.75rem; font-weight:700;">دسته‌بندی شغل:</label>
       <select class="select" id="sug118Category">
         <option value="تاسیسات و تعمیرات منزل">تاسیسات و تعمیرات منزل</option>
         <option value="پزشکی و درمان">پزشکی و درمان</option>
@@ -1048,18 +1075,62 @@
         <option value="خوراکی، رستوران و فروشگاه">خوراکی، رستوران و فروشگاه</option>
         <option value="کشاورزی و دام">کشاورزی و دام</option>
         <option value="اینترنت، موبایل و خدمات فنی">اینترنت، موبایل و خدمات فنی</option>
+        <option value="سایر / عمومی">سایر / عمومی</option>
       </select>
-      <select class="select" id="sug118Region">
-        <option value="گله‌دار و حومه">گله‌دار و حومه</option>
-        <option value="گله‌دار و فال">گله‌دار و فال</option>
-        <option value="اسیر و حومه">اسیر و حومه</option>
-        <option value="مُهر و وراوی">مُهر و وراوی</option>
-        <option value="لامرد">لامرد</option>
-        <option value="عسلویه، کنگان و جم">عسلویه، کنگان و جم</option>
+      <label style="font-size:0.75rem; font-weight:700;">شهر / منطقه اصلی:</label>
+      <select class="select" id="sug118RegionKey">
+        <option value="mohr_galledar_asir">شهرستان مُهر، گله‌دار و اسیر</option>
+        <option value="jam">جم</option>
+        <option value="lamerd">لامرد</option>
+        <option value="asaluyeh">عسلویه و کنگان</option>
+        <option value="other">شیراز و شهرهای همجوار</option>
       </select>
+      <input type="text" class="input" id="sug118SubRegion" placeholder="نام دقیق شهر یا روستا (مثلاً: گله‌دار، اسیر، جم، لامرد...)" />
       <div style="display:flex; gap:8px;">
         <button class="btn btn-primary" style="flex:1;" onclick="submitSuggested118()">ثبت در دفترچه ۱۱۸</button>
         <button class="btn btn-outline" onclick="closeModal('suggest118Modal')">انصراف</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADMIN EDIT/ADD 118 CONTACT -->
+  <div class="modal-backdrop" id="adminEdit118Modal" style="z-index:95;">
+    <div class="modal-box">
+      <div class="card-title">
+        <span id="admEdit118Title">✏️ ویرایش مخاطب ۱۱۸</span>
+        <button class="btn btn-outline btn-sm" onclick="closeModal('adminEdit118Modal')">✕</button>
+      </div>
+      <input type="hidden" id="admEdit118Id" />
+      <label style="font-size:0.75rem; font-weight:700;">نام و عنوان شغلی (فارسی):</label>
+      <input type="text" class="input" id="admEdit118Name" placeholder="نام و شغل..." />
+      <label style="font-size:0.75rem; font-weight:700;">شماره‌های تماس (هر شماره در یک خط):</label>
+      <textarea class="textarea" id="admEdit118Phones" rows="3" dir="ltr" placeholder="09170000000&#10;07152850000"></textarea>
+      <label style="font-size:0.75rem; font-weight:700;">دسته‌بندی:</label>
+      <select class="select" id="admEdit118Cat">
+        <option value="پزشکی و درمان">پزشکی و درمان</option>
+        <option value="تاسیسات و تعمیرات منزل">تاسیسات و تعمیرات منزل</option>
+        <option value="خودرو، یدکی و حمل‌ونقل">خودرو، یدکی و حمل‌ونقل</option>
+        <option value="مصالح و ساختمان">مصالح و ساختمان</option>
+        <option value="اداری، بانکی و حقوقی">اداری، بانکی و حقوقی</option>
+        <option value="خوراکی، رستوران و فروشگاه">خوراکی، رستوران و فروشگاه</option>
+        <option value="کشاورزی و دام">کشاورزی و دام</option>
+        <option value="اینترنت، موبایل و خدمات فنی">اینترنت، موبایل و خدمات فنی</option>
+        <option value="سایر / عمومی">سایر / عمومی</option>
+      </select>
+      <label style="font-size:0.75rem; font-weight:700;">منطقه اصلی (برای نمایش در شهر مربوطه):</label>
+      <select class="select" id="admEdit118Rk" onchange="autoFillAdminSubRegion()">
+        <option value="mohr_galledar_asir">شهرستان مُهر، گله‌دار و اسیر</option>
+        <option value="jam">جم</option>
+        <option value="lamerd">لامرد</option>
+        <option value="asaluyeh">عسلویه و کنگان</option>
+        <option value="other">شیراز و شهرهای همجوار</option>
+        <option value="universal">همگانی (نمایش در همه شهرها)</option>
+      </select>
+      <label style="font-size:0.75rem; font-weight:700;">برچسب شهر/روستا:</label>
+      <input type="text" class="input" id="admEdit118R" placeholder="مثلاً: گله‌دار و فال، اسیر و حومه، جم، لامرد..." />
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn-primary" style="flex:1;" onclick="saveAdminEdit118()">💾 ذخیره آنلاین روی سرور</button>
+        <button class="btn btn-outline" onclick="closeModal('adminEdit118Modal')">انصراف</button>
       </div>
     </div>
   </div>
@@ -1096,10 +1167,11 @@
 
       <div id="adminPanelContent" style="display:none;">
         <div class="admin-subtabs">
-          <button class="admin-subtab active" onclick="switchAdminSubtab('adm-power', this)">⚡ برق و هوا</button>
+          <button class="admin-subtab active" onclick="switchAdminSubtab('adm-power', this)">⚡ برق</button>
           <button class="admin-subtab" onclick="switchAdminSubtab('adm-mat', this)">🧱 مصالح</button>
-          <button class="admin-subtab" onclick="switchAdminSubtab('adm-divar', this)">📢 دیوار/۱۱۸</button>
-          <button class="admin-subtab" onclick="switchAdminSubtab('adm-cloud', this)">☁️ ابری/رمز</button>
+          <button class="admin-subtab" onclick="switchAdminSubtab('adm-118', this)">📞 ۱۱۸</button>
+          <button class="admin-subtab" onclick="switchAdminSubtab('adm-divar', this)">📢 دیوار</button>
+          <button class="admin-subtab" onclick="switchAdminSubtab('adm-cloud', this)">☁️ سرور</button>
         </div>
 
         <!-- Admin Subtab 1: Power & Weather -->
@@ -1153,13 +1225,47 @@
           <button class="btn btn-primary" style="width:100%;" onclick="saveAdminMaterials()">💾 ذخیره و انتشار آنلاین مصالح</button>
         </div>
 
-        <!-- Admin Subtab 3: Divar & 118 -->
+        <!-- Admin Subtab 3: Full 118 Directory Manager -->
+        <div class="admin-pane" id="adm-118" style="display:none;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span style="font-weight:900; font-size:0.86rem;">📞 مدیریت کامل بانک ۱۱۸</span>
+            <button class="btn btn-primary btn-sm" onclick="openAdminAdd118()">+ افزودن شماره جدید</button>
+          </div>
+          <input type="text" class="input" id="adm118Search" placeholder="جستجوی نام، شغل یا شماره برای ویرایش/حذف..." oninput="resetAdmin118List()" style="margin-bottom:6px;" />
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:8px;">
+            <select class="select" id="adm118CatFilter" onchange="resetAdmin118List()" style="margin:0; font-size:0.75rem; padding:6px;">
+              <option value="all">همه دسته‌ها</option>
+              <option value="پزشکی و درمان">پزشکی و درمان</option>
+              <option value="تاسیسات و تعمیرات منزل">تاسیسات و تعمیرات منزل</option>
+              <option value="خودرو، یدکی و حمل‌ونقل">خودرو، یدکی و حمل‌ونقل</option>
+              <option value="مصالح و ساختمان">مصالح و ساختمان</option>
+              <option value="اداری، بانکی و حقوقی">اداری، بانکی و حقوقی</option>
+              <option value="خوراکی، رستوران و فروشگاه">خوراکی، رستوران و فروشگاه</option>
+              <option value="کشاورزی و دام">کشاورزی و دام</option>
+              <option value="اینترنت، موبایل و خدمات فنی">اینترنت، موبایل و خدمات فنی</option>
+              <option value="سایر / عمومی">سایر / عمومی</option>
+            </select>
+            <select class="select" id="adm118RegionFilter" onchange="resetAdmin118List()" style="margin:0; font-size:0.75rem; padding:6px;">
+              <option value="all">همه مناطق و وضعیت‌ها</option>
+              <option value="mohr_galledar_asir">مُهر، گله‌دار و اسیر</option>
+              <option value="jam">جم</option>
+              <option value="lamerd">لامرد</option>
+              <option value="asaluyeh">عسلویه و کنگان</option>
+              <option value="other">شیراز و شهرهای همجوار</option>
+              <option value="_edited">فقط ویرایش‌شده‌ها</option>
+              <option value="_deleted">فقط حذف‌شده‌ها (برای بازیابی)</option>
+              <option value="_extra">فقط ثبت‌شده توسط کاربران/مدیر</option>
+            </select>
+          </div>
+          <div id="adm118Stats" style="font-size:0.73rem; color:#475569; margin-bottom:7px;"></div>
+          <div id="admin118ManageList"></div>
+          <button class="btn btn-outline btn-sm" id="adm118LoadMoreBtn" style="width:100%; display:none; margin-top:6px;" onclick="loadMoreAdmin118()">نمایش بیشتر ▾</button>
+        </div>
+
+        <!-- Admin Subtab 4: Divar -->
         <div class="admin-pane" id="adm-divar" style="display:none;">
           <div style="font-weight:900; font-size:0.86rem; margin-bottom:6px;">🗑️ مدیریت آگهی‌های دیوار محلی</div>
           <div id="adminAdsList" style="margin-bottom:14px;"></div>
-
-          <div style="font-weight:900; font-size:0.86rem; margin-bottom:6px;">📞 مدیریت شماره‌های اضافه‌شده به ۱۱۸</div>
-          <div id="adminExtra118List"></div>
         </div>
 
         <!-- Admin Subtab 4: Cloud & Password -->
@@ -1343,12 +1449,12 @@
     };
 
     const BUILTIN_ESSENTIAL_118 = [
-      { n: 'اورژانس و فوریت‌های پزشکی', p: '115', c: 'پزشکی و درمان', r: 'گله‌دار و حومه' },
-      { n: 'آتش‌نشانی و خدمات ایمنی', p: '125', c: 'اداری، بانکی و حقوقی', r: 'گله‌دار و حومه' },
-      { n: 'پلیس ۱۱۰', p: '110', c: 'اداری، بانکی و حقوقی', r: 'گله‌دار و حومه' },
-      { n: 'اتفاقات برق (سراسری)', p: '121', c: 'تاسیسات و تعمیرات منزل', r: 'گله‌دار و حومه' },
-      { n: 'اتفاقات آب و فاضلاب', p: '122', c: 'تاسیسات و تعمیرات منزل', r: 'گله‌دار و حومه' },
-      { n: 'امداد گاز', p: '194', c: 'تاسیسات و تعمیرات منزل', r: 'گله‌دار و حومه' }
+      { id: 'em_115', n: 'اورژانس و فوریت‌های پزشکی', ps: ['115'], c: 'پزشکی و درمان', r: 'سراسری (همه شهرها)', rk: 'universal' },
+      { id: 'em_125', n: 'آتش‌نشانی و خدمات ایمنی', ps: ['125'], c: 'اداری، بانکی و حقوقی', r: 'سراسری (همه شهرها)', rk: 'universal' },
+      { id: 'em_110', n: 'پلیس ۱۱۰', ps: ['110'], c: 'اداری، بانکی و حقوقی', r: 'سراسری (همه شهرها)', rk: 'universal' },
+      { id: 'em_121', n: 'اتفاقات برق (سراسری)', ps: ['121'], c: 'تاسیسات و تعمیرات منزل', r: 'سراسری (همه شهرها)', rk: 'universal' },
+      { id: 'em_122', n: 'اتفاقات آب و فاضلاب', ps: ['122'], c: 'تاسیسات و تعمیرات منزل', r: 'سراسری (همه شهرها)', rk: 'universal' },
+      { id: 'em_194', n: 'امداد گاز', ps: ['194'], c: 'تاسیسات و تعمیرات منزل', r: 'سراسری (همه شهرها)', rk: 'universal' }
     ];
 
     const SAMPLE_ADS = [
@@ -1366,6 +1472,8 @@
     let materialsConfig = JSON.parse(localStorage.getItem('hj_materials_cfg') || 'null') || JSON.parse(JSON.stringify(DEFAULT_MATERIALS_CONFIG));
     let localAds = JSON.parse(localStorage.getItem('hj_ads') || 'null') || SAMPLE_ADS;
     let extra118Contacts = JSON.parse(localStorage.getItem('hj_extra_118') || '[]');
+    let overrides118 = JSON.parse(localStorage.getItem('hj_overrides_118') || '{}');
+    let adm118VisibleCount = 30;
     let adminPassword = localStorage.getItem('hj_admin_pass') || '1234';
     let apiBaseUrl = (window.HAMYAR_CONFIG && window.HAMYAR_CONFIG.API_URL) || (window.HAMYAR_FIREBASE && window.HAMYAR_FIREBASE.DATABASE_URL) || localStorage.getItem('hj_api_url') || '';
 
@@ -1439,6 +1547,10 @@
         if (cloud.extra118 && typeof cloud.extra118 === 'object') {
           extra118Contacts = Object.values(cloud.extra118);
           localStorage.setItem('hj_extra_118', JSON.stringify(extra118Contacts));
+        }
+        if (cloud.overrides118 && typeof cloud.overrides118 === 'object') {
+          overrides118 = cloud.overrides118;
+          localStorage.setItem('hj_overrides_118', JSON.stringify(overrides118));
         }
 
         badge.textContent = '🟢 آنلاین (سرور ایران)';
@@ -1525,6 +1637,8 @@
       }
 
       loadWeatherForRegion(regionKey);
+      updateDirectoryRegionDropdown();
+      resetAndRenderDirectory();
       renderAdsList();
     }
 
@@ -1771,21 +1885,115 @@
       }).join('');
     }
 
-    // ================== 118 DIRECTORY ==================
-    function getAll118Contacts() {
+    // ================== 118 DIRECTORY (MULTI-PHONE + REGION-AWARE + ADMIN OVERRIDES) ==================
+    function getContactPhones(item) {
+      if (!item) return [];
+      if (Array.isArray(item.ps) && item.ps.length) return item.ps;
+      if (item.p) return [String(item.p)];
+      return [];
+    }
+
+    function inferRegionKeyFromLabel(rLabel) {
+      const s = normalizeFa(rLabel || '');
+      if (s.includes('لامرد')) return 'lamerd';
+      if (s.includes('عسلویه') || s.includes('کنگان')) return 'asaluyeh';
+      if (s.includes('جم')) return 'jam';
+      if (s.includes('شیراز') || s.includes('همجوار')) return 'other';
+      if (s.includes('سراسری')) return 'universal';
+      return 'mohr_galledar_asir';
+    }
+
+    function normalizeContactRecord(item, fallbackId, sourceType) {
+      const id = item.id || fallbackId;
+      const ps = getContactPhones(item);
+      const r = item.r || 'گله‌دار و حومه';
+      const rk = item.rk || inferRegionKeyFromLabel(r);
+      return {
+        id,
+        n: item.n || '',
+        ps,
+        c: item.c || 'سایر / عمومی',
+        r,
+        rk,
+        sourceType
+      };
+    }
+
+    function getAll118Contacts(includeDeleted = false) {
       const external = Array.isArray(window.DIRECTORY_118) ? window.DIRECTORY_118 : [];
-      const merged = [...extra118Contacts, ...external, ...BUILTIN_ESSENTIAL_118];
-      const seen = new Set();
-      const unique = [];
-      for (const item of merged) {
-        if (!item || !item.p || !item.n) continue;
-        const key = String(item.p).replace(/\s+/g, '');
-        if (!seen.has(key)) {
-          seen.add(key);
-          unique.push(item);
+      const rawList = [];
+
+      // 1. Admin / User-added contacts
+      extra118Contacts.forEach((it, idx) => {
+        if (!it || !it.n) return;
+        rawList.push(normalizeContactRecord(it, it.id || ('c_local_' + idx), 'extra'));
+      });
+
+      // 2. Base contacts-118.js
+      external.forEach((it, idx) => {
+        if (!it || !it.n) return;
+        rawList.push(normalizeContactRecord(it, it.id || ('b_' + (idx + 1)), 'base'));
+      });
+
+      // 3. Builtin universal emergency numbers
+      BUILTIN_ESSENTIAL_118.forEach(it => {
+        rawList.push(normalizeContactRecord(it, it.id, 'builtin'));
+      });
+
+      const seenIds = new Set();
+      const result = [];
+
+      for (const baseItem of rawList) {
+        if (seenIds.has(baseItem.id)) continue;
+        seenIds.add(baseItem.id);
+
+        const ov = overrides118 && overrides118[baseItem.id];
+        if (ov) {
+          if (ov.deleted) {
+            if (includeDeleted) {
+              result.push({ ...baseItem, _deleted: true, _edited: false });
+            }
+            continue;
+          }
+          const mergedPhones = getContactPhones(ov);
+          result.push({
+            ...baseItem,
+            n: ov.n || baseItem.n,
+            ps: mergedPhones.length ? mergedPhones : baseItem.ps,
+            c: ov.c || baseItem.c,
+            r: ov.r || baseItem.r,
+            rk: ov.rk || baseItem.rk,
+            _deleted: false,
+            _edited: true
+          });
+        } else {
+          if (baseItem.ps.length) {
+            result.push({ ...baseItem, _deleted: false, _edited: false });
+          }
         }
       }
-      return unique;
+      return result;
+    }
+
+    function updateDirectoryRegionDropdown() {
+      const reg = REGIONS[currentRegion] || REGIONS.mohr_galledar_asir;
+      const titleEl = document.getElementById('dirHeaderTitle');
+      if (titleEl) titleEl.textContent = `📞 ۱۱۸ ${reg.shortName}`;
+
+      const sel = document.getElementById('dirRegionFilter');
+      if (!sel) return;
+      let opts = `<option value="current">📍 فقط ${escapeHtml(reg.shortName)}</option>`;
+      if (currentRegion === 'mohr_galledar_asir') {
+        opts += `
+          <option value="sub:گله‌دار و فال">↳ فقط گله‌دار، فال و دهنو</option>
+          <option value="sub:اسیر و حومه">↳ فقط اسیر، شهرک امام و حومه</option>
+          <option value="sub:مُهر و وراوی">↳ فقط مُهر، وراوی و خوزی</option>`;
+      }
+      opts += `
+        <option value="all">🗺️ همه مناطق جنوب و همجوار</option>
+        <option value="rk:other">🏥 شیراز، لار، اوز و خنج</option>`;
+      sel.innerHTML = opts;
+      sel.value = 'current';
     }
 
     function resetAndRenderDirectory() {
@@ -1799,52 +2007,80 @@
     }
 
     function renderDirectory() {
-      const all = getAll118Contacts();
+      const all = getAll118Contacts(false);
       const q = normalizeFa(document.getElementById('dirSearchInput').value);
       const cat = document.getElementById('dirCategoryFilter').value;
-      const reg = document.getElementById('dirRegionFilter').value;
+      const regFilter = document.getElementById('dirRegionFilter').value || 'current';
 
       const filtered = all.filter(item => {
         if (cat !== 'all' && item.c !== cat) return false;
-        if (reg !== 'all' && item.r !== reg) return false;
+        if (regFilter === 'current') {
+          if (item.rk !== currentRegion && item.rk !== 'universal') return false;
+        } else if (regFilter.startsWith('sub:')) {
+          const targetSub = regFilter.slice(4);
+          if (item.r !== targetSub && item.rk !== 'universal') return false;
+        } else if (regFilter.startsWith('rk:')) {
+          const targetRk = regFilter.slice(3);
+          if (item.rk !== targetRk) return false;
+        }
         if (q) {
-          const hay = normalizeFa(`${item.n} ${item.p} ${item.c} ${item.r}`);
+          const phonesText = item.ps.join(' ');
+          const hay = normalizeFa(`${item.n} ${phonesText} ${item.c} ${item.r}`);
           if (!hay.includes(q)) return false;
         }
         return true;
       });
 
+      // Put city-specific matches first, universal emergencies right after (or top if searched)
+      filtered.sort((a, b) => {
+        const score = x => (x.rk === 'universal' ? 1 : (x.sourceType === 'extra' ? 3 : 2));
+        return score(b) - score(a);
+      });
+
+      const totalPhonesInFiltered = filtered.reduce((acc, x) => acc + x.ps.length, 0);
+      const regName = REGIONS[currentRegion]?.shortName || 'منطقه';
       document.getElementById('dirStatsText').textContent =
-        `${filtered.length.toLocaleString('fa-IR')} شماره فعال از مجموع ${all.length.toLocaleString('fa-IR')} رکورد`;
+        `${filtered.length.toLocaleString('fa-IR')} کسب‌وکار (${totalPhonesInFiltered.toLocaleString('fa-IR')} شماره) در ${regFilter === 'all' ? 'کل مناطق' : regName}`;
 
       const container = document.getElementById('dirListContainer');
       const loadMoreBtn = document.getElementById('dirLoadMoreBtn');
 
       if (!filtered.length) {
-        container.innerHTML = `<div class="card" style="text-align:center; color:#64748b; font-size:0.83rem;">شماره‌ای با این مشخصات پیدا نشد.</div>`;
+        container.innerHTML = `
+          <div class="card" style="text-align:center; color:#64748b; font-size:0.83rem;">
+            <div style="margin-bottom:8px;">شماره‌ای با این فیلتر در <strong>${escapeHtml(regName)}</strong> پیدا نشد.</div>
+            <button class="btn btn-outline btn-sm" onclick="document.getElementById('dirRegionFilter').value='all';resetAndRenderDirectory()">جستجو در همه مناطق جنوب</button>
+          </div>`;
         loadMoreBtn.style.display = 'none';
         return;
       }
 
       const slice = filtered.slice(0, dirVisibleCount);
       container.innerHTML = slice.map(item => {
-        const cleanNum = String(item.p).replace(/[^0-9+]/g, '');
-        const isMobile = cleanNum.startsWith('09') || cleanNum.startsWith('+989');
-        const waNum = cleanNum.startsWith('0') ? '98' + cleanNum.slice(1) : cleanNum.replace('+', '');
+        const phoneRowsHtml = item.ps.map(rawP => {
+          const cleanNum = String(rawP).replace(/[^0-9+]/g, '');
+          const isMobile = cleanNum.startsWith('09') || cleanNum.startsWith('+989');
+          const waNum = cleanNum.startsWith('0') ? '98' + cleanNum.slice(1) : cleanNum.replace('+', '');
+          return `
+            <div class="phone-row">
+              <span class="dir-phone">${escapeHtml(rawP)}</span>
+              <div class="phone-actions">
+                <a href="tel:${cleanNum}" class="btn btn-primary btn-sm">📞 تماس</a>
+                ${isMobile ? `<a href="https://wa.me/${waNum}" target="_blank" class="btn btn-amber btn-sm">💬</a>` : ''}
+                <button class="btn btn-outline btn-sm" onclick="copyText('${escapeHtml(cleanNum)}')" title="کپی شماره">📋</button>
+              </div>
+            </div>`;
+        }).join('');
+
         return `
           <div class="dir-card">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
               <div>
                 <div style="font-weight:800; font-size:0.88rem;">${escapeHtml(item.n)}</div>
-                <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">🏷️ ${escapeHtml(item.c || 'عمومی')} • 📍 ${escapeHtml(item.r || 'منطقه')}</div>
+                <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">🏷️ ${escapeHtml(item.c)} • 📍 ${escapeHtml(item.r)} ${item.ps.length > 1 ? `• <span style="color:#0f766e; font-weight:800;">${item.ps.length} شماره</span>` : ''}</div>
               </div>
-              <span class="dir-phone">${escapeHtml(item.p)}</span>
             </div>
-            <div style="display:flex; gap:6px; margin-top:9px;">
-              <a href="tel:${cleanNum}" class="btn btn-primary btn-sm" style="flex:1;">📞 تماس</a>
-              ${isMobile ? `<a href="https://wa.me/${waNum}" target="_blank" class="btn btn-amber btn-sm" style="flex:1;">💬 واتس‌اپ</a>` : ''}
-              <button class="btn btn-outline btn-sm" onclick="copyText('${escapeHtml(cleanNum)}')">📋 کپی</button>
-            </div>
+            ${phoneRowsHtml}
           </div>`;
       }).join('');
 
@@ -1859,22 +2095,36 @@
       }
     }
 
+    function parseMultiPhones(rawText) {
+      const parts = normalizeFa(rawText).split(/[
+,،;|]+/);
+      const clean = [];
+      for (const part of parts) {
+        const num = part.replace(/[^0-9+]/g, '');
+        if (num.length >= 3 && !clean.includes(num)) clean.push(num);
+      }
+      return clean;
+    }
+
     function openSuggestContactModal() {
       document.getElementById('sug118Name').value = '';
-      document.getElementById('sug118Phone').value = '';
+      document.getElementById('sug118Phones').value = '';
+      document.getElementById('sug118RegionKey').value = currentRegion;
+      document.getElementById('sug118SubRegion').value = REGIONS[currentRegion]?.shortName || '';
       document.getElementById('suggest118Modal').classList.add('open');
     }
 
     async function submitSuggested118() {
       const n = document.getElementById('sug118Name').value.trim();
-      const p = normalizeFa(document.getElementById('sug118Phone').value).replace(/[^0-9+]/g, '');
+      const ps = parseMultiPhones(document.getElementById('sug118Phones').value);
       const c = document.getElementById('sug118Category').value;
-      const r = document.getElementById('sug118Region').value;
-      if (!n || p.length < 7) {
-        alert('لطفاً نام/شغل و شماره تماس معتبر وارد کنید.');
+      const rk = document.getElementById('sug118RegionKey').value;
+      const r = document.getElementById('sug118SubRegion').value.trim() || (REGIONS[rk]?.shortName || 'منطقه');
+      if (!n || !ps.length) {
+        alert('لطفاً نام/شغل و حداقل یک شماره تماس معتبر وارد کنید.');
         return;
       }
-      const entry = { id: 'c_' + Date.now(), n, p, c, r };
+      const entry = { id: 'c_' + Date.now(), n, ps, c, r, rk };
       extra118Contacts.unshift(entry);
       localStorage.setItem('hj_extra_118', JSON.stringify(extra118Contacts));
       await apiRequest('/api/hamyar/118', 'POST', entry);
@@ -2376,9 +2626,7 @@
         ? localAds.map(ad => `<div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #e2e8f0; font-size:0.77rem;"><span>${escapeHtml(ad.title)}</span><button class="btn btn-danger btn-sm" onclick="adminDeleteAd('${escapeHtml(ad.id)}')">حذف</button></div>`).join('')
         : '<div style="font-size:0.76rem; color:#64748b;">آگهی‌ای وجود ندارد.</div>';
 
-      document.getElementById('adminExtra118List').innerHTML = extra118Contacts.length
-        ? extra118Contacts.map(c => `<div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #e2e8f0; font-size:0.77rem;"><span>${escapeHtml(c.n)} (${escapeHtml(c.p)})</span><button class="btn btn-danger btn-sm" onclick="adminDelete118('${escapeHtml(c.id || c.p)}')">حذف</button></div>`).join('')
-        : '<div style="font-size:0.76rem; color:#64748b;">شماره سفارشی جدیدی ثبت نشده است.</div>';
+      resetAdmin118List();
 
       // Cloud
       document.getElementById('adminFirebaseUrlInput').value = apiBaseUrl;
@@ -2490,13 +2738,174 @@
       populateAdminPanel();
     }
 
-    async function adminDelete118(idOrPhone) {
-      extra118Contacts = extra118Contacts.filter(c => (c.id || c.p) !== idOrPhone);
-      localStorage.setItem('hj_extra_118', JSON.stringify(extra118Contacts));
-      await apiRequest(`/api/hamyar/118/${idOrPhone}`, 'DELETE', null, true);
+    function resetAdmin118List() {
+      adm118VisibleCount = 30;
+      renderAdmin118List();
+    }
+
+    function loadMoreAdmin118() {
+      adm118VisibleCount += 30;
+      renderAdmin118List();
+    }
+
+    function renderAdmin118List() {
+      const q = normalizeFa(document.getElementById('adm118Search')?.value || '');
+      const cat = document.getElementById('adm118CatFilter')?.value || 'all';
+      const rf = document.getElementById('adm118RegionFilter')?.value || 'all';
+
+      const all = getAll118Contacts(true);
+      const filtered = all.filter(item => {
+        if (rf === '_deleted') {
+          if (!item._deleted) return false;
+        } else {
+          if (item._deleted) return false;
+          if (rf === '_edited' && !item._edited) return false;
+          else if (rf === '_extra' && item.sourceType !== 'extra') return false;
+          else if (!['all', '_edited', '_extra'].includes(rf) && item.rk !== rf) return false;
+        }
+        if (cat !== 'all' && item.c !== cat) return false;
+        if (q) {
+          const hay = normalizeFa(`${item.n} ${item.ps.join(' ')} ${item.c} ${item.r}`);
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      const statsEl = document.getElementById('adm118Stats');
+      if (statsEl) statsEl.textContent = `نمایش ${Math.min(filtered.length, adm118VisibleCount).toLocaleString('fa-IR')} از ${filtered.length.toLocaleString('fa-IR')} مورد`;
+
+      const box = document.getElementById('admin118ManageList');
+      const moreBtn = document.getElementById('adm118LoadMoreBtn');
+      if (!filtered.length) {
+        box.innerHTML = '<div style="font-size:0.76rem; color:#64748b; text-align:center; padding:10px;">موردی یافت نشد.</div>';
+        moreBtn.style.display = 'none';
+        return;
+      }
+
+      const slice = filtered.slice(0, adm118VisibleCount);
+      box.innerHTML = slice.map(item => {
+        const cls = item._deleted ? 'is-deleted' : (item._edited ? 'is-edited' : '');
+        const tag = item._deleted ? '<span style="color:#dc2626; font-weight:800;">[حذف‌شده]</span> ' :
+                    (item._edited ? '<span style="color:#0284c7; font-weight:800;">[ویرایش‌شده]</span> ' :
+                    (item.sourceType === 'extra' ? '<span style="color:#0f766e; font-weight:800;">[جدید]</span> ' : ''));
+        return `
+          <div class="adm-118-row ${cls}">
+            <div style="font-weight:800;">${tag}${escapeHtml(item.n)}</div>
+            <div style="color:#0f766e; direction:ltr; text-align:right; font-weight:700; margin:2px 0;">${escapeHtml(item.ps.join('  |  '))}</div>
+            <div style="font-size:0.7rem; color:#64748b; margin-bottom:6px;">🏷️ ${escapeHtml(item.c)} • 📍 ${escapeHtml(item.r)}</div>
+            <div style="display:flex; gap:5px;">
+              ${!item._deleted ? `<button class="btn btn-blue btn-sm" style="flex:1;" onclick="openAdminEdit118('${escapeHtml(item.id)}')">✏️ ویرایش</button>` : ''}
+              ${!item._deleted ? `<button class="btn btn-danger btn-sm" onclick="adminDelete118('${escapeHtml(item.id)}')">🗑️ حذف</button>` : ''}
+              ${(item._deleted || item._edited) ? `<button class="btn btn-amber btn-sm" style="flex:1;" onclick="adminRestore118('${escapeHtml(item.id)}')">↩️ بازیابی پیش‌فرض</button>` : ''}
+            </div>
+          </div>`;
+      }).join('');
+
+      moreBtn.style.display = filtered.length > adm118VisibleCount ? 'block' : 'none';
+    }
+
+    function autoFillAdminSubRegion() {
+      const rk = document.getElementById('admEdit118Rk').value;
+      const map = {
+        mohr_galledar_asir: 'گله‌دار و حومه',
+        jam: 'جم',
+        lamerd: 'لامرد',
+        asaluyeh: 'عسلویه و کنگان',
+        other: 'شیراز و شهرهای همجوار',
+        universal: 'سراسری (همه شهرها)'
+      };
+      document.getElementById('admEdit118R').value = map[rk] || 'گله‌دار و حومه';
+    }
+
+    function openAdminAdd118() {
+      document.getElementById('admEdit118Title').textContent = '➕ افزودن مخاطب جدید به ۱۱۸';
+      document.getElementById('admEdit118Id').value = 'c_' + Date.now();
+      document.getElementById('admEdit118Name').value = '';
+      document.getElementById('admEdit118Phones').value = '';
+      document.getElementById('admEdit118Cat').value = 'تاسیسات و تعمیرات منزل';
+      document.getElementById('admEdit118Rk').value = currentRegion;
+      autoFillAdminSubRegion();
+      document.getElementById('adminEdit118Modal').classList.add('open');
+    }
+
+    function openAdminEdit118(id) {
+      const item = getAll118Contacts(true).find(x => x.id === id);
+      if (!item) return;
+      document.getElementById('admEdit118Title').textContent = '✏️ ویرایش مخاطب ۱۱۸';
+      document.getElementById('admEdit118Id').value = item.id;
+      document.getElementById('admEdit118Name').value = item.n;
+      document.getElementById('admEdit118Phones').value = item.ps.join('\n');
+      document.getElementById('admEdit118Cat').value = item.c;
+      document.getElementById('admEdit118Rk').value = item.rk || 'mohr_galledar_asir';
+      document.getElementById('admEdit118R').value = item.r || '';
+      document.getElementById('adminEdit118Modal').classList.add('open');
+    }
+
+    async function saveAdminEdit118() {
+      const id = document.getElementById('admEdit118Id').value.trim();
+      const n = document.getElementById('admEdit118Name').value.trim();
+      const ps = parseMultiPhones(document.getElementById('admEdit118Phones').value);
+      const c = document.getElementById('admEdit118Cat').value;
+      const rk = document.getElementById('admEdit118Rk').value;
+      const r = document.getElementById('admEdit118R').value.trim() || (REGIONS[rk]?.shortName || 'منطقه');
+      if (!n || !ps.length) {
+        alert('نام و حداقل یک شماره تماس معتبر الزامی است.');
+        return;
+      }
+
+      const payload = { id, n, ps, c, r, rk, deleted: false };
+      const res = await apiRequest('/api/hamyar/admin/118/save', 'POST', payload, true);
+      if (res && !res.ok) {
+        alert(res.error || 'خطا در ذخیره روی سرور');
+        return;
+      }
+
+      if (id.startsWith('c_')) {
+        const idx = extra118Contacts.findIndex(x => x.id === id);
+        if (idx >= 0) extra118Contacts[idx] = payload;
+        else extra118Contacts.unshift(payload);
+        localStorage.setItem('hj_extra_118', JSON.stringify(extra118Contacts));
+      } else {
+        overrides118[id] = payload;
+        localStorage.setItem('hj_overrides_118', JSON.stringify(overrides118));
+      }
+
+      closeModal('adminEdit118Modal');
       renderDirectory();
-      populateAdminPanel();
-      showToast('شماره از لیست حذف شد.');
+      renderAdmin118List();
+      showToast('تغییرات ۱۱۸ روی سرور ذخیره و منتشر شد.');
+    }
+
+    async function adminDelete118(id) {
+      const res = await apiRequest('/api/hamyar/admin/118/save', 'POST', { id, deleted: true }, true);
+      if (res && !res.ok) {
+        alert(res.error || 'خطا در حذف روی سرور');
+        return;
+      }
+      if (id.startsWith('c_')) {
+        extra118Contacts = extra118Contacts.filter(x => x.id !== id);
+        localStorage.setItem('hj_extra_118', JSON.stringify(extra118Contacts));
+        delete overrides118[id];
+      } else {
+        overrides118[id] = { id, deleted: true };
+      }
+      localStorage.setItem('hj_overrides_118', JSON.stringify(overrides118));
+      renderDirectory();
+      renderAdmin118List();
+      showToast('مخاطب از لیست ۱۱۸ حذف شد.');
+    }
+
+    async function adminRestore118(id) {
+      const res = await apiRequest('/api/hamyar/admin/118/restore', 'POST', { id }, true);
+      if (res && !res.ok) {
+        alert(res.error || 'خطا در بازیابی');
+        return;
+      }
+      delete overrides118[id];
+      localStorage.setItem('hj_overrides_118', JSON.stringify(overrides118));
+      renderDirectory();
+      renderAdmin118List();
+      showToast('مخاطب به حالت اولیه بازگردانده شد.');
     }
 
     async function saveFirebaseUrlFromAdmin() {
