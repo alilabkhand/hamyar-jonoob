@@ -1,0 +1,8 @@
+{
+  "appId": "ir.hamyarjonoob.app",
+  "appName": "همیار جنوب",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}

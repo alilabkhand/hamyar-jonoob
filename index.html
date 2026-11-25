@@ -1,0 +1,2505 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0f766e" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>همیار جنوب | هواشناسی، قطعی برق، ۱۱۸، دیوار و مصالح</title>
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-page: #f1f5f9;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --accent: #d97706;
+      --border: #e2e8f0;
+      --shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      direction: rtl;
+      text-align: right;
+      padding-bottom: 86px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    .app-container {
+      max-width: 580px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: var(--bg-page);
+    }
+
+    /* Header */
+    .top-header {
+      background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+      color: #fff;
+      padding: 13px 15px 14px;
+      border-bottom-left-radius: 22px;
+      border-bottom-right-radius: 22px;
+      box-shadow: 0 8px 24px rgba(15, 118, 110, 0.22);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .brand-box {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .brand-title {
+      font-size: 1.12rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-sub {
+      font-size: 0.74rem;
+      opacity: 0.92;
+      margin-top: 2px;
+    }
+
+    .header-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .date-badge {
+      font-size: 0.73rem;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 4px 10px;
+      border-radius: 10px;
+      font-weight: 700;
+      white-space: nowrap;
+      direction: rtl;
+      unicode-bidi: isolate;
+    }
+
+    .sync-badge {
+      font-size: 0.66rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 700;
+      background: rgba(15, 23, 42, 0.28);
+      color: #e2e8f0;
+      cursor: pointer;
+    }
+    .sync-badge.online {
+      background: rgba(16, 185, 129, 0.28);
+      color: #d1fae5;
+    }
+
+    .region-pills {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-top: 11px;
+      scrollbar-width: none;
+    }
+    .region-pills::-webkit-scrollbar { display: none; }
+
+    .region-pill {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .region-pill.active {
+      background: #ffffff;
+      color: #0f766e;
+      border-color: #ffffff;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    }
+
+    .section-wrap {
+      padding: 13px;
+    }
+
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.2s ease;
+    }
+    .tab-pane.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 15px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 13px;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    /* Weather Hero */
+    .weather-hero {
+      border-radius: 22px;
+      padding: 17px;
+      margin-bottom: 13px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s ease;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.12);
+    }
+    .weather-hero.theme-sunny {
+      background: linear-gradient(145deg, #fffdf5 0%, #fef3c7 55%, #fde68a 100%);
+      color: #78350f;
+      border: 1px solid #fcd34d;
+    }
+    .weather-hero.theme-cloudy {
+      background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 60%, #cbd5e1 100%);
+      color: #1e293b;
+      border: 1px solid #94a3b8;
+    }
+    .weather-hero.theme-rainy {
+      background: linear-gradient(145deg, #0369a1 0%, #0284c7 55%, #0c4a6e 100%);
+      color: #ffffff;
+      border: 1px solid #38bdf8;
+    }
+
+    .rain-drops {
+      display: none;
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(255,255,255,0.38) 1.5px, transparent 1.5px);
+      background-size: 22px 28px;
+      animation: rainFall 1.1s linear infinite;
+    }
+    .weather-hero.theme-rainy .rain-drops { display: block; }
+    @keyframes rainFall {
+      from { background-position: 0 0; }
+      to { background-position: -10px 28px; }
+    }
+
+    .theme-test-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 11px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+    .theme-btn {
+      font-size: 0.69rem;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid currentColor;
+      background: rgba(255,255,255,0.24);
+      color: inherit;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .weather-main-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+    .temp-big {
+      font-size: 2.75rem;
+      font-weight: 900;
+      line-height: 1.08;
+    }
+    .feels-like-badge {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 4px 10px;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.36);
+    }
+    .weather-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 13px;
+      position: relative;
+      z-index: 2;
+    }
+    .metric-box {
+      background: rgba(255, 255, 255, 0.32);
+      border-radius: 12px;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.74rem;
+    }
+    .metric-val {
+      font-weight: 800;
+      font-size: 0.88rem;
+      margin-top: 2px;
+    }
+    .rain-highlight {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.42);
+      font-size: 0.82rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .expert-box {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border: 1px solid #6ee7b7;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 13px;
+    }
+
+    .alert-banner {
+      border-radius: 14px;
+      padding: 11px 13px;
+      margin-bottom: 11px;
+      font-size: 0.81rem;
+      font-weight: 700;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .alert-rain { background: #eff6ff; border: 1px solid #93c5fd; color: #1e40af; }
+    .alert-cold { background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
+    .alert-heat { background: #fff7ed; border: 1px solid #fdba74; color: #9a3412; }
+    .alert-good { background: #f0fdf4; border: 1px solid #86efac; color: #166534; }
+
+    .surprise-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 13px;
+    }
+    .surprise-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .hourly-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+      scrollbar-width: none;
+    }
+    .hourly-scroll::-webkit-scrollbar { display: none; }
+    .hour-chip {
+      min-width: 66px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 8px 6px;
+      text-align: center;
+      font-size: 0.74rem;
+    }
+
+    /* Crops */
+    .crop-item {
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 11px 12px;
+      margin-bottom: 8px;
+      background: #ffffff;
+      cursor: pointer;
+    }
+    .crop-item.active-season {
+      border-color: #10b981;
+      background: #f0fdf4;
+    }
+    .crop-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .badge-season {
+      font-size: 0.69rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .badge-now { background: #10b981; color: #fff; }
+    .badge-soon { background: #fef3c7; color: #92400e; }
+    .badge-off { background: #e2e8f0; color: #475569; }
+    .crop-details {
+      display: none;
+      margin-top: 9px;
+      padding-top: 9px;
+      border-top: 1px dashed #cbd5e1;
+      font-size: 0.79rem;
+      color: #334155;
+    }
+    .crop-item.open .crop-details { display: block; }
+
+    /* Power Outage */
+    .power-hero {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #fff;
+      border-radius: 20px;
+      padding: 17px;
+      margin-bottom: 13px;
+    }
+    .power-time-box {
+      background: rgba(251, 191, 36, 0.16);
+      border: 1px solid rgba(251, 191, 36, 0.45);
+      color: #fde68a;
+      border-radius: 14px;
+      padding: 13px;
+      margin: 12px 0;
+      text-align: center;
+      font-size: 1.18rem;
+      font-weight: 900;
+    }
+    .feeder-row {
+      border: 1px solid #e2e8f0;
+      border-radius: 13px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      background: #fff;
+      cursor: pointer;
+    }
+    .feeder-sub {
+      display: none;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed #cbd5e1;
+      font-size: 0.77rem;
+      color: #475569;
+    }
+    .feeder-row.expanded .feeder-sub { display: block; }
+
+    .group-pill {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .grp-A { background: #ea580c; }
+    .grp-B { background: #0284c7; }
+    .grp-C { background: #16a34a; }
+    .grp-D { background: #ca8a04; }
+    .grp-Y { background: #dc2626; }
+
+    /* 118 Directory */
+    .dir-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 15px;
+      padding: 12px;
+      margin-bottom: 9px;
+      box-shadow: var(--shadow);
+    }
+    .dir-phone {
+      direction: ltr;
+      display: inline-block;
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: #0f766e;
+      letter-spacing: 0.4px;
+    }
+
+    /* Divar Local */
+    .ad-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 15px;
+      padding: 11px;
+      margin-bottom: 9px;
+      display: flex;
+      gap: 11px;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+    .ad-thumb {
+      width: 74px;
+      height: 74px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #f1f5f9;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.55rem;
+    }
+
+    /* Materials */
+    .mat-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 15px;
+      padding: 12px;
+      margin-bottom: 9px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 11px;
+      padding: 3px;
+    }
+    .qty-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: none;
+      background: #0f766e;
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .qty-btn.minus { background: #e2e8f0; color: #0f172a; }
+    .qty-val { min-width: 26px; text-align: center; font-weight: 900; font-size: 0.9rem; }
+
+    .invoice-box {
+      background: #f8fafc;
+      border: 2px dashed #0f766e;
+      border-radius: 16px;
+      padding: 14px;
+      margin-top: 12px;
+    }
+    .inv-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      padding: 4px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .inv-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.98rem;
+      font-weight: 900;
+      color: #0f766e;
+      padding-top: 9px;
+      margin-top: 6px;
+    }
+
+    /* Buttons & Inputs */
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 9px 13px;
+      font-size: 0.83rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      text-decoration: none;
+      transition: transform 0.12s;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background: #0f766e; color: #fff; }
+    .btn-amber { background: #d97706; color: #fff; }
+    .btn-blue { background: #0284c7; color: #fff; }
+    .btn-outline { background: #fff; color: #0f172a; border: 1px solid #cbd5e1; }
+    .btn-danger { background: #dc2626; color: #fff; }
+    .btn-sm { padding: 6px 10px; font-size: 0.74rem; border-radius: 9px; }
+
+    .input, .select, .textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 0.84rem;
+      background: #fff;
+      color: #0f172a;
+      margin-bottom: 9px;
+    }
+
+    /* Bottom Navigation (5 Tabs) */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 580px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 6px 2px 9px;
+      z-index: 50;
+      box-shadow: 0 -4px 18px rgba(15, 23, 42, 0.07);
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      color: #64748b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-size: 0.67rem;
+      font-weight: 800;
+      cursor: pointer;
+      padding: 3px 2px;
+    }
+    .nav-btn.active { color: #0f766e; }
+    .nav-icon { font-size: 1.2rem; }
+
+    /* Modal */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.62);
+      z-index: 80;
+      padding: 12px;
+      overflow-y: auto;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 530px;
+      padding: 16px;
+      margin-top: 16px;
+      margin-bottom: 28px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.28);
+    }
+
+    .admin-subtabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin-bottom: 12px;
+    }
+    .admin-subtab {
+      padding: 7px 4px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #334155;
+      cursor: pointer;
+    }
+    .admin-subtab.active {
+      background: #0f766e;
+      color: #fff;
+      border-color: #0f766e;
+    }
+
+    .quick-presets {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+    .preset-tag {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      padding: 3px 7px;
+      font-size: 0.69rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 84px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      color: #fff;
+      padding: 9px 16px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      z-index: 100;
+      display: none;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- HEADER -->
+    <header class="top-header">
+      <div class="header-row">
+        <div class="brand-box" id="secretAdminTrigger" title="همیار جنوب">
+          <div class="brand-title">🌴 همیار جنوب</div>
+          <div class="brand-sub" id="headerRegionSubtitle">شهرستان مُهر، گله‌دار و اسیر</div>
+        </div>
+        <div class="header-meta">
+          <div class="date-badge" id="todayJalaliBadge">در حال بارگذاری تاریخ...</div>
+          <div class="sync-badge" id="cloudSyncBadge" onclick="syncFromCloud(true)" title="بروزرسانی اطلاعات آنلاین">📱 حالت آفلاین</div>
+        </div>
+      </div>
+
+      <div class="region-pills">
+        <button class="region-pill active" data-region="mohr_galledar_asir">شهرستان مُهر، گله‌دار و اسیر</button>
+        <button class="region-pill" data-region="jam">جم</button>
+        <button class="region-pill" data-region="lamerd">لامرد</button>
+        <button class="region-pill" data-region="asaluyeh">عسلویه</button>
+      </div>
+    </header>
+
+    <main class="section-wrap">
+      <!-- ==================== TAB 1: WEATHER & AGRICULTURE ==================== -->
+      <section class="tab-pane active" id="tab-weather">
+        <div class="weather-hero theme-sunny" id="weatherHeroCard">
+          <div class="rain-drops"></div>
+          <div class="theme-test-bar">
+            <span style="font-size:0.69rem; opacity:0.85; align-self:center;">تست ظاهر:</span>
+            <button class="theme-btn" onclick="setWeatherThemeOverride('auto')">واقعی</button>
+            <button class="theme-btn" onclick="setWeatherThemeOverride('sunny')">☀️ آفتابی</button>
+            <button class="theme-btn" onclick="setWeatherThemeOverride('cloudy')">⛅ ابری</button>
+            <button class="theme-btn" onclick="setWeatherThemeOverride('rainy')">🌧️ بارانی</button>
+          </div>
+
+          <div class="weather-main-row">
+            <div>
+              <div style="font-size: 0.84rem; font-weight: 800;" id="weatherCityTitle">شهرستان مُهر، گله‌دار و اسیر</div>
+              <div class="temp-big" id="weatherCurrentTemp">--°</div>
+              <div style="font-size: 0.86rem; font-weight: 700;" id="weatherConditionText">در حال دریافت وضعیت هوا...</div>
+              <div class="feels-like-badge" id="weatherFeelsLike">دمای حسی (Feels Like): --°</div>
+            </div>
+            <div style="font-size: 3.5rem; line-height: 1;" id="weatherBigIcon">☀️</div>
+          </div>
+
+          <div class="weather-metrics">
+            <div class="metric-box">
+              <div>💧 رطوبت</div>
+              <div class="metric-val" id="metricHumidity">--%</div>
+            </div>
+            <div class="metric-box">
+              <div>💨 سرعت باد</div>
+              <div class="metric-val" id="metricWind">-- km/h</div>
+            </div>
+            <div class="metric-box">
+              <div>🔆 شاخص UV</div>
+              <div class="metric-val" id="metricUv">--</div>
+            </div>
+          </div>
+
+          <div class="rain-highlight">
+            <span>🌧️ نزدیک‌ترین روز بارندگی:</span>
+            <span id="nextRainText">در حال بررسی ۱۶ روز آینده...</span>
+          </div>
+        </div>
+
+        <div class="expert-box">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+            <span style="font-weight: 900; font-size: 0.88rem; color: #065f46;">🎙️ نظر کارشناس بومی هواشناسی</span>
+            <span style="font-size: 0.69rem; color: #047857; font-weight: 700;" id="expertUpdatedAt">تحلیل منطقه</span>
+          </div>
+          <p style="font-size: 0.83rem; color: #064e3b; line-height: 1.75;" id="expertNoteText"></p>
+        </div>
+
+        <div id="agriAlertsContainer"></div>
+
+        <div class="surprise-grid">
+          <div class="surprise-card">
+            <div style="font-size: 0.79rem; font-weight: 900; color: #0f766e; margin-bottom: 4px;">🚜 پنجره طلایی سم‌پاشی</div>
+            <div style="font-size: 0.76rem; color: #334155;" id="sprayWindowText">در حال تحلیل باد و رطوبت...</div>
+          </div>
+          <div class="surprise-card">
+            <div style="font-size: 0.79rem; font-weight: 900; color: #0369a1; margin-bottom: 4px;">💧 شاخص تبخیر و آبیاری</div>
+            <div style="font-size: 0.76rem; color: #334155;" id="evapGuideText">در حال محاسبه نیاز آبی...</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span>🕒 پیش‌بینی ساعتی امروز</span></div>
+          <div class="hourly-scroll" id="hourlyContainer"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span>🌾 راهنمای هوشمند کشاورزی منطقه</span>
+            <span style="font-size: 0.7rem; color: #0f766e; font-weight: 700;">مرتب‌شده بر اساس فصل</span>
+          </div>
+          <p style="font-size: 0.76rem; color: #64748b; margin-bottom: 9px;">
+            کشت‌های بومی منطقه (گندم، گوجه، سبزی، صیفی‌جات، هندوانه، ملون، ذرت و کنجد) بر اساس ماه جاری مرتب شده‌اند:
+          </p>
+          <div id="cropsListContainer"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="cursor:pointer;" onclick="toggle14Days()">
+            <span>📅 پیش‌بینی ۱۴ روز آینده</span>
+            <span style="font-size: 0.76rem; color: #0f766e;" id="toggle14DaysLabel">مشاهده کامل ▾</span>
+          </div>
+          <div id="fourteenDaysContainer" style="display:none; margin-top:8px;"></div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 2: POWER OUTAGE ==================== -->
+      <section class="tab-pane" id="tab-power">
+        <div id="powerSupportedView">
+          <div class="power-hero">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+              <span style="font-size:0.8rem; opacity:0.88;">⚡ برنامه خاموشی شهرستان مُهر، گله‌دار و اسیر</span>
+              <span style="font-size:0.7rem; background:rgba(255,255,255,0.16); padding:3px 8px; border-radius:8px; white-space:nowrap;" id="powerModeBadge">جدول ۴ گروهی</span>
+            </div>
+            <div id="myPowerSummary" style="margin-top: 11px;"></div>
+          </div>
+
+          <div class="card" id="feederSelectorCard">
+            <div class="card-title"><span>📍 انتخاب شهر، روستا یا محله شما (یک‌بار برای همیشه)</span></div>
+            <input type="text" class="input" id="feederSearchInput" placeholder="جستجوی نام روستا یا خیابان (مثلاً: شهرک امام، اسیر، چاه کبکان، فال...)" oninput="renderFeederSelectionList()" />
+            <div id="feederSelectionList"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" style="cursor:pointer;" onclick="toggleFullPowerTable()">
+              <span>📋 جدول کامل گروه‌های برق منطقه</span>
+              <span style="font-size: 0.76rem; color: #0f766e;" id="fullTableToggleText">نمایش جدول ▾</span>
+            </div>
+            <div id="fullPowerTableContainer" style="display:none; margin-top:8px;"></div>
+          </div>
+        </div>
+
+        <div id="powerUnsupportedView" style="display:none;">
+          <div class="card" style="text-align:center; padding: 26px 16px;">
+            <div style="font-size: 2.4rem; margin-bottom: 10px;">⚡</div>
+            <h3 style="font-size: 0.98rem; font-weight: 800; margin-bottom: 8px;" id="unsupportedRegionTitle">به‌زودی فعال می‌شود</h3>
+            <p style="font-size: 0.82rem; color: #64748b; margin-bottom: 15px;">
+              در حال حاضر جدول ۲۲ فیدر رسمی برای <strong>شهرستان مُهر، گله‌دار و اسیر</strong> فعال است.
+            </p>
+            <button class="btn btn-primary" onclick="selectRegion('mohr_galledar_asir')">بازگشت به شهرستان مُهر، گله‌دار و اسیر</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 3: 118 DIRECTORY ==================== -->
+      <section class="tab-pane" id="tab-118">
+        <div class="card" style="background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%); border-color: #67e8f9;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+            <div>
+              <div style="font-weight: 900; font-size: 0.96rem; color: #155e75;">📞 بانک اطلاعاتی ۱۱۸ منطقه</div>
+              <div style="font-size: 0.75rem; color: #0e7490;" id="dirStatsText">در حال بارگذاری شماره‌ها...</div>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openSuggestContactModal()">+ ثبت شغل در ۱۱۸</button>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px;">
+          <input type="text" class="input" id="dirSearchInput" placeholder="جستجوی شغل، نام، روستا یا شماره (مثلاً: تعمیر کولر، دکتر، وانت، کلیدساز...)" oninput="resetAndRenderDirectory()" style="margin-bottom:8px;" />
+          <div style="display:flex; gap:8px;">
+            <select class="select" id="dirCategoryFilter" onchange="resetAndRenderDirectory()" style="margin-bottom:0;">
+              <option value="all">همه مشاغل و خدمات</option>
+              <option value="پزشکی و درمان">پزشکی و درمان</option>
+              <option value="تاسیسات و تعمیرات منزل">تاسیسات و تعمیرات منزل</option>
+              <option value="خودرو، یدکی و حمل‌ونقل">خودرو، یدکی و حمل‌ونقل</option>
+              <option value="مصالح و ساختمان">مصالح و ساختمان</option>
+              <option value="اداری، بانکی و حقوقی">اداری، بانکی و حقوقی</option>
+              <option value="خوراکی، رستوران و فروشگاه">خوراکی، رستوران و فروشگاه</option>
+              <option value="کشاورزی و دام">کشاورزی و دام</option>
+              <option value="اینترنت، موبایل و خدمات فنی">اینترنت، موبایل و خدمات فنی</option>
+            </select>
+            <select class="select" id="dirRegionFilter" onchange="resetAndRenderDirectory()" style="margin-bottom:0;">
+              <option value="all">همه شهرها و روستاها</option>
+              <option value="گله‌دار و حومه">گله‌دار و حومه</option>
+              <option value="گله‌دار و فال">گله‌دار و فال</option>
+              <option value="اسیر و حومه">اسیر و حومه</option>
+              <option value="مُهر و وراوی">مُهر و وراوی</option>
+              <option value="لامرد">لامرد</option>
+              <option value="عسلویه، کنگان و جم">عسلویه، کنگان و جم</option>
+              <option value="شیراز / شهرهای همجوار">شیراز / شهرهای همجوار</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="dirListContainer"></div>
+        <button class="btn btn-outline" id="dirLoadMoreBtn" style="width:100%; display:none; margin-bottom:12px;" onclick="loadMoreDirectory()">نمایش شماره‌های بیشتر ▾</button>
+      </section>
+
+      <!-- ==================== TAB 4: LOCAL DIVAR ==================== -->
+      <section class="tab-pane" id="tab-divar">
+        <div class="card" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #fdba74;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+            <div>
+              <div style="font-weight: 900; font-size: 0.95rem; color: #9a3412;">📢 دیوار محلی و نیازمندی‌ها</div>
+              <div style="font-size: 0.75rem; color: #7c2d12;">خرید و فروش بی‌واسطه در منطقه خودتان</div>
+            </div>
+            <button class="btn btn-amber btn-sm" onclick="openAddAdModal()">+ ثبت آگهی رایگان</button>
+          </div>
+        </div>
+
+        <div class="card" style="padding: 12px;">
+          <input type="text" class="input" id="adSearchInput" placeholder="جستجو در آگهی‌ها (وانت، موتور آب، زمین، لوازم...)" oninput="renderAdsList()" style="margin-bottom:8px;" />
+          <div style="display:flex; gap:8px;">
+            <select class="select" id="adRegionFilter" onchange="renderAdsList()" style="margin-bottom:0;">
+              <option value="current">فقط منطقه انتخاب‌شده فعلی</option>
+              <option value="all">همه مناطق جنوب</option>
+            </select>
+            <select class="select" id="adCategoryFilter" onchange="renderAdsList()" style="margin-bottom:0;">
+              <option value="all">همه دسته‌ها</option>
+              <option value="مصالح و ابزار">مصالح و ابزار</option>
+              <option value="کشاورزی و دام">کشاورزی و دام</option>
+              <option value="خودرو و موتور">خودرو و موتور</option>
+              <option value="املاک و زمین">املاک و زمین</option>
+              <option value="لوازم خانگی">لوازم خانگی</option>
+              <option value="خدمات و استادکار">خدمات و استادکار</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="adsListContainer"></div>
+      </section>
+
+      <!-- ==================== TAB 5: INDEPENDENT BUILDING MATERIALS ==================== -->
+      <section class="tab-pane" id="tab-materials">
+        <div class="card" style="background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%); border-color: #5eead4;">
+          <div style="font-weight: 900; font-size: 0.96rem; color: #115e59;">🧱 تأمین و ارسال مصالح ساختمانی منطقه</div>
+          <div style="font-size: 0.76rem; color: #134e4a; margin-top: 3px;">
+            مشاهده موجودی روز، محاسبه دقیق هزینه حمل و بارگیری و ارسال مستقیم فاکتور سفارش
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span>📦 موجودی و انتخاب مصالح</span></div>
+          <div id="materialsListContainer"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><span>🚚 نحوه تحویل و مشخصات سفارش</span></div>
+          <label style="font-size:0.76rem; font-weight:700;">محل تحویل بار:</label>
+          <select class="select" id="matDeliverySelect" onchange="renderMaterialInvoice()"></select>
+
+          <label style="display:flex; align-items:center; gap:8px; font-size:0.82rem; font-weight:700; margin-bottom:10px; cursor:pointer;">
+            <input type="checkbox" id="matIncludeHandling" checked onchange="renderMaterialInvoice()" style="width:17px; height:17px;" />
+            <span>محاسبه هزینه کارگر بارگیری و تخلیه بار</span>
+          </label>
+
+          <input type="text" class="input" id="matCustName" placeholder="نام و نام خانوادگی سفارش‌دهنده" oninput="renderMaterialInvoice()" />
+          <input type="tel" class="input" id="matCustPhone" placeholder="شماره تماس شما (اختیاری)" oninput="renderMaterialInvoice()" />
+          <input type="text" class="input" id="matCustAddress" placeholder="آدرس دقیق محل تخلیه بار (روستا، خیابان، نشانی)" oninput="renderMaterialInvoice()" style="margin-bottom:4px;" />
+
+          <div class="invoice-box" id="matInvoiceSummary"></div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
+            <button class="btn btn-primary" onclick="sendMaterialOrder('whatsapp')">💬 ارسال به واتس‌اپ</button>
+            <button class="btn btn-blue" onclick="sendMaterialOrder('sms')">✉️ ارسال پیامک (SMS)</button>
+            <button class="btn btn-amber" onclick="generateMaterialInvoiceImage()">🖼️ عکس فاکتور (واتس‌اپ)</button>
+            <button class="btn btn-outline" onclick="downloadMaterialInvoiceTxt()">📄 دانلود فایل متنی</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-tab="tab-weather" onclick="switchTab('tab-weather', this)">
+        <span class="nav-icon">🌤️</span>
+        <span>هوا و کشت</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-power" onclick="switchTab('tab-power', this)">
+        <span class="nav-icon">⚡</span>
+        <span>قطعی برق</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-118" onclick="switchTab('tab-118', this)">
+        <span class="nav-icon">📞</span>
+        <span>۱۱۸ منطقه</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-divar" onclick="switchTab('tab-divar', this)">
+        <span class="nav-icon">📢</span>
+        <span>دیوار</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-materials" onclick="switchTab('tab-materials', this)">
+        <span class="nav-icon">🧱</span>
+        <span>مصالح</span>
+      </button>
+    </nav>
+  </div>
+
+  <div class="toast" id="toastMsg"></div>
+
+  <!-- MODAL: ADD AD -->
+  <div class="modal-backdrop" id="addAdModal">
+    <div class="modal-box">
+      <div class="card-title">
+        <span>➕ ثبت آگهی رایگان در دیوار محلی</span>
+        <button class="btn btn-outline btn-sm" onclick="closeModal('addAdModal')">✕</button>
+      </div>
+      <label style="font-size:0.76rem; font-weight:700;">منطقه آگهی:</label>
+      <select class="select" id="newAdRegion">
+        <option value="mohr_galledar_asir">شهرستان مُهر، گله‌دار و اسیر</option>
+        <option value="jam">جم</option>
+        <option value="lamerd">لامرد</option>
+        <option value="asaluyeh">عسلویه</option>
+      </select>
+      <label style="font-size:0.76rem; font-weight:700;">دسته‌بندی:</label>
+      <select class="select" id="newAdCategory">
+        <option value="مصالح و ابزار">مصالح و ابزار</option>
+        <option value="کشاورزی و دام">کشاورزی و دام</option>
+        <option value="خودرو و موتور">خودرو و موتور</option>
+        <option value="املاک و زمین">املاک و زمین</option>
+        <option value="لوازم خانگی">لوازم خانگی</option>
+        <option value="خدمات و استادکار">خدمات و استادکار</option>
+      </select>
+      <input type="text" class="input" id="newAdTitle" placeholder="عنوان آگهی (مثلاً: موتور آب کشاورزی ۴ اینچ)" />
+      <input type="text" class="input" id="newAdPrice" placeholder="قیمت به تومان (یا بنویسید: توافقی)" />
+      <input type="tel" class="input" id="newAdPhone" placeholder="شماره تماس / واتس‌اپ (مثلاً: 09170000000)" />
+      <textarea class="textarea" id="newAdDesc" rows="3" placeholder="توضیحات کامل، نام روستا یا محله..."></textarea>
+      <label style="font-size:0.76rem; font-weight:700; display:block; margin-bottom:4px;">تصویر کالا (اختیاری - فشرده‌سازی خودکار):</label>
+      <input type="file" accept="image/*" class="input" id="newAdImageInput" onchange="handleAdImageUpload(event)" />
+      <img id="newAdImagePreview" style="display:none; width:100%; max-height:150px; object-fit:cover; border-radius:12px; margin-bottom:10px;" alt="پیش‌نمایش" />
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn-primary" style="flex:1;" onclick="submitNewAd()">انتشار آگهی</button>
+        <button class="btn btn-outline" onclick="closeModal('addAdModal')">انصراف</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: AD DETAIL -->
+  <div class="modal-backdrop" id="adDetailModal">
+    <div class="modal-box" id="adDetailContent"></div>
+  </div>
+
+  <!-- MODAL: SUGGEST 118 CONTACT -->
+  <div class="modal-backdrop" id="suggest118Modal">
+    <div class="modal-box">
+      <div class="card-title">
+        <span>📞 ثبت شماره کسب‌وکار در ۱۱۸ منطقه</span>
+        <button class="btn btn-outline btn-sm" onclick="closeModal('suggest118Modal')">✕</button>
+      </div>
+      <input type="text" class="input" id="sug118Name" placeholder="نام و عنوان شغل (مثلاً: تعمیر کولر گازی در اسیر)" />
+      <input type="tel" class="input" id="sug118Phone" placeholder="شماره تماس (مثلاً: 09170000000)" />
+      <select class="select" id="sug118Category">
+        <option value="تاسیسات و تعمیرات منزل">تاسیسات و تعمیرات منزل</option>
+        <option value="پزشکی و درمان">پزشکی و درمان</option>
+        <option value="خودرو، یدکی و حمل‌ونقل">خودرو، یدکی و حمل‌ونقل</option>
+        <option value="مصالح و ساختمان">مصالح و ساختمان</option>
+        <option value="اداری، بانکی و حقوقی">اداری، بانکی و حقوقی</option>
+        <option value="خوراکی، رستوران و فروشگاه">خوراکی، رستوران و فروشگاه</option>
+        <option value="کشاورزی و دام">کشاورزی و دام</option>
+        <option value="اینترنت، موبایل و خدمات فنی">اینترنت، موبایل و خدمات فنی</option>
+      </select>
+      <select class="select" id="sug118Region">
+        <option value="گله‌دار و حومه">گله‌دار و حومه</option>
+        <option value="گله‌دار و فال">گله‌دار و فال</option>
+        <option value="اسیر و حومه">اسیر و حومه</option>
+        <option value="مُهر و وراوی">مُهر و وراوی</option>
+        <option value="لامرد">لامرد</option>
+        <option value="عسلویه، کنگان و جم">عسلویه، کنگان و جم</option>
+      </select>
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn-primary" style="flex:1;" onclick="submitSuggested118()">ثبت در دفترچه ۱۱۸</button>
+        <button class="btn btn-outline" onclick="closeModal('suggest118Modal')">انصراف</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: INVOICE IMAGE PREVIEW -->
+  <div class="modal-backdrop" id="invoiceImgModal">
+    <div class="modal-box">
+      <div class="card-title">
+        <span>🖼️ تصویر آماده فاکتور سفارش</span>
+        <button class="btn btn-outline btn-sm" onclick="closeModal('invoiceImgModal')">✕</button>
+      </div>
+      <img id="invoiceCanvasImg" style="width:100%; border-radius:12px; border:1px solid #cbd5e1; margin-bottom:12px;" alt="فاکتور مصالح" />
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        <button class="btn btn-primary" onclick="shareInvoiceImage()">📤 اشتراک / واتس‌اپ</button>
+        <a id="downloadInvoicePngLink" download="factor-masaleh.png" class="btn btn-outline">⬇️ ذخیره در گالری</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: SECRET ADMIN PANEL -->
+  <div class="modal-backdrop" id="adminModal">
+    <div class="modal-box">
+      <div class="card-title">
+        <span>🔐 پنل مدیریت کل همیار جنوب</span>
+        <button class="btn btn-outline btn-sm" onclick="closeModal('adminModal')">✕</button>
+      </div>
+
+      <div id="adminLoginSection">
+        <p style="font-size:0.81rem; color:#475569; margin-bottom:10px;">رمز مدیریت را وارد کنید:</p>
+        <input type="password" class="input" id="adminPassInput" placeholder="رمز مدیریت" onkeydown="if(event.key==='Enter')loginAdmin()" />
+        <div id="adminLockNotice" style="font-size:0.76rem; color:#dc2626; margin-bottom:8px; display:none;"></div>
+        <button class="btn btn-primary" style="width:100%;" onclick="loginAdmin()">ورود به پنل</button>
+      </div>
+
+      <div id="adminPanelContent" style="display:none;">
+        <div class="admin-subtabs">
+          <button class="admin-subtab active" onclick="switchAdminSubtab('adm-power', this)">⚡ برق و هوا</button>
+          <button class="admin-subtab" onclick="switchAdminSubtab('adm-mat', this)">🧱 مصالح</button>
+          <button class="admin-subtab" onclick="switchAdminSubtab('adm-divar', this)">📢 دیوار/۱۱۸</button>
+          <button class="admin-subtab" onclick="switchAdminSubtab('adm-cloud', this)">☁️ ابری/رمز</button>
+        </div>
+
+        <!-- Admin Subtab 1: Power & Weather -->
+        <div class="admin-pane" id="adm-power">
+          <div style="font-weight:900; font-size:0.88rem; margin-bottom:6px;">⚡ تنظیم سریع برنامه قطعی برق</div>
+          <select class="select" id="adminPowerMode" onchange="updateAdminPreview()">
+            <option value="4">برنامه ۴ گروهی (الف، ب، ج، د)</option>
+            <option value="5">برنامه ۵ گروهی (الف، ب، ج، د، ی)</option>
+          </select>
+          <textarea class="textarea" id="adminRawPowerText" rows="2" placeholder="متن اطلاعیه اداره برق را اینجا بچسبانید (مثال: گروه الف: ۹ تا ۱۱ | گروه ب: ۱۱ تا ۱۳ ...)"></textarea>
+          <div style="display:flex; gap:6px; margin-bottom:10px;">
+            <button class="btn btn-primary btn-sm" style="flex:1;" onclick="parseRawPowerText()">✨ تشخیص خودکار از متن</button>
+            <button class="btn btn-amber btn-sm" onclick="rotatePowerShifts()">🔄 چرخش شیفت فردا</button>
+          </div>
+          <div id="adminPowerInputs"></div>
+
+          <div style="background:#0f172a; color:#fff; border-radius:13px; padding:11px; margin:10px 0;">
+            <div style="font-size:0.72rem; color:#94a3b8; margin-bottom:5px;">👁️ پیش‌نمایش زنده در گوشی مردم:</div>
+            <select class="select" id="adminPreviewFeeder" onchange="updateAdminPreview()" style="margin-bottom:5px; font-size:0.76rem; padding:6px;"></select>
+            <div id="adminLivePreviewBox" style="font-size:0.82rem; font-weight:800; color:#fde68a;"></div>
+          </div>
+
+          <div style="font-weight:900; font-size:0.88rem; margin:10px 0 5px;">🎙️ نظر کارشناس بومی هواشناسی</div>
+          <textarea class="textarea" id="adminExpertInput" rows="3"></textarea>
+          <button class="btn btn-primary" style="width:100%;" onclick="saveAdminPowerWeather()">💾 ذخیره و انتشار آنلاین برق و هوا</button>
+        </div>
+
+        <!-- Admin Subtab 2: Materials -->
+        <div class="admin-pane" id="adm-mat" style="display:none;">
+          <div style="font-weight:900; font-size:0.88rem; margin-bottom:6px;">📞 شماره دریافت سفارش مصالح (واتس‌اپ / پیامک)</div>
+          <input type="text" class="input" id="adminMatPhone" placeholder="+989923213245" />
+
+          <div style="font-weight:900; font-size:0.88rem; margin:8px 0 6px;">🚚 کرایه حمل مناطق (تومان)</div>
+          <div id="adminDeliveryFeesBox"></div>
+
+          <div style="font-weight:900; font-size:0.88rem; margin:8px 0 6px;">📦 موجودی، قیمت و بارگیری مصالح</div>
+          <div id="adminMaterialsEditor"></div>
+
+          <div style="background:#f8fafc; border:1px dashed #94a3b8; border-radius:12px; padding:10px; margin:10px 0;">
+            <div style="font-size:0.78rem; font-weight:800; margin-bottom:6px;">➕ افزودن کالای ساختمانی جدید</div>
+            <input type="text" class="input" id="newMatName" placeholder="نام کالا (مثلاً: ماسه شسته خاوری)" />
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+              <input type="text" class="input" id="newMatUnit" placeholder="واحد (کیسه، عدد، سرویس)" />
+              <input type="number" class="input" id="newMatStock" placeholder="موجودی انبار" />
+              <input type="number" class="input" id="newMatPrice" placeholder="قیمت واحد (تومان)" />
+              <input type="number" class="input" id="newMatHandling" placeholder="بارگیری هر واحد" />
+            </div>
+            <button class="btn btn-outline btn-sm" style="width:100%;" onclick="adminAddMaterial()">افزودن به لیست</button>
+          </div>
+
+          <button class="btn btn-primary" style="width:100%;" onclick="saveAdminMaterials()">💾 ذخیره و انتشار آنلاین مصالح</button>
+        </div>
+
+        <!-- Admin Subtab 3: Divar & 118 -->
+        <div class="admin-pane" id="adm-divar" style="display:none;">
+          <div style="font-weight:900; font-size:0.86rem; margin-bottom:6px;">🗑️ مدیریت آگهی‌های دیوار محلی</div>
+          <div id="adminAdsList" style="margin-bottom:14px;"></div>
+
+          <div style="font-weight:900; font-size:0.86rem; margin-bottom:6px;">📞 مدیریت شماره‌های اضافه‌شده به ۱۱۸</div>
+          <div id="adminExtra118List"></div>
+        </div>
+
+        <!-- Admin Subtab 4: Cloud & Password -->
+        <div class="admin-pane" id="adm-cloud" style="display:none;">
+          <div style="font-weight:900; font-size:0.88rem; margin-bottom:6px;">☁️ اتصال آنلاین ابری (Firebase Realtime Database)</div>
+          <p style="font-size:0.76rem; color:#475569; margin-bottom:8px;">
+            برای انتشار همگانی روی گیت‌هاب، آدرس دیتابیس را در فایل <code>firebase-config.js</code> قرار دهید. همچنین می‌توانید همین‌جا برای تست روی این گوشی وارد کنید:
+          </p>
+          <input type="url" class="input" id="adminFirebaseUrlInput" dir="ltr" placeholder="https://your-project-default-rtdb.firebaseio.com" />
+          <button class="btn btn-blue btn-sm" style="width:100%; margin-bottom:14px;" onclick="saveFirebaseUrlFromAdmin()">اتصال و همگام‌سازی زنده</button>
+
+          <div style="font-weight:900; font-size:0.88rem; margin-bottom:6px;">🔑 تغییر رمز پنل مدیریت</div>
+          <input type="password" class="input" id="adminNewPassInput" placeholder="رمز جدید (حداقل ۶ کاراکتر)" />
+          <button class="btn btn-amber btn-sm" style="width:100%;" onclick="changeAdminPassword()">تغییر رمز مدیریت</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional external config & 118 data files (work gracefully even if absent) -->
+  <script src="./firebase-config.js"></script>
+  <script src="./contacts-118.js"></script>
+
+  <script>
+    // ================== UTILITIES ==================
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function normalizeFa(str) {
+      return String(str || '')
+        .replace(/ي/g, 'ی')
+        .replace(/ك/g, 'ک')
+        .replace(/[۰-۹]/g, d => String.fromCharCode(d.charCodeAt(0) - 1728))
+        .replace(/[٠-٩]/g, d => String.fromCharCode(d.charCodeAt(0) - 1584))
+        .toLowerCase()
+        .trim();
+    }
+
+    function formatToman(num) {
+      return Number(num || 0).toLocaleString('fa-IR');
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById('toastMsg');
+      el.textContent = msg;
+      el.style.display = 'block';
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => { el.style.display = 'none'; }, 2800);
+    }
+
+    // Algorithmic Gregorian-to-Jalali fallback (guarantees clean Persian date on EVERY device)
+    function gregorianToJalali(gy, gm, gd) {
+      const g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+      let jy = gy <= 1600 ? 0 : 979;
+      gy -= gy <= 1600 ? 621 : 1600;
+      const gy2 = gm > 2 ? gy + 1 : gy;
+      let days = 365 * gy + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) +
+                 Math.floor((gy2 + 399) / 400) - 80 + gd + g_d_m[gm - 1];
+      jy += 33 * Math.floor(days / 12053);
+      days %= 12053;
+      jy += 4 * Math.floor(days / 1461);
+      days %= 1461;
+      if (days > 365) {
+        jy += Math.floor((days - 1) / 365);
+        days = (days - 1) % 365;
+      }
+      const jm = days < 186 ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30);
+      const jd = 1 + (days < 186 ? days % 31 : (days - 186) % 30);
+      return { jy, jm, jd };
+    }
+
+    function getCleanJalaliDate(dateObj = new Date()) {
+      const weekdays = ['یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه', 'شنبه'];
+      const months = ['', 'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+      const { jy, jm, jd } = gregorianToJalali(
+        dateObj.getFullYear(),
+        dateObj.getMonth() + 1,
+        dateObj.getDate()
+      );
+      const wd = weekdays[dateObj.getDay()];
+      const toFaNum = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+      return {
+        weekday: wd,
+        day: jd,
+        month: jm,
+        monthName: months[jm],
+        year: jy,
+        formatted: `${wd}، ${toFaNum(jd)} ${months[jm]} ${toFaNum(jy)}`
+      };
+    }
+
+    // ================== STATIC DATA ==================
+    const REGIONS = {
+      mohr_galledar_asir: { id: 'mohr_galledar_asir', name: 'شهرستان مُهر، گله‌دار و اسیر', shortName: 'مُهر، گله‌دار و اسیر', lat: 27.656, lon: 52.668, powerSupported: true },
+      jam: { id: 'jam', name: 'شهرستان جم', shortName: 'جم', lat: 27.827, lon: 52.326, powerSupported: false },
+      lamerd: { id: 'lamerd', name: 'شهرستان لامرد', shortName: 'لامرد', lat: 27.333, lon: 53.178, powerSupported: false },
+      asaluyeh: { id: 'asaluyeh', name: 'شهرستان عسلویه', shortName: 'عسلویه', lat: 27.476, lon: 52.607, powerSupported: false }
+    };
+
+    const FEEDERS_DATA = [
+      { id: 'f1', title: 'ارودان علیا، شول و قلعه محمدعلی', group4: 'A', group5: 'A', details: 'ارودان علیا، شول، قلعه محمدعلی، چاه آب تنگ شول، مرغداری عبداللهی' },
+      { id: 'f2', title: 'بخشی از شهر مُهر، فاریاب و شهرک صنعتی', group4: 'A', group5: 'A', details: 'قسمتی از شهر مُهر (بلوار امام علی، فلکه شهرداری، خیابان انقلاب، نانوایی همدانی)، فاریاب، شهرک صنعتی' },
+      { id: 'f3', title: 'شهرک دارالصفای فال، خواجه مراد و حاجی‌آباد', group4: 'A', group5: 'A', details: 'شهرک دارالصفای فال، روستای خواجه مراد و حاجی‌آباد، روستای چاه محمد حاجی، سنگ‌شکن شمس، پمپاژ شجاعی، چاه آهکی فال، پمپ بنزین احمدی' },
+      { id: 'f4', title: 'گله‌دار (خیابان بسیج، معلم، بلوار کوثر و پارسیان)', group4: 'A', group5: 'A', details: 'خیابان بسیج تا ابتدای هورمه، خیابان معلم تا سپاه گله‌دار، بلوار کوثر، بلوار پارسیان' },
+      { id: 'f5', title: 'شهر خوزی و پمپ بنزین خوزی', group4: 'B', group5: 'B', details: 'شهر خوزی، پمپ بنزین خوزی' },
+      { id: 'f6', title: 'قسمتی از شهر وراوی (مصلی به سمت شرق) و نورآباد', group4: 'B', group5: 'Y', details: 'قسمتی از شهر وراوی (مصلی نماز جمعه به سمت شرق)، نورآباد، چاه گزی، تل ملو، گودرزی' },
+      { id: 'f7', title: 'چاه سرگاهی، غلام‌آباد و زیغان', group4: 'B', group5: 'Y', details: 'چاه سرگاهی، غلام‌آباد، زیغان، چاه خالوها' },
+      { id: 'f8', title: 'اسیر (اداره برق تا شهرداری)، شهرک فرهنگیان و مسکن مهر', group4: 'B', group5: 'B', details: 'حد فاصل اداره برق تا شهرداری، چاه‌های آهکی گله‌دار، شهرک فرهنگیان، مسکن مهر، محله افسری، درمانگاه قمر بنی هاشم، بلوار منتقل' },
+      { id: 'f9', title: 'بیمارستان گله‌دار و دهنو', group4: 'B', group5: 'B', details: 'بیمارستان گله‌دار، دهنو، ده بالا دهنو' },
+      { id: 'f10', title: 'دهنو (خیابان فضیلت و مکتب دینی)', group4: 'B', group5: 'D', details: 'دهنو (خیابان فضیلت، مکتب دینی، مرغداری احمدی و غنی)' },
+      { id: 'f11', title: 'چاهو، قلعه سید، بردکویه و نخلستان مُهر', group4: 'C', group5: 'C', details: 'چاهو، قلعه سید، بردکویه، نخلستان مُهر، پایه ریزی قاسمی، مرغداری حسن‌پور، مرغداری زارعی، قسمتی از شهر مُهر (شهرک گلستان و حد فاصل نیروی انتظامی تا مخابرات و ورودی غربی خیابان نماز تا چهارراه اصلی)' },
+      { id: 'f12', title: 'شهر وراوی (بانک ملت به سمت غرب) و قسمتی از خوزی', group4: 'C', group5: 'C', details: 'شهر وراوی (از بانک ملت به سمت غرب)، قسمتی از شهر خوزی (حسینیه چهارده معصوم و انتهای خیابان امام علی)' },
+      { id: 'f13', title: 'شهر فال و خواجه مراد', group4: 'C', group5: 'D', details: 'شهر فال، مسیر خواجه مراد' },
+      { id: 'f14', title: 'شهرک امام، سرگاه قدیم و میدان سرداران گله‌دار', group4: 'C', group5: 'C', details: 'شهرک امام، سرگاه قدیم، چاه‌های کشاورزی پایین چاه بیدو و سرگاه، مجتمع معزی گله‌دار، پشت میدان سرداران گله‌دار، بلوک‌زنی مقدم گله‌دار' },
+      { id: 'f15', title: 'هورمه، کارون، چاه کبکان و چاه دروا', group4: 'C', group5: 'C', details: 'هورمه، کارون، چاه دروا، چاه کبکان، نوآباد' },
+      { id: 'f16', title: 'مُهر (فلکه بیمارستان تا شهرک سید حبیب و میدان معلم)', group4: 'D', group5: 'D', details: 'قسمتی از شهر مُهر حد فاصل فلکه بیمارستان تا شهرک سید حبیب و حد فاصل فلکه بیمارستان تا میدان معلم شامل خ امام رضا و خ پارسیان و خ مروارید' },
+      { id: 'f17', title: 'مُهر (بلوار فرهنگ، نارنجستان)، حاجی‌آباد و صادره', group4: 'D', group5: 'D', details: 'قسمتی از شهر مُهر (بلوار فرهنگ، فلکه معلم به سمت خیابان نارنجستان، میدان فاطمیه به سمت پمپ بنزین، محله‌های قسمت دادگستری قدیم)، حاجی‌آباد، صادره، تنگ مُهر' },
+      { id: 'f18', title: 'بهرستان، هرج، مزیجان و جنوب شهر اسیر', group4: 'D', group5: 'B', details: 'قسمتی از شهر اسیر (محله جنوب، قسمتی از کوی شهدا، محله پایین کوه، چاه خامه، شهدای گمنام)، بهرستان، مزیجان، چاه شورک، باغ چاله، هرج، ۲ ترانس از شهر گله‌دار (مدرسه سید شریف، مجتمع واحدی)' },
+      { id: 'f19', title: 'نرمان، خالده، چاه شرف و میرملکی', group4: 'D', group5: 'D', details: 'نرمان، چاه شرف، تل ملایی، خالده، میرملکی، چاه‌های گاز خالده و نرمان، ۳ ترانس شهر وراوی، پارد تعمیراتی، گاوداری نکویی، نخلستان نرمان' },
+      { id: 'f20', title: 'شمال اسیر (شهرک صنعتی)، قدمان، چاه بیدو و شلدان', group4: 'D', group5: 'D', details: 'قسمتی از شهر اسیر (شهرک صنعتی، کوی شهدا، محله شمال، آزادگان)، قدمان، چاه بیدو، شلدان، ارودان اسیر' },
+      { id: 'f21', title: 'باقرآباد، محله امام حسن، گلزار شهدا و بلوار امام خمینی', group4: 'D', group5: 'Y', details: 'باقرآباد، محله امام حسن، حوالی گلزار شهدا، خیابان جانبازان، محله سلمان فارسی، بلوار امام خمینی تا میدان امام، خیابان مسجد جامع و مسجد علی، خیابان انتظام، پمپ بنزین اسدی' },
+      { id: 'f22', title: 'دارالمیزان، گنبدو، چاه پهن، سمنگان و جنتی', group4: 'A', group5: 'Y', details: 'دارالمیزان، گاو چاه، روستای ناچار، احمدآباد، چک چک، آزادخانی، گنبدو، کتویه، میو، جوینو، چاه پهن، پاگل، سمنگان، جنتی، پلگره، شرکت جهاد نصر' }
+    ];
+
+    const GROUP_LABELS = {
+      A: { name: 'گروه الف', cls: 'grp-A' },
+      B: { name: 'گروه ب', cls: 'grp-B' },
+      C: { name: 'گروه ج', cls: 'grp-C' },
+      D: { name: 'گروه د', cls: 'grp-D' },
+      Y: { name: 'گروه ی', cls: 'grp-Y' }
+    };
+
+    const CROPS_DATA = [
+      { id: 'wheat', name: 'گندم (آبی و دیم)', icon: '🌾', plantMonths: [8, 9, 10], activeMonths: [8, 9, 10, 11, 12, 1], tempIdeal: '۱۲ تا ۲۴ درجه سانتی‌گراد', tips: 'بهترین زمان کشت در گله‌دار، اسیر، مُهر و جم از نیمه آبان تا پایان آذر است. در صورت بارندگی پاییزه، زمان مناسبی برای کود سرک اوره و کنترل علف‌های هرز است.' },
+      { id: 'tomato', name: 'گوجه‌فرنگی خارج از فصل', icon: '🍅', plantMonths: [6, 7, 8, 9], activeMonths: [7, 8, 9, 10, 11, 12, 1], tempIdeal: '۱۸ تا ۲۸ درجه سانتی‌گراد', tips: 'مناطق اسیر، مشکاویز، گله‌دار، جم و لامرد قطب گوجه پاییزه و زمستانه هستند. به افت دمای شبانه زیر ۶ درجه حساس است و پیش از بارندگی باید قارچ‌کش پاشیده شود.' },
+      { id: 'leafy_veg', name: 'سبزیجات برگی (شوید، گشنیز، تره، جعفری)', icon: '🥬', plantMonths: [7, 8, 9, 10, 11], activeMonths: [7, 8, 9, 10, 11, 12, 1, 2], tempIdeal: '۱۴ تا ۲۵ درجه سانتی‌گراد', tips: 'کشت سبزیجات در تمام پاییز و زمستان جنوب بازدهی عالی دارد. آبیاری منظم و سبک باعث ترد ماندن برگ‌ها می‌شود.' },
+      { id: 'summer_veg', name: 'صیفی‌جات (بادمجان، فلفل، خیار، کدو)', icon: '🍆', plantMonths: [7, 8, 11, 12, 1], activeMonths: [8, 9, 10, 11, 12, 1, 2, 3], tempIdeal: '۲۰ تا ۳۰ درجه سانتی‌گراد', tips: 'در کشت‌های پاییزه و زیرپلاستیکی، تهویه تونل‌های پلاستیکی در روزهای آفتابی برای جلوگیری از ریزش گل ضروری است.' },
+      { id: 'watermelon', name: 'هندوانه (زمستانه و بهاره)', icon: '🍉', plantMonths: [10, 11, 12, 1], activeMonths: [10, 11, 12, 1, 2, 3, 4], tempIdeal: '۲۲ تا ۳۲ درجه سانتی‌گراد', tips: 'کشت زیرپلاستیکی هندوانه در دی و بهمن انجام می‌شود. در زمان گل‌دهی و گرده‌افشانی از سم‌پاشی در ساعات فعالیت زنبورها پرهیز کنید.' },
+      { id: 'melon', name: 'ملون و طالبی', icon: '🍈', plantMonths: [11, 12, 1], activeMonths: [11, 12, 1, 2, 3, 4], tempIdeal: '۲۲ تا ۳۲ درجه سانتی‌گراد', tips: 'از نیمه بهمن تا اسفند زمان طلایی کاشت ملون در منطقه است. خاک سبک با آبیاری قطره‌ای بهترین شیرینی و تناژ را می‌دهد.' },
+      { id: 'corn', name: 'ذرت دانه‌ای و علوفه‌ای', icon: '🌽', plantMonths: [12, 1, 4, 5], activeMonths: [1, 2, 3, 5, 6, 7], tempIdeal: '۲۴ تا ۳۴ درجه سانتی‌گراد', tips: 'در دو فصل بهاره (اسفند و فروردین) و تابستانه (مرداد) کشت می‌شود. در مرحله گل‌دهی به تنش آبی بسیار حساس است.' },
+      { id: 'sesame', name: 'کنجد', icon: '🌱', plantMonths: [3, 4, 5], activeMonths: [3, 4, 5, 6, 7, 8], tempIdeal: '۲۶ تا ۳۸ درجه سانتی‌گراد', tips: 'بسیار مقاوم به گرمای تابستان جنوب. در ابتدای کاشت به آبیاری سبک برای سبز شدن یکنواخت نیاز دارد و پس از استقرار کم‌آب‌بر است.' }
+    ];
+
+    const DEFAULT_POWER_SCHEDULE = {
+      mode: '4',
+      times: {
+        A: '۰۹:۰۰ تا ۱۱:۰۰ و ۱۷:۰۰ تا ۱۹:۰۰',
+        B: '۱۱:۰۰ تا ۱۳:۰۰ و ۱۹:۰۰ تا ۲۱:۰۰',
+        C: '۱۳:۰۰ تا ۱۵:۰۰',
+        D: '۱۵:۰۰ تا ۱۷:۰۰',
+        Y: '۰۷:۰۰ تا ۰۹:۰۰'
+      }
+    };
+
+    const DEFAULT_EXPERT_NOTE = 'با توجه به نقشه‌های جوی منطقه، طی روزهای آینده جوی نسبتاً پایدار در محور گله‌دار، اسیر، مُهر، جم و لامرد حاکم است. کشاورزان عزیز ساعات صبح که سرعت باد پایین است بهترین زمان برای محلول‌پاشی و تغذیه برگ را دارند.';
+
+    const DEFAULT_MATERIALS_CONFIG = {
+      orderPhone: '+989923213245',
+      deliveryFees: [
+        { id: 'pickup', label: 'تحویل حضوری از انبار', fee: 0 },
+        { id: 'asir', label: 'ارسال به اسیر', fee: 300000 },
+        { id: 'galledar', label: 'ارسال به گله‌دار', fee: 500000 },
+        { id: 'shahrak', label: 'ارسال به شهرک امام', fee: 500000 },
+        { id: 'fal', label: 'ارسال به فال و حاجی‌آباد', fee: 500000 },
+        { id: 'other', label: 'سایر روستاهای اطراف (توافقی پایه)', fee: 550000 }
+      ],
+      items: [
+        { id: 'm1', name: 'سیمان سیاه تیپ ۲ (۵۰ کیلویی)', unit: 'کیسه', price: 250000, handling: 20000, stock: 350 },
+        { id: 'm2', name: 'سیمان سفید ممتاز', unit: 'کیسه', price: 340000, handling: 20000, stock: 120 },
+        { id: 'm3', name: 'گچ ساختمانی زیرکار و سفیدکاری', unit: 'کیسه', price: 145000, handling: 15000, stock: 240 },
+        { id: 'm4', name: 'بلوک سیمانی دیواری استاندارد', unit: 'عدد', price: 18500, handling: 2500, stock: 1500 },
+        { id: 'm5', name: 'آجر فشاری / سفال دیواری', unit: 'عدد', price: 6500, handling: 1000, stock: 4000 },
+        { id: 'm6', name: 'ماسه شسته ساختمانی (وانتی)', unit: 'سرویس', price: 950000, handling: 0, stock: 40 }
+      ]
+    };
+
+    const BUILTIN_ESSENTIAL_118 = [
+      { n: 'اورژانس و فوریت‌های پزشکی', p: '115', c: 'پزشکی و درمان', r: 'گله‌دار و حومه' },
+      { n: 'آتش‌نشانی و خدمات ایمنی', p: '125', c: 'اداری، بانکی و حقوقی', r: 'گله‌دار و حومه' },
+      { n: 'پلیس ۱۱۰', p: '110', c: 'اداری، بانکی و حقوقی', r: 'گله‌دار و حومه' },
+      { n: 'اتفاقات برق (سراسری)', p: '121', c: 'تاسیسات و تعمیرات منزل', r: 'گله‌دار و حومه' },
+      { n: 'اتفاقات آب و فاضلاب', p: '122', c: 'تاسیسات و تعمیرات منزل', r: 'گله‌دار و حومه' },
+      { n: 'امداد گاز', p: '194', c: 'تاسیسات و تعمیرات منزل', r: 'گله‌دار و حومه' }
+    ];
+
+    const SAMPLE_ADS = [
+      { id: 'ad1', region: 'mohr_galledar_asir', category: 'کشاورزی و دام', title: 'لوله آبیاری قطره‌ای و نوار تیپ نو و کارکرده', price: 'توافقی', phone: '09170001122', description: 'مناسب کشت گوجه و هندوانه، تحویل در محور اسیر و شهرک امام.', image: '', createdAt: 'نمونه', isUserOwned: false },
+      { id: 'ad2', region: 'jam', category: 'املاک و زمین', title: 'اجاره باغ لیمو و نخلستان در جم', price: 'رهن و اجاره توافقی', phone: '09170005566', description: 'دارای سهمیه آب چاه و برق کشاورزی، دسترسی آسفالته.', image: '', createdAt: 'نمونه', isUserOwned: false },
+      { id: 'ad3', region: 'lamerd', category: 'خودرو و موتور', title: 'وانت نیسان دوگانه‌سوز تمیز و آماده کار', price: '۵۴۰,۰۰۰,۰۰۰ تومان', phone: '09170007788', description: 'موتور سالم، بیمه کامل، آماده کار در منطقه.', image: '', createdAt: 'نمونه', isUserOwned: false },
+      { id: 'ad4', region: 'asaluyeh', category: 'خدمات و استادکار', title: 'سرویس و تعمیر تخصصی کولر گازی و اسپلیت', price: 'اجرت منصفانه', phone: '09170009900', description: 'شارژ گاز و سرویس کامل در عسلویه، نخل تقی و شیرینو.', image: '', createdAt: 'نمونه', isUserOwned: false }
+    ];
+
+    // ================== APP STATE ==================
+    let currentRegion = localStorage.getItem('hj_region') || 'mohr_galledar_asir';
+    let selectedFeederId = localStorage.getItem('hj_feeder_id') || '';
+    let powerSchedule = JSON.parse(localStorage.getItem('hj_power_schedule') || 'null') || JSON.parse(JSON.stringify(DEFAULT_POWER_SCHEDULE));
+    let expertNote = localStorage.getItem('hj_expert_note') || DEFAULT_EXPERT_NOTE;
+    let materialsConfig = JSON.parse(localStorage.getItem('hj_materials_cfg') || 'null') || JSON.parse(JSON.stringify(DEFAULT_MATERIALS_CONFIG));
+    let localAds = JSON.parse(localStorage.getItem('hj_ads') || 'null') || SAMPLE_ADS;
+    let extra118Contacts = JSON.parse(localStorage.getItem('hj_extra_118') || '[]');
+    let adminPassword = localStorage.getItem('hj_admin_pass') || '1234';
+    let firebaseUrl = (window.HAMYAR_FIREBASE && window.HAMYAR_FIREBASE.DATABASE_URL) || localStorage.getItem('hj_firebase_url') || '';
+
+    let materialCart = {};
+    let weatherDataCache = {};
+    let weatherThemeOverride = 'auto';
+    let uploadedAdBase64 = '';
+    let dirPageSize = 40;
+    let dirVisibleCount = 40;
+    let secretTapCount = 0;
+    let secretTapTimer = null;
+    let adminFailedAttempts = 0;
+    let adminLockUntil = 0;
+    let lastInvoiceBlob = null;
+
+    // ================== FIREBASE REALTIME REST SYNC ==================
+    function getFirebaseBaseUrl() {
+      return (firebaseUrl || '').trim().replace(/\/+$/, '');
+    }
+
+    async function fbRequest(path, method = 'GET', bodyObj = null) {
+      const base = getFirebaseBaseUrl();
+      if (!base) return null;
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5500);
+      try {
+        const opts = {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          signal: controller.signal
+        };
+        if (bodyObj !== null) opts.body = JSON.stringify(bodyObj);
+        const res = await fetch(`${base}/hamyar_jonoob/${path}.json`, opts);
+        clearTimeout(timeout);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return await res.json();
+      } catch (e) {
+        clearTimeout(timeout);
+        return null;
+      }
+    }
+
+    async function syncFromCloud(manual = false) {
+      const badge = document.getElementById('cloudSyncBadge');
+      if (!getFirebaseBaseUrl()) {
+        badge.textContent = '📱 حافظه دستگاه';
+        badge.classList.remove('online');
+        if (manual) showToast('دیتابیس ابری هنوز تنظیم نشده است (از پنل مدیریت یا firebase-config.js تنظیم کنید).');
+        return;
+      }
+
+      badge.textContent = '🔄 در حال همگام‌سازی...';
+      const cloud = await fbRequest('', 'GET');
+      if (cloud && typeof cloud === 'object') {
+        if (cloud.powerSchedule) {
+          powerSchedule = cloud.powerSchedule;
+          localStorage.setItem('hj_power_schedule', JSON.stringify(powerSchedule));
+        }
+        if (typeof cloud.expertNote === 'string' && cloud.expertNote.trim()) {
+          expertNote = cloud.expertNote;
+          localStorage.setItem('hj_expert_note', expertNote);
+        }
+        if (cloud.materialsConfig && Array.isArray(cloud.materialsConfig.items)) {
+          materialsConfig = cloud.materialsConfig;
+          localStorage.setItem('hj_materials_cfg', JSON.stringify(materialsConfig));
+        }
+        if (cloud.ads && typeof cloud.ads === 'object') {
+          localAds = Object.values(cloud.ads).sort((a, b) => (b.ts || 0) - (a.ts || 0));
+          localStorage.setItem('hj_ads', JSON.stringify(localAds));
+        }
+        if (cloud.extra118 && typeof cloud.extra118 === 'object') {
+          extra118Contacts = Object.values(cloud.extra118);
+          localStorage.setItem('hj_extra_118', JSON.stringify(extra118Contacts));
+        }
+        if (cloud.adminPassword) {
+          adminPassword = cloud.adminPassword;
+          localStorage.setItem('hj_admin_pass', adminPassword);
+        }
+
+        badge.textContent = '🟢 آنلاین و زنده';
+        badge.classList.add('online');
+        document.getElementById('expertNoteText').textContent = expertNote;
+        renderPowerSection();
+        renderDirectory();
+        renderAdsList();
+        renderMaterialsTab();
+        if (manual) showToast('اطلاعات با موفقیت از سرور ابری به‌روزرسانی شد.');
+      } else {
+        badge.textContent = '🟠 آفلاین (کش محلی)';
+        badge.classList.remove('online');
+        if (manual) showToast('اتصال به سرور برقرار نشد؛ نمایش آخرین اطلاعات ذخیره‌شده.');
+      }
+    }
+
+    // ================== INIT ==================
+    document.addEventListener('DOMContentLoaded', () => {
+      // Fixed, clean Persian Date
+      const jDate = getCleanJalaliDate(new Date());
+      document.getElementById('todayJalaliBadge').textContent = jDate.formatted;
+
+      // Register Service Worker for PWA/Offline
+      if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      }
+
+      document.querySelectorAll('.region-pill').forEach(btn => {
+        btn.addEventListener('click', () => selectRegion(btn.dataset.region));
+      });
+
+      // Secret Admin Panel Trigger (5 rapid taps or #admin)
+      document.getElementById('secretAdminTrigger').addEventListener('click', () => {
+        secretTapCount++;
+        clearTimeout(secretTapTimer);
+        secretTapTimer = setTimeout(() => { secretTapCount = 0; }, 1800);
+        if (secretTapCount >= 5) {
+          secretTapCount = 0;
+          openAdminModal();
+        }
+      });
+      if (window.location.hash === '#admin') openAdminModal();
+
+      document.getElementById('expertNoteText').textContent = expertNote;
+      selectRegion(currentRegion);
+      renderCropsList();
+      renderDirectory();
+      renderAdsList();
+      renderMaterialsTab();
+      syncFromCloud(false);
+    });
+
+    function switchTab(tabId, btnEl) {
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function selectRegion(regionKey) {
+      if (!REGIONS[regionKey]) regionKey = 'mohr_galledar_asir';
+      currentRegion = regionKey;
+      localStorage.setItem('hj_region', regionKey);
+
+      const reg = REGIONS[regionKey];
+      document.getElementById('headerRegionSubtitle').textContent = reg.name;
+      document.getElementById('weatherCityTitle').textContent = reg.name;
+      document.getElementById('newAdRegion').value = regionKey;
+
+      document.querySelectorAll('.region-pill').forEach(pill => {
+        pill.classList.toggle('active', pill.dataset.region === regionKey);
+      });
+
+      if (reg.powerSupported) {
+        document.getElementById('powerSupportedView').style.display = 'block';
+        document.getElementById('powerUnsupportedView').style.display = 'none';
+        renderPowerSection();
+      } else {
+        document.getElementById('powerSupportedView').style.display = 'none';
+        document.getElementById('powerUnsupportedView').style.display = 'block';
+        document.getElementById('unsupportedRegionTitle').textContent = `برنامه قطعی برق ${reg.name} به‌زودی فعال می‌شود`;
+      }
+
+      loadWeatherForRegion(regionKey);
+      renderAdsList();
+    }
+
+    // ================== WEATHER & AGRICULTURE ==================
+    async function loadWeatherForRegion(regionKey) {
+      const reg = REGIONS[regionKey];
+      if (weatherDataCache[regionKey]) {
+        renderWeatherUI(weatherDataCache[regionKey]);
+        return;
+      }
+      document.getElementById('weatherConditionText').textContent = 'در حال دریافت اطلاعات زنده هوا...';
+      try {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${reg.lat}&longitude=${reg.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&hourly=temperature_2m,precipitation_probability,wind_speed_10m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,uv_index_max&timezone=Asia%2FTehran&forecast_days=14`;
+        const res = await fetch(url);
+        const data = await res.json();
+        weatherDataCache[regionKey] = data;
+        renderWeatherUI(data);
+      } catch (e) {
+        renderWeatherUI(buildFallbackWeather());
+      }
+    }
+
+    function buildFallbackWeather() {
+      const today = new Date();
+      const days = [], maxT = [], minT = [], rainP = [], codes = [], uvs = [];
+      for (let i = 0; i < 14; i++) {
+        const d = new Date(today.getTime() + i * 86400000);
+        days.push(d.toISOString().slice(0, 10));
+        maxT.push(25 + (i % 4));
+        minT.push(13 + (i % 3));
+        rainP.push(i === 7 ? 60 : 8);
+        codes.push(i === 7 ? 61 : (i % 3 === 0 ? 2 : 0));
+        uvs.push(6);
+      }
+      const hTimes = [], hTemp = [], hRain = [], hWind = [], hCode = [];
+      for (let h = 0; h < 24; h++) {
+        hTimes.push(`2026-11-24T${String(h).padStart(2, '0')}:00`);
+        hTemp.push(17 + Math.round(Math.sin((h - 6) / 24 * Math.PI * 2) * 7));
+        hRain.push(5);
+        hWind.push(h >= 12 && h <= 17 ? 15 : 7);
+        hCode.push(0);
+      }
+      return {
+        current: { temperature_2m: 24, apparent_temperature: 23, relative_humidity_2m: 44, wind_speed_10m: 9, weather_code: 0 },
+        hourly: { time: hTimes, temperature_2m: hTemp, precipitation_probability: hRain, wind_speed_10m: hWind, weather_code: hCode },
+        daily: { time: days, temperature_2m_max: maxT, temperature_2m_min: minT, precipitation_probability_max: rainP, weather_code: codes, uv_index_max: uvs }
+      };
+    }
+
+    function interpretWmoCode(code) {
+      if ([51, 53, 55, 61, 63, 65, 80, 81, 82, 95, 96, 99].includes(code)) return { text: 'بارانی و ناپایدار', icon: '🌧️', theme: 'rainy' };
+      if ([2, 3, 45, 48].includes(code)) return { text: 'نیمه‌ابری تا ابری', icon: '⛅', theme: 'cloudy' };
+      return { text: 'صاف و آفتابی', icon: '☀️', theme: 'sunny' };
+    }
+
+    function setWeatherThemeOverride(mode) {
+      weatherThemeOverride = mode;
+      renderWeatherUI(weatherDataCache[currentRegion] || buildFallbackWeather());
+    }
+
+    function renderWeatherUI(data) {
+      const cur = data.current;
+      const wInfo = interpretWmoCode(cur.weather_code);
+      const activeTheme = weatherThemeOverride === 'auto' ? wInfo.theme : weatherThemeOverride;
+
+      const hero = document.getElementById('weatherHeroCard');
+      hero.className = `weather-hero theme-${activeTheme}`;
+
+      document.getElementById('weatherCurrentTemp').textContent = `${Math.round(cur.temperature_2m)}°`;
+      document.getElementById('weatherFeelsLike').textContent = `دمای حسی (Feels Like): ${Math.round(cur.apparent_temperature)}°`;
+      document.getElementById('weatherConditionText').textContent =
+        weatherThemeOverride === 'auto' ? wInfo.text :
+        (activeTheme === 'rainy' ? 'پیش‌نمایش حالت بارانی' : activeTheme === 'cloudy' ? 'پیش‌نمایش حالت ابری' : 'پیش‌نمایش حالت آفتابی');
+      document.getElementById('weatherBigIcon').textContent =
+        activeTheme === 'rainy' ? '🌧️' : activeTheme === 'cloudy' ? '⛅' : '☀️';
+
+      document.getElementById('metricHumidity').textContent = `${cur.relative_humidity_2m}%`;
+      document.getElementById('metricWind').textContent = `${Math.round(cur.wind_speed_10m)} km/h`;
+      document.getElementById('metricUv').textContent = data.daily?.uv_index_max?.[0] ?? 5;
+
+      const probs = data.daily.precipitation_probability_max || [];
+      const rainDayIdx = probs.findIndex(p => p >= 40);
+      const rainTextEl = document.getElementById('nextRainText');
+      if (rainDayIdx === 0) rainTextEl.textContent = `امروز (احتمال ${probs[0]}٪)`;
+      else if (rainDayIdx > 0) rainTextEl.textContent = `${rainDayIdx} روز دیگر (احتمال ${probs[rainDayIdx]}٪)`;
+      else rainTextEl.textContent = 'تا ۱۴ روز آینده بارش مؤثری پیش‌بینی نمی‌شود';
+
+      // Alerts
+      let alertsHtml = '';
+      if (rainDayIdx >= 0 && rainDayIdx <= 3) {
+        alertsHtml += `<div class="alert-banner alert-rain"><span>⚠️</span><div>هشدار بارندگی کشاورزی: احتمال بارش در ${rainDayIdx === 0 ? 'امروز' : rainDayIdx + ' روز آینده'} (${probs[rainDayIdx]}٪). سم‌پاشی و برداشت محصولات حساس به رطوبت را مدیریت کنید.</div></div>`;
+      }
+      const minTemps = data.daily.temperature_2m_min || [];
+      const coldIdx = minTemps.slice(0, 5).findIndex(t => t <= 7);
+      if (coldIdx >= 0) {
+        alertsHtml += `<div class="alert-banner alert-cold"><span>❄️</span><div>هشدار افت دمای شبانه: کاهش دما تا ${Math.round(minTemps[coldIdx])} درجه در ${coldIdx === 0 ? 'امشب' : coldIdx + ' شب آینده'}. پوشش نشای گوجه و صیفی‌جات را بررسی کنید.</div></div>`;
+      }
+      const maxTemps = data.daily.temperature_2m_max || [];
+      const heatIdx = maxTemps.slice(0, 3).findIndex(t => t >= 42);
+      if (heatIdx >= 0) {
+        alertsHtml += `<div class="alert-banner alert-heat"><span>🔥</span><div>هشدار گرمای شدید: دمای بالای ${Math.round(maxTemps[heatIdx])} درجه؛ آبیاری مزارع را حتماً به ساعات شب منتقل کنید.</div></div>`;
+      }
+      if (!alertsHtml) {
+        alertsHtml = `<div class="alert-banner alert-good"><span>✅</span><div>شرایط جوی روزهای آینده برای کاشت، آبیاری و عملیات زراعی کاملاً پایدار و مساعد است.</div></div>`;
+      }
+      document.getElementById('agriAlertsContainer').innerHTML = alertsHtml;
+
+      // Surprises
+      const windNow = cur.wind_speed_10m;
+      const sprayEl = document.getElementById('sprayWindowText');
+      if (rainDayIdx === 0 || (probs[0] || 0) >= 40) sprayEl.textContent = 'به دلیل احتمال بارندگی، امروز سم‌پاشی توصیه نمی‌شود.';
+      else if (windNow > 15) sprayEl.textContent = `سرعت باد (${Math.round(windNow)} km/h) بالاست؛ سم‌پاشی را به عصر ۱۸ تا ۲۱ یا سحر موکول کنید.`;
+      else sprayEl.textContent = 'اکنون تا پیش از ظهر و عصر ۱۷ تا ۲۰ بهترین بازه کم‌باد برای سم‌پاشی است.';
+
+      const maxToday = maxTemps[0] || 25;
+      const evapEl = document.getElementById('evapGuideText');
+      if (maxToday >= 32) evapEl.textContent = 'تبخیر بالا: آبیاری را شب یا سحر انجام دهید تا تلفات آب کم شود.';
+      else if (maxToday >= 22) evapEl.textContent = 'تبخیر متوسط: دور آبیاری معمول منطقه (صبح زود) مناسب است.';
+      else evapEl.textContent = 'تبخیر پایین: فواصل آبیاری را کمی بیشتر کنید تا ریشه آسیب نبیند.';
+
+      // Hourly
+      const nowH = new Date().getHours();
+      let hourlyHtml = '';
+      for (let i = nowH; i < Math.min(nowH + 12, 24); i++) {
+        const t = data.hourly.temperature_2m[i] ?? cur.temperature_2m;
+        const c = interpretWmoCode(data.hourly.weather_code[i] ?? 0);
+        const rp = data.hourly.precipitation_probability[i] ?? 0;
+        hourlyHtml += `<div class="hour-chip"><div style="color:#64748b; font-weight:700;">${String(i).padStart(2, '0')}:00</div><div style="font-size:1.2rem; margin:3px 0;">${c.icon}</div><div style="font-weight:900;">${Math.round(t)}°</div>${rp > 15 ? `<div style="font-size:0.65rem; color:#0284c7;">💧${rp}%</div>` : ''}</div>`;
+      }
+      document.getElementById('hourlyContainer').innerHTML = hourlyHtml;
+
+      // 14 Days
+      let daysHtml = '';
+      const weekDays = ['یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه', 'شنبه'];
+      for (let i = 0; i < data.daily.time.length; i++) {
+        const dt = new Date(data.daily.time[i]);
+        const dayName = i === 0 ? 'امروز' : (i === 1 ? 'فردا' : weekDays[dt.getDay()]);
+        const w = interpretWmoCode(data.daily.weather_code[i]);
+        const p = probs[i] || 0;
+        daysHtml += `<div style="display:flex; justify-content:space-between; align-items:center; padding:8px 4px; border-bottom:1px solid #f1f5f9; font-size:0.81rem;"><span style="font-weight:800; width:82px;">${dayName}</span><span>${w.icon} ${p > 20 ? `<small style="color:#0284c7; font-weight:700;">(${p}٪)</small>` : ''}</span><span style="font-weight:800;"><span style="color:#dc2626;">${Math.round(maxTemps[i])}°</span> / <span style="color:#0284c7;">${Math.round(minTemps[i])}°</span></span></div>`;
+      }
+      document.getElementById('fourteenDaysContainer').innerHTML = daysHtml;
+    }
+
+    function toggle14Days() {
+      const el = document.getElementById('fourteenDaysContainer');
+      const open = el.style.display === 'none';
+      el.style.display = open ? 'block' : 'none';
+      document.getElementById('toggle14DaysLabel').textContent = open ? 'بستن ▴' : 'مشاهده کامل ▾';
+    }
+
+    function renderCropsList() {
+      const currentMonth = getCleanJalaliDate().month;
+      const nextMonth = currentMonth === 12 ? 1 : currentMonth + 1;
+      const sorted = [...CROPS_DATA].sort((a, b) => {
+        const score = c => c.plantMonths.includes(currentMonth) ? 3 : (c.plantMonths.includes(nextMonth) ? 2 : (c.activeMonths.includes(currentMonth) ? 1 : 0));
+        return score(b) - score(a);
+      });
+      document.getElementById('cropsListContainer').innerHTML = sorted.map(crop => {
+        const isNow = crop.plantMonths.includes(currentMonth);
+        const isNext = crop.plantMonths.includes(nextMonth);
+        let badge = `<span class="badge-season badge-off">خارج از فصل کاشت</span>`;
+        if (isNow) badge = `<span class="badge-season badge-now">🌱 فصل کاشت فعال</span>`;
+        else if (isNext) badge = `<span class="badge-season badge-soon">⏳ آماده کاشت ماه آینده</span>`;
+        else if (crop.activeMonths.includes(currentMonth)) badge = `<span class="badge-season badge-soon">🌿 در حال رشد / برداشت</span>`;
+        return `<div class="crop-item ${isNow ? 'active-season' : ''}" onclick="this.classList.toggle('open')"><div class="crop-header"><div style="font-weight:800; font-size:0.86rem;">${crop.icon} ${crop.name}</div>${badge}</div><div class="crop-details"><div style="margin-bottom:4px;"><strong>🌡️ دمای مطلوب رشد:</strong> ${crop.tempIdeal}</div><div><strong>💡 نکته بومی:</strong> ${crop.tips}</div></div></div>`;
+      }).join('');
+    }
+
+    // ================== POWER OUTAGE ==================
+    function getFeederGroupKey(feeder) {
+      return powerSchedule.mode === '5' ? feeder.group5 : feeder.group4;
+    }
+
+    function renderPowerSection() {
+      document.getElementById('powerModeBadge').textContent =
+        powerSchedule.mode === '5' ? 'جدول ۵ گروهی (الف تا ی)' : 'جدول ۴ گروهی (الف تا د)';
+      const summaryBox = document.getElementById('myPowerSummary');
+      const selectorCard = document.getElementById('feederSelectorCard');
+
+      if (selectedFeederId) {
+        const feeder = FEEDERS_DATA.find(f => f.id === selectedFeederId);
+        if (feeder) {
+          const gKey = getFeederGroupKey(feeder);
+          const gMeta = GROUP_LABELS[gKey] || GROUP_LABELS.A;
+          const timeText = powerSchedule.times[gKey] || 'ساعت قطعی ثبت نشده است';
+          summaryBox.innerHTML = `
+            <div style="font-size:0.78rem; color:#cbd5e1;">منطقه انتخاب‌شده شما:</div>
+            <div style="font-size:1.02rem; font-weight:900; margin-top:2px;">📍 ${escapeHtml(feeder.title)}</div>
+            <div style="margin-top:6px;"><span class="group-pill ${gMeta.cls}">${gMeta.name}</span></div>
+            <div class="power-time-box">🕒 ${escapeHtml(timeText)}</div>
+            <button class="btn btn-outline btn-sm" style="width:100%;" onclick="clearSelectedFeeder()">تغییر شهر یا روستای انتخابی</button>`;
+          selectorCard.style.display = 'none';
+        }
+      } else {
+        summaryBox.innerHTML = `<div style="font-size:0.84rem; color:#fde68a; font-weight:700;">👇 یک‌بار شهر یا روستای خود را انتخاب کنید تا از این به بعد فقط ساعت قطعی برق خودتان نمایش داده شود:</div>`;
+        selectorCard.style.display = 'block';
+        renderFeederSelectionList();
+      }
+      renderFullPowerTable();
+    }
+
+    function renderFeederSelectionList() {
+      const q = normalizeFa(document.getElementById('feederSearchInput').value);
+      const filtered = FEEDERS_DATA.filter(f => !q || normalizeFa(f.title).includes(q) || normalizeFa(f.details).includes(q));
+      const container = document.getElementById('feederSelectionList');
+      if (!filtered.length) {
+        container.innerHTML = `<div style="font-size:0.82rem; color:#64748b; text-align:center; padding:12px;">موردی یافت نشد.</div>`;
+        return;
+      }
+      container.innerHTML = filtered.map(f => {
+        const gKey = getFeederGroupKey(f);
+        const gMeta = GROUP_LABELS[gKey] || GROUP_LABELS.A;
+        return `<div class="feeder-row ${q ? 'expanded' : ''}" onclick="this.classList.toggle('expanded')"><div style="display:flex; justify-content:space-between; align-items:center; gap:8px;"><span style="font-weight:800; font-size:0.85rem;">${escapeHtml(f.title)}</span><span class="group-pill ${gMeta.cls}">${gMeta.name}</span></div><div class="feeder-sub" onclick="event.stopPropagation()"><div style="margin-bottom:8px;"><strong>زیرمجموعه‌ها:</strong> ${escapeHtml(f.details)}</div><button class="btn btn-primary btn-sm" style="width:100%;" onclick="confirmFeederSelection('${f.id}')">✅ انتخاب همیشگی این منطقه</button></div></div>`;
+      }).join('');
+    }
+
+    function confirmFeederSelection(id) {
+      selectedFeederId = id;
+      localStorage.setItem('hj_feeder_id', id);
+      renderPowerSection();
+      showToast('منطقه شما برای همیشه ذخیره شد.');
+    }
+
+    function clearSelectedFeeder() {
+      selectedFeederId = '';
+      localStorage.removeItem('hj_feeder_id');
+      renderPowerSection();
+    }
+
+    function toggleFullPowerTable() {
+      const el = document.getElementById('fullPowerTableContainer');
+      const hidden = el.style.display === 'none';
+      el.style.display = hidden ? 'block' : 'none';
+      document.getElementById('fullTableToggleText').textContent = hidden ? 'بستن جدول ▴' : 'نمایش جدول ▾';
+    }
+
+    function renderFullPowerTable() {
+      const groups = powerSchedule.mode === '5' ? ['A', 'B', 'C', 'D', 'Y'] : ['A', 'B', 'C', 'D'];
+      document.getElementById('fullPowerTableContainer').innerHTML = groups.map(gKey => {
+        const gMeta = GROUP_LABELS[gKey];
+        const list = FEEDERS_DATA.filter(f => getFeederGroupKey(f) === gKey);
+        return `<div style="border:1px solid #e2e8f0; border-radius:14px; padding:10px; margin-bottom:10px; background:#f8fafc;"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;"><span class="group-pill ${gMeta.cls}">${gMeta.name}</span><span style="font-weight:900; font-size:0.82rem;">🕒 ${escapeHtml(powerSchedule.times[gKey] || 'نامشخص')}</span></div>${list.map(f => `<div style="background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:7px 10px; margin-bottom:5px; font-size:0.79rem; cursor:pointer;" onclick="const s=this.querySelector('.sub-mini'); s.style.display=s.style.display==='block'?'none':'block'"><div style="font-weight:700;">• ${escapeHtml(f.title)}</div><div class="sub-mini" style="display:none; color:#64748b; font-size:0.73rem; margin-top:4px;">${escapeHtml(f.details)}</div></div>`).join('')}</div>`;
+      }).join('');
+    }
+
+    // ================== 118 DIRECTORY ==================
+    function getAll118Contacts() {
+      const external = Array.isArray(window.DIRECTORY_118) ? window.DIRECTORY_118 : [];
+      const merged = [...extra118Contacts, ...external, ...BUILTIN_ESSENTIAL_118];
+      const seen = new Set();
+      const unique = [];
+      for (const item of merged) {
+        if (!item || !item.p || !item.n) continue;
+        const key = String(item.p).replace(/\s+/g, '');
+        if (!seen.has(key)) {
+          seen.add(key);
+          unique.push(item);
+        }
+      }
+      return unique;
+    }
+
+    function resetAndRenderDirectory() {
+      dirVisibleCount = dirPageSize;
+      renderDirectory();
+    }
+
+    function loadMoreDirectory() {
+      dirVisibleCount += dirPageSize;
+      renderDirectory();
+    }
+
+    function renderDirectory() {
+      const all = getAll118Contacts();
+      const q = normalizeFa(document.getElementById('dirSearchInput').value);
+      const cat = document.getElementById('dirCategoryFilter').value;
+      const reg = document.getElementById('dirRegionFilter').value;
+
+      const filtered = all.filter(item => {
+        if (cat !== 'all' && item.c !== cat) return false;
+        if (reg !== 'all' && item.r !== reg) return false;
+        if (q) {
+          const hay = normalizeFa(`${item.n} ${item.p} ${item.c} ${item.r}`);
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      document.getElementById('dirStatsText').textContent =
+        `${filtered.length.toLocaleString('fa-IR')} شماره فعال از مجموع ${all.length.toLocaleString('fa-IR')} رکورد`;
+
+      const container = document.getElementById('dirListContainer');
+      const loadMoreBtn = document.getElementById('dirLoadMoreBtn');
+
+      if (!filtered.length) {
+        container.innerHTML = `<div class="card" style="text-align:center; color:#64748b; font-size:0.83rem;">شماره‌ای با این مشخصات پیدا نشد.</div>`;
+        loadMoreBtn.style.display = 'none';
+        return;
+      }
+
+      const slice = filtered.slice(0, dirVisibleCount);
+      container.innerHTML = slice.map(item => {
+        const cleanNum = String(item.p).replace(/[^0-9+]/g, '');
+        const isMobile = cleanNum.startsWith('09') || cleanNum.startsWith('+989');
+        const waNum = cleanNum.startsWith('0') ? '98' + cleanNum.slice(1) : cleanNum.replace('+', '');
+        return `
+          <div class="dir-card">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+              <div>
+                <div style="font-weight:800; font-size:0.88rem;">${escapeHtml(item.n)}</div>
+                <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">🏷️ ${escapeHtml(item.c || 'عمومی')} • 📍 ${escapeHtml(item.r || 'منطقه')}</div>
+              </div>
+              <span class="dir-phone">${escapeHtml(item.p)}</span>
+            </div>
+            <div style="display:flex; gap:6px; margin-top:9px;">
+              <a href="tel:${cleanNum}" class="btn btn-primary btn-sm" style="flex:1;">📞 تماس</a>
+              ${isMobile ? `<a href="https://wa.me/${waNum}" target="_blank" class="btn btn-amber btn-sm" style="flex:1;">💬 واتس‌اپ</a>` : ''}
+              <button class="btn btn-outline btn-sm" onclick="copyText('${escapeHtml(cleanNum)}')">📋 کپی</button>
+            </div>
+          </div>`;
+      }).join('');
+
+      loadMoreBtn.style.display = filtered.length > dirVisibleCount ? 'block' : 'none';
+    }
+
+    function copyText(txt) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(txt).then(() => showToast('شماره کپی شد: ' + txt));
+      } else {
+        showToast(txt);
+      }
+    }
+
+    function openSuggestContactModal() {
+      document.getElementById('sug118Name').value = '';
+      document.getElementById('sug118Phone').value = '';
+      document.getElementById('suggest118Modal').classList.add('open');
+    }
+
+    async function submitSuggested118() {
+      const n = document.getElementById('sug118Name').value.trim();
+      const p = normalizeFa(document.getElementById('sug118Phone').value).replace(/[^0-9+]/g, '');
+      const c = document.getElementById('sug118Category').value;
+      const r = document.getElementById('sug118Region').value;
+      if (!n || p.length < 7) {
+        alert('لطفاً نام/شغل و شماره تماس معتبر وارد کنید.');
+        return;
+      }
+      const entry = { id: 'c_' + Date.now(), n, p, c, r };
+      extra118Contacts.unshift(entry);
+      localStorage.setItem('hj_extra_118', JSON.stringify(extra118Contacts));
+      await fbRequest(`extra118/${entry.id}`, 'PUT', entry);
+      closeModal('suggest118Modal');
+      resetAndRenderDirectory();
+      showToast('شماره با موفقیت به دفترچه ۱۱۸ اضافه شد.');
+    }
+
+    // ================== LOCAL DIVAR ==================
+    function renderAdsList() {
+      const search = normalizeFa(document.getElementById('adSearchInput').value);
+      const regionFilter = document.getElementById('adRegionFilter').value;
+      const catFilter = document.getElementById('adCategoryFilter').value;
+
+      const filtered = localAds.filter(ad => {
+        if (regionFilter === 'current' && ad.region !== currentRegion) return false;
+        if (catFilter !== 'all' && ad.category !== catFilter) return false;
+        if (search && !normalizeFa(`${ad.title} ${ad.description}`).includes(search)) return false;
+        return true;
+      });
+
+      const container = document.getElementById('adsListContainer');
+      if (!filtered.length) {
+        container.innerHTML = `<div class="card" style="text-align:center; color:#64748b; font-size:0.83rem;">هنوز آگهی‌ای با این فیلتر ثبت نشده است.</div>`;
+        return;
+      }
+      container.innerHTML = filtered.map(ad => {
+        const regName = REGIONS[ad.region]?.shortName || '';
+        return `
+          <div class="ad-card" onclick="openAdDetail('${escapeHtml(ad.id)}')">
+            ${ad.image ? `<img src="${ad.image}" class="ad-thumb" alt="${escapeHtml(ad.title)}" />` : `<div class="ad-thumb">📦</div>`}
+            <div style="flex:1; min-width:0;">
+              <div style="font-weight:800; font-size:0.87rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(ad.title)}</div>
+              <div style="font-size:0.81rem; font-weight:800; color:#0f766e; margin:3px 0;">${escapeHtml(ad.price)}</div>
+              <div style="font-size:0.71rem; color:#64748b;">📍 ${escapeHtml(regName)} • ${escapeHtml(ad.category)} • ${escapeHtml(ad.createdAt || '')}</div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function openAddAdModal() {
+      uploadedAdBase64 = '';
+      document.getElementById('newAdTitle').value = '';
+      document.getElementById('newAdPrice').value = '';
+      document.getElementById('newAdPhone').value = '';
+      document.getElementById('newAdDesc').value = '';
+      document.getElementById('newAdImageInput').value = '';
+      document.getElementById('newAdImagePreview').style.display = 'none';
+      document.getElementById('newAdRegion').value = currentRegion;
+      document.getElementById('addAdModal').classList.add('open');
+    }
+
+    function handleAdImageUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxW = 500;
+          const scale = Math.min(1, maxW / img.width);
+          canvas.width = img.width * scale;
+          canvas.height = img.height * scale;
+          canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+          uploadedAdBase64 = canvas.toDataURL('image/jpeg', 0.72);
+          const prev = document.getElementById('newAdImagePreview');
+          prev.src = uploadedAdBase64;
+          prev.style.display = 'block';
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function submitNewAd() {
+      const title = document.getElementById('newAdTitle').value.trim();
+      const phone = normalizeFa(document.getElementById('newAdPhone').value).replace(/[^0-9+]/g, '');
+      if (!title || phone.length < 7) {
+        alert('لطفاً عنوان آگهی و شماره تماس معتبر وارد کنید.');
+        return;
+      }
+      const newAd = {
+        id: 'ad_' + Date.now(),
+        ts: Date.now(),
+        region: document.getElementById('newAdRegion').value,
+        category: document.getElementById('newAdCategory').value,
+        title,
+        price: document.getElementById('newAdPrice').value.trim() || 'توافقی',
+        phone,
+        description: document.getElementById('newAdDesc').value.trim() || 'توضیحات بیشتر در تماس.',
+        image: uploadedAdBase64,
+        createdAt: getCleanJalaliDate().formatted.split('،')[1]?.trim() || 'امروز',
+        isUserOwned: true
+      };
+      localAds.unshift(newAd);
+      localStorage.setItem('hj_ads', JSON.stringify(localAds));
+      await fbRequest(`ads/${newAd.id}`, 'PUT', { ...newAd, isUserOwned: false });
+      closeModal('addAdModal');
+      renderAdsList();
+      showToast('آگهی شما منتشر شد.');
+    }
+
+    function openAdDetail(adId) {
+      const ad = localAds.find(a => a.id === adId);
+      if (!ad) return;
+      const regName = REGIONS[ad.region]?.name || '';
+      const cleanPhone = String(ad.phone).replace(/[^0-9+]/g, '');
+      const waPhone = cleanPhone.startsWith('0') ? '98' + cleanPhone.slice(1) : cleanPhone.replace('+', '');
+      const waText = encodeURIComponent(`سلام، درباره آگهی «${ad.title}» در همیار جنوب پیام می‌دهم.`);
+
+      document.getElementById('adDetailContent').innerHTML = `
+        <div class="card-title"><span>جزئیات آگهی</span><button class="btn btn-outline btn-sm" onclick="closeModal('adDetailModal')">✕</button></div>
+        ${ad.image ? `<img src="${ad.image}" style="width:100%; max-height:220px; object-fit:cover; border-radius:14px; margin-bottom:11px;" />` : ''}
+        <h3 style="font-size:1.02rem; font-weight:900; margin-bottom:5px;">${escapeHtml(ad.title)}</h3>
+        <div style="font-size:0.93rem; font-weight:800; color:#0f766e; margin-bottom:7px;">💰 ${escapeHtml(ad.price)}</div>
+        <div style="font-size:0.77rem; color:#64748b; margin-bottom:9px;">📍 ${escapeHtml(regName)} | ${escapeHtml(ad.category)}</div>
+        <p style="font-size:0.84rem; color:#334155; background:#f8fafc; padding:11px; border-radius:12px; margin-bottom:13px;">${escapeHtml(ad.description)}</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:7px;">
+          <a href="tel:${cleanPhone}" class="btn btn-primary">📞 تماس</a>
+          <a href="https://wa.me/${waPhone}?text=${waText}" target="_blank" class="btn btn-amber">💬 واتس‌اپ</a>
+          <a href="sms:${cleanPhone}?body=${waText}" class="btn btn-outline">✉️ پیامک</a>
+        </div>
+        ${ad.isUserOwned ? `<button class="btn btn-danger btn-sm" style="width:100%; margin-top:10px;" onclick="deleteAd('${escapeHtml(ad.id)}')">حذف آگهی من</button>` : ''}`;
+      document.getElementById('adDetailModal').classList.add('open');
+    }
+
+    async function deleteAd(adId) {
+      localAds = localAds.filter(a => a.id !== adId);
+      localStorage.setItem('hj_ads', JSON.stringify(localAds));
+      await fbRequest(`ads/${adId}`, 'DELETE');
+      closeModal('adDetailModal');
+      renderAdsList();
+      showToast('آگهی حذف شد.');
+    }
+
+    // ================== INDEPENDENT BUILDING MATERIALS ==================
+    function renderMaterialsTab() {
+      const delSel = document.getElementById('matDeliverySelect');
+      const prevVal = delSel.value;
+      delSel.innerHTML = materialsConfig.deliveryFees.map(d =>
+        `<option value="${escapeHtml(d.id)}">${escapeHtml(d.label)} (${d.fee === 0 ? 'رایگان' : formatToman(d.fee) + ' تومان'})</option>`
+      ).join('');
+      if (prevVal && materialsConfig.deliveryFees.some(d => d.id === prevVal)) delSel.value = prevVal;
+
+      const listEl = document.getElementById('materialsListContainer');
+      listEl.innerHTML = materialsConfig.items.map(item => {
+        const qty = materialCart[item.id] || 0;
+        const out = Number(item.stock) <= 0;
+        return `
+          <div class="mat-card" style="${out ? 'opacity:0.6;' : ''}">
+            <div style="flex:1;">
+              <div style="font-weight:800; font-size:0.86rem;">${escapeHtml(item.name)}</div>
+              <div style="font-size:0.78rem; color:#0f766e; font-weight:800; margin-top:2px;">
+                ${formatToman(item.price)} تومان / ${escapeHtml(item.unit)}
+              </div>
+              <div style="font-size:0.71rem; color:#64748b; margin-top:2px;">
+                موجودی: <strong>${formatToman(item.stock)} ${escapeHtml(item.unit)}</strong>
+                ${item.handling > 0 ? ` • بارگیری/تخلیه: ${formatToman(item.handling)} ت` : ''}
+              </div>
+            </div>
+            <div class="qty-control">
+              <button class="qty-btn" onclick="changeMatQty('${escapeHtml(item.id)}', 1)" ${out ? 'disabled' : ''}>+</button>
+              <span class="qty-val">${qty}</span>
+              <button class="qty-btn minus" onclick="changeMatQty('${escapeHtml(item.id)}', -1)">−</button>
+            </div>
+          </div>`;
+      }).join('');
+
+      renderMaterialInvoice();
+    }
+
+    function changeMatQty(id, delta) {
+      const item = materialsConfig.items.find(i => i.id === id);
+      if (!item) return;
+      const cur = materialCart[id] || 0;
+      const next = Math.max(0, Math.min(Number(item.stock), cur + delta));
+      if (cur + delta > Number(item.stock)) {
+        showToast(`حداکثر موجودی فعلی ${item.stock} ${item.unit} است.`);
+      }
+      materialCart[id] = next;
+      renderMaterialsTab();
+    }
+
+    function computeMaterialInvoice() {
+      const selected = [];
+      let subtotal = 0;
+      let handlingTotal = 0;
+      const includeHandling = document.getElementById('matIncludeHandling').checked;
+
+      for (const item of materialsConfig.items) {
+        const qty = materialCart[item.id] || 0;
+        if (qty > 0) {
+          const lineTotal = qty * Number(item.price);
+          const lineHandling = includeHandling ? qty * Number(item.handling || 0) : 0;
+          subtotal += lineTotal;
+          handlingTotal += lineHandling;
+          selected.push({ ...item, qty, lineTotal, lineHandling });
+        }
+      }
+
+      const delId = document.getElementById('matDeliverySelect').value;
+      const delObj = materialsConfig.deliveryFees.find(d => d.id === delId) || materialsConfig.deliveryFees[0];
+      const deliveryFee = selected.length ? Number(delObj.fee || 0) : 0;
+      const grandTotal = subtotal + handlingTotal + deliveryFee;
+
+      return {
+        selected,
+        subtotal,
+        handlingTotal,
+        includeHandling,
+        deliveryLabel: delObj.label,
+        deliveryFee,
+        grandTotal,
+        custName: document.getElementById('matCustName').value.trim(),
+        custPhone: document.getElementById('matCustPhone').value.trim(),
+        custAddress: document.getElementById('matCustAddress').value.trim(),
+        dateStr: getCleanJalaliDate().formatted
+      };
+    }
+
+    function renderMaterialInvoice() {
+      const inv = computeMaterialInvoice();
+      const box = document.getElementById('matInvoiceSummary');
+      if (!inv.selected.length) {
+        box.innerHTML = `<div style="text-align:center; font-size:0.82rem; color:#64748b;">هنوز مصالحی انتخاب نشده است؛ با دکمه + تعداد مورد نیاز را اضافه کنید.</div>`;
+        return;
+      }
+      box.innerHTML = `
+        <div style="font-weight:900; font-size:0.88rem; margin-bottom:7px; color:#0f172a;">🧾 پیش‌فاکتور سفارش مصالح</div>
+        ${inv.selected.map(s => `<div class="inv-row"><span>${escapeHtml(s.name)} (${s.qty} ${escapeHtml(s.unit)})</span><span>${formatToman(s.lineTotal)} ت</span></div>`).join('')}
+        <div class="inv-row"><span>جمع کل مصالح</span><span>${formatToman(inv.subtotal)} تومان</span></div>
+        <div class="inv-row"><span>هزینه بارگیری و تخلیه</span><span>${inv.handlingTotal ? formatToman(inv.handlingTotal) + ' تومان' : 'ندارد'}</span></div>
+        <div class="inv-row"><span>${escapeHtml(inv.deliveryLabel)}</span><span>${inv.deliveryFee ? formatToman(inv.deliveryFee) + ' تومان' : 'رایگان'}</span></div>
+        <div class="inv-total"><span>مبلغ قابل پرداخت:</span><span>${formatToman(inv.grandTotal)} تومان</span></div>`;
+    }
+
+    function buildInvoicePlainText(inv) {
+      const lines = [
+        '==============================',
+        '   فاکتور سفارش مصالح ساختمانی',
+        '          (همیار جنوب)',
+        '==============================',
+        `تاریخ: ${inv.dateStr}`,
+        inv.custName ? `سفارش‌دهنده: ${inv.custName}` : '',
+        inv.custPhone ? `شماره تماس: ${inv.custPhone}` : '',
+        `تحویل: ${inv.deliveryLabel}`,
+        inv.custAddress ? `آدرس: ${inv.custAddress}` : '',
+        '------------------------------',
+        'اقلام سفارش:'
+      ].filter(Boolean);
+
+      inv.selected.forEach((s, idx) => {
+        lines.push(`${idx + 1}. ${s.name} — ${s.qty} ${s.unit} × ${formatToman(s.price)} = ${formatToman(s.lineTotal)} تومان`);
+      });
+
+      lines.push('------------------------------');
+      lines.push(`جمع مصالح: ${formatToman(inv.subtotal)} تومان`);
+      if (inv.handlingTotal > 0) lines.push(`بارگیری و تخلیه: ${formatToman(inv.handlingTotal)} تومان`);
+      lines.push(`کرایه حمل: ${inv.deliveryFee ? formatToman(inv.deliveryFee) + ' تومان' : 'رایگان'}`);
+      lines.push(`جمع کل فاکتور: ${formatToman(inv.grandTotal)} تومان`);
+      lines.push('==============================');
+      return lines.join('
+');
+    }
+
+    function sendMaterialOrder(channel) {
+      const inv = computeMaterialInvoice();
+      if (!inv.selected.length) {
+        alert('لطفاً ابتدا حداقل یک قلم مصالح انتخاب کنید.');
+        return;
+      }
+      const txt = buildInvoicePlainText(inv);
+      const target = String(materialsConfig.orderPhone || '+989923213245').replace(/[^0-9+]/g, '');
+      const waTarget = target.startsWith('0') ? '98' + target.slice(1) : target.replace('+', '');
+
+      if (channel === 'whatsapp') {
+        window.open(`https://wa.me/${waTarget}?text=${encodeURIComponent(txt)}`, '_blank');
+      } else {
+        window.location.href = `sms:${target}?body=${encodeURIComponent(txt)}`;
+      }
+    }
+
+    function downloadMaterialInvoiceTxt() {
+      const inv = computeMaterialInvoice();
+      if (!inv.selected.length) { alert('ابتدا مصالح را انتخاب کنید.'); return; }
+      const blob = new Blob([buildInvoicePlainText(inv)], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `factor-masaleh-${Date.now()}.txt`;
+      a.click();
+      showToast('فایل متنی فاکتور دانلود شد.');
+    }
+
+    function generateMaterialInvoiceImage() {
+      const inv = computeMaterialInvoice();
+      if (!inv.selected.length) { alert('ابتدا مصالح را انتخاب کنید.'); return; }
+
+      const canvas = document.createElement('canvas');
+      const W = 720;
+      const H = 370 + inv.selected.length * 46;
+      canvas.width = W;
+      canvas.height = H;
+      const ctx = canvas.getContext('2d');
+      ctx.direction = 'rtl';
+
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, W, H);
+
+      // Header band
+      ctx.fillStyle = '#0f766e';
+      ctx.fillRect(0, 0, W, 105);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 28px Vazirmatn, Tahoma, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('فاکتور سفارش مصالح ساختمانی — همیار جنوب', W / 2, 50);
+      ctx.font = '18px Vazirmatn, Tahoma, sans-serif';
+      ctx.fillText(inv.dateStr, W / 2, 84);
+
+      let y = 140;
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#1e293b';
+      ctx.font = 'bold 19px Vazirmatn, Tahoma, sans-serif';
+      if (inv.custName) { ctx.fillText(`سفارش‌دهنده: ${inv.custName}   ${inv.custPhone || ''}`, W - 36, y); y += 30; }
+      ctx.fillText(`نحوه تحویل: ${inv.deliveryLabel}`, W - 36, y); y += 28;
+      if (inv.custAddress) { ctx.font = '17px Vazirmatn, Tahoma, sans-serif'; ctx.fillText(`آدرس: ${inv.custAddress}`, W - 36, y); y += 28; }
+
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.beginPath(); ctx.moveTo(36, y); ctx.lineTo(W - 36, y); ctx.stroke();
+      y += 32;
+
+      inv.selected.forEach(s => {
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 18px Vazirmatn, Tahoma, sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText(`${s.name} (${s.qty} ${s.unit})`, W - 36, y);
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#0f766e';
+        ctx.fillText(`${formatToman(s.lineTotal)} تومان`, 36, y);
+        y += 42;
+      });
+
+      ctx.strokeStyle = '#94a3b8';
+      ctx.beginPath(); ctx.moveTo(36, y - 10); ctx.lineTo(W - 36, y - 10); ctx.stroke();
+      y += 22;
+
+      ctx.font = '18px Vazirmatn, Tahoma, sans-serif';
+      ctx.fillStyle = '#334155';
+      ctx.textAlign = 'right';
+      ctx.fillText(`بارگیری و تخلیه: ${inv.handlingTotal ? formatToman(inv.handlingTotal) + ' تومان' : 'ندارد'}`, W - 36, y);
+      y += 30;
+      ctx.fillText(`کرایه حمل: ${inv.deliveryFee ? formatToman(inv.deliveryFee) + ' تومان' : 'رایگان'}`, W - 36, y);
+      y += 42;
+
+      ctx.fillStyle = '#f0fdfa';
+      ctx.fillRect(30, y - 32, W - 60, 52);
+      ctx.fillStyle = '#0f766e';
+      ctx.font = 'bold 23px Vazirmatn, Tahoma, sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText('مبلغ قابل پرداخت:', W - 46, y);
+      ctx.textAlign = 'left';
+      ctx.fillText(`${formatToman(inv.grandTotal)} تومان`, 46, y);
+
+      const dataUrl = canvas.toDataURL('image/png');
+      document.getElementById('invoiceCanvasImg').src = dataUrl;
+      document.getElementById('downloadInvoicePngLink').href = dataUrl;
+      canvas.toBlob(b => { lastInvoiceBlob = b; }, 'image/png');
+      document.getElementById('invoiceImgModal').classList.add('open');
+    }
+
+    async function shareInvoiceImage() {
+      if (navigator.share && lastInvoiceBlob) {
+        const file = new File([lastInvoiceBlob], 'factor-masaleh.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({ files: [file], title: 'فاکتور سفارش مصالح ساختمانی' });
+            return;
+          } catch (e) {}
+        }
+      }
+      showToast('ابتدا عکس فاکتور را در گالری ذخیره کنید و سپس در واتس‌اپ ارسال نمایید.');
+    }
+
+    // ================== SECRET ADMIN PANEL ==================
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    function openAdminModal() {
+      document.getElementById('adminLoginSection').style.display = 'block';
+      document.getElementById('adminPanelContent').style.display = 'none';
+      document.getElementById('adminPassInput').value = '';
+      document.getElementById('adminLockNotice').style.display = 'none';
+      document.getElementById('adminModal').classList.add('open');
+    }
+
+    function loginAdmin() {
+      const now = Date.now();
+      const notice = document.getElementById('adminLockNotice');
+      if (now < adminLockUntil) {
+        const sec = Math.ceil((adminLockUntil - now) / 1000);
+        notice.textContent = `ورود به مدت ${sec} ثانیه قفل است.`;
+        notice.style.display = 'block';
+        return;
+      }
+      const pass = document.getElementById('adminPassInput').value;
+      if (pass !== adminPassword) {
+        adminFailedAttempts++;
+        if (adminFailedAttempts >= 5) {
+          adminLockUntil = Date.now() + 60000;
+          adminFailedAttempts = 0;
+          notice.textContent = '۵ بار رمز اشتباه وارد شد؛ پنل به مدت ۶۰ ثانیه قفل گردید.';
+        } else {
+          notice.textContent = `رمز مدیریت اشتباه است (تلاش ${adminFailedAttempts} از ۵).`;
+        }
+        notice.style.display = 'block';
+        return;
+      }
+      adminFailedAttempts = 0;
+      document.getElementById('adminLoginSection').style.display = 'none';
+      document.getElementById('adminPanelContent').style.display = 'block';
+      populateAdminPanel();
+    }
+
+    function switchAdminSubtab(paneId, btn) {
+      document.querySelectorAll('.admin-pane').forEach(p => p.style.display = 'none');
+      document.getElementById(paneId).style.display = 'block';
+      document.querySelectorAll('.admin-subtab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function populateAdminPanel() {
+      // Power & Weather
+      document.getElementById('adminPowerMode').value = powerSchedule.mode;
+      document.getElementById('adminExpertInput').value = expertNote;
+      const groups = ['A', 'B', 'C', 'D', 'Y'];
+      document.getElementById('adminPowerInputs').innerHTML = groups.map(g => `
+        <div style="margin-bottom:8px;">
+          <label style="font-size:0.74rem; font-weight:800;">${GROUP_LABELS[g].name}:</label>
+          <div class="quick-presets">
+            <span class="preset-tag" onclick="setAdminTime('${g}','۰۹:۰۰ تا ۱۱:۰۰')">۹ تا ۱۱</span>
+            <span class="preset-tag" onclick="setAdminTime('${g}','۱۱:۰۰ تا ۱۳:۰۰')">۱۱ تا ۱۳</span>
+            <span class="preset-tag" onclick="setAdminTime('${g}','۱۳:۰۰ تا ۱۵:۰۰')">۱۳ تا ۱۵</span>
+            <span class="preset-tag" onclick="setAdminTime('${g}','۱۵:۰۰ تا ۱۷:۰۰')">۱۵ تا ۱۷</span>
+            <span class="preset-tag" onclick="setAdminTime('${g}','۱۷:۰۰ تا ۱۹:۰۰')">۱۷ تا ۱۹</span>
+            <span class="preset-tag" onclick="document.getElementById('adminTime_${g}').value='';updateAdminPreview()">پاک</span>
+          </div>
+          <input type="text" class="input" id="adminTime_${g}" value="${escapeHtml(powerSchedule.times[g] || '')}" oninput="updateAdminPreview()" style="margin-bottom:3px;" />
+        </div>`).join('');
+
+      document.getElementById('adminPreviewFeeder').innerHTML = FEEDERS_DATA.map(f => `<option value="${f.id}">${escapeHtml(f.title)}</option>`).join('');
+      updateAdminPreview();
+
+      // Materials
+      document.getElementById('adminMatPhone').value = materialsConfig.orderPhone || '+989923213245';
+      document.getElementById('adminDeliveryFeesBox').innerHTML = materialsConfig.deliveryFees.map((d, idx) => `
+        <div style="display:flex; gap:6px; align-items:center; margin-bottom:6px;">
+          <span style="font-size:0.76rem; flex:1; font-weight:700;">${escapeHtml(d.label)}</span>
+          <input type="number" class="input" id="admDelFee_${idx}" value="${d.fee}" style="width:125px; margin-bottom:0; padding:6px 8px;" />
+        </div>`).join('');
+
+      document.getElementById('adminMaterialsEditor').innerHTML = materialsConfig.items.map((item, idx) => `
+        <div style="border:1px solid #e2e8f0; border-radius:11px; padding:8px; margin-bottom:7px; background:#f8fafc;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+            <strong style="font-size:0.78rem;">${escapeHtml(item.name)} (${escapeHtml(item.unit)})</strong>
+            <button class="btn btn-danger btn-sm" onclick="adminRemoveMaterial(${idx})">حذف</button>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:5px;">
+            <div><small style="font-size:0.67rem;">قیمت (ت)</small><input type="number" class="input" id="admMatPrice_${idx}" value="${item.price}" style="margin:0; padding:5px;" /></div>
+            <div><small style="font-size:0.67rem;">بارگیری (ت)</small><input type="number" class="input" id="admMatHand_${idx}" value="${item.handling}" style="margin:0; padding:5px;" /></div>
+            <div><small style="font-size:0.67rem;">موجودی</small><input type="number" class="input" id="admMatStock_${idx}" value="${item.stock}" style="margin:0; padding:5px;" /></div>
+          </div>
+        </div>`).join('');
+
+      // Divar & Extra 118
+      document.getElementById('adminAdsList').innerHTML = localAds.length
+        ? localAds.map(ad => `<div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #e2e8f0; font-size:0.77rem;"><span>${escapeHtml(ad.title)}</span><button class="btn btn-danger btn-sm" onclick="adminDeleteAd('${escapeHtml(ad.id)}')">حذف</button></div>`).join('')
+        : '<div style="font-size:0.76rem; color:#64748b;">آگهی‌ای وجود ندارد.</div>';
+
+      document.getElementById('adminExtra118List').innerHTML = extra118Contacts.length
+        ? extra118Contacts.map(c => `<div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #e2e8f0; font-size:0.77rem;"><span>${escapeHtml(c.n)} (${escapeHtml(c.p)})</span><button class="btn btn-danger btn-sm" onclick="adminDelete118('${escapeHtml(c.id || c.p)}')">حذف</button></div>`).join('')
+        : '<div style="font-size:0.76rem; color:#64748b;">شماره سفارشی جدیدی ثبت نشده است.</div>';
+
+      // Cloud
+      document.getElementById('adminFirebaseUrlInput').value = firebaseUrl;
+    }
+
+    function setAdminTime(g, val) {
+      const inp = document.getElementById(`adminTime_${g}`);
+      inp.value = inp.value ? `${inp.value} و ${val}` : val;
+      updateAdminPreview();
+    }
+
+    function rotatePowerShifts() {
+      const mode = document.getElementById('adminPowerMode').value;
+      const keys = mode === '5' ? ['A', 'B', 'C', 'D', 'Y'] : ['A', 'B', 'C', 'D'];
+      const vals = keys.map(k => document.getElementById(`adminTime_${k}`).value);
+      vals.unshift(vals.pop());
+      keys.forEach((k, i) => { document.getElementById(`adminTime_${k}`).value = vals[i]; });
+      updateAdminPreview();
+    }
+
+    function parseRawPowerText() {
+      const raw = document.getElementById('adminRawPowerText').value;
+      if (!raw.trim()) return;
+      [
+        { key: 'A', regex: /گروه\s*الف\s*[:\-]?\s*([^
+|،]+)/ },
+        { key: 'B', regex: /گروه\s*ب\s*[:\-]?\s*([^
+|،]+)/ },
+        { key: 'C', regex: /گروه\s*ج\s*[:\-]?\s*([^
+|،]+)/ },
+        { key: 'D', regex: /گروه\s*د\s*[:\-]?\s*([^
+|،]+)/ },
+        { key: 'Y', regex: /گروه\s*ی\s*[:\-]?\s*([^
+|،]+)/ }
+      ].forEach(p => {
+        const m = raw.match(p.regex);
+        if (m && m[1]) document.getElementById(`adminTime_${p.key}`).value = m[1].trim();
+      });
+      updateAdminPreview();
+      showToast('ساعات از متن تشخیص داده شدند.');
+    }
+
+    function updateAdminPreview() {
+      const mode = document.getElementById('adminPowerMode').value;
+      const fId = document.getElementById('adminPreviewFeeder').value;
+      const feeder = FEEDERS_DATA.find(f => f.id === fId) || FEEDERS_DATA[0];
+      const gKey = mode === '5' ? feeder.group5 : feeder.group4;
+      const timeVal = document.getElementById(`adminTime_${gKey}`)?.value || 'تعیین نشده';
+      document.getElementById('adminLivePreviewBox').textContent = `${feeder.title} (${GROUP_LABELS[gKey].name}) ← 🕒 ${timeVal}`;
+    }
+
+    async function saveAdminPowerWeather() {
+      powerSchedule = {
+        mode: document.getElementById('adminPowerMode').value,
+        times: {
+          A: document.getElementById('adminTime_A').value.trim(),
+          B: document.getElementById('adminTime_B').value.trim(),
+          C: document.getElementById('adminTime_C').value.trim(),
+          D: document.getElementById('adminTime_D').value.trim(),
+          Y: document.getElementById('adminTime_Y').value.trim()
+        }
+      };
+      expertNote = document.getElementById('adminExpertInput').value.trim() || DEFAULT_EXPERT_NOTE;
+      localStorage.setItem('hj_power_schedule', JSON.stringify(powerSchedule));
+      localStorage.setItem('hj_expert_note', expertNote);
+      document.getElementById('expertNoteText').textContent = expertNote;
+      renderPowerSection();
+
+      await fbRequest('powerSchedule', 'PUT', powerSchedule);
+      await fbRequest('expertNote', 'PUT', expertNote);
+      showToast('برنامه برق و نظر کارشناس ذخیره و منتشر شد.');
+    }
+
+    function adminAddMaterial() {
+      const name = document.getElementById('newMatName').value.trim();
+      const unit = document.getElementById('newMatUnit').value.trim() || 'عدد';
+      const stock = Number(document.getElementById('newMatStock').value) || 0;
+      const price = Number(document.getElementById('newMatPrice').value) || 0;
+      const handling = Number(document.getElementById('newMatHandling').value) || 0;
+      if (!name || price <= 0) { alert('نام و قیمت کالا الزامی است.'); return; }
+      materialsConfig.items.push({ id: 'm_' + Date.now(), name, unit, price, handling, stock });
+      document.getElementById('newMatName').value = '';
+      populateAdminPanel();
+    }
+
+    function adminRemoveMaterial(idx) {
+      materialsConfig.items.splice(idx, 1);
+      populateAdminPanel();
+    }
+
+    async function saveAdminMaterials() {
+      materialsConfig.orderPhone = document.getElementById('adminMatPhone').value.trim() || '+989923213245';
+      materialsConfig.deliveryFees.forEach((d, idx) => {
+        const el = document.getElementById(`admDelFee_${idx}`);
+        if (el) d.fee = Number(el.value) || 0;
+      });
+      materialsConfig.items.forEach((item, idx) => {
+        const p = document.getElementById(`admMatPrice_${idx}`);
+        const h = document.getElementById(`admMatHand_${idx}`);
+        const s = document.getElementById(`admMatStock_${idx}`);
+        if (p) item.price = Number(p.value) || 0;
+        if (h) item.handling = Number(h.value) || 0;
+        if (s) item.stock = Number(s.value) || 0;
+      });
+      localStorage.setItem('hj_materials_cfg', JSON.stringify(materialsConfig));
+      renderMaterialsTab();
+      await fbRequest('materialsConfig', 'PUT', materialsConfig);
+      showToast('موجودی و قیمت مصالح ذخیره و منتشر شد.');
+    }
+
+    async function adminDeleteAd(adId) {
+      await deleteAd(adId);
+      populateAdminPanel();
+    }
+
+    async function adminDelete118(idOrPhone) {
+      extra118Contacts = extra118Contacts.filter(c => (c.id || c.p) !== idOrPhone);
+      localStorage.setItem('hj_extra_118', JSON.stringify(extra118Contacts));
+      await fbRequest(`extra118/${idOrPhone}`, 'DELETE');
+      renderDirectory();
+      populateAdminPanel();
+      showToast('شماره از لیست حذف شد.');
+    }
+
+    async function saveFirebaseUrlFromAdmin() {
+      firebaseUrl = document.getElementById('adminFirebaseUrlInput').value.trim();
+      localStorage.setItem('hj_firebase_url', firebaseUrl);
+      await syncFromCloud(true);
+    }
+
+    async function changeAdminPassword() {
+      const np = document.getElementById('adminNewPassInput').value.trim();
+      if (np.length < 6) { alert('رمز جدید باید حداقل ۶ کاراکتر باشد.'); return; }
+      adminPassword = np;
+      localStorage.setItem('hj_admin_pass', adminPassword);
+      await fbRequest('adminPassword', 'PUT', adminPassword);
+      document.getElementById('adminNewPassInput').value = '';
+      showToast('رمز مدیریت تغییر یافت.');
+    }
+  </script>
+</body>
+</html>
