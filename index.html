@@ -1164,11 +1164,11 @@
 
         <!-- Admin Subtab 4: Cloud & Password -->
         <div class="admin-pane" id="adm-cloud" style="display:none;">
-          <div style="font-weight:900; font-size:0.88rem; margin-bottom:6px;">☁️ اتصال آنلاین ابری (Firebase Realtime Database)</div>
+          <div style="font-weight:900; font-size:0.88rem; margin-bottom:6px;">☁️ اتصال آنلاین به سرور ایران (لیارا)</div>
           <p style="font-size:0.76rem; color:#475569; margin-bottom:8px;">
-            برای انتشار همگانی روی گیت‌هاب، آدرس دیتابیس را در فایل <code>firebase-config.js</code> قرار دهید. همچنین می‌توانید همین‌جا برای تست روی این گوشی وارد کنید:
+            برای اتصال همگانی بدون فیلترشکن، آدرس برنامه لیارا (مثل <code>https://hamyar-api.liara.run</code>) را در فایل <code>firebase-config.js</code> قرار دهید یا همین‌جا برای تست وارد کنید:
           </p>
-          <input type="url" class="input" id="adminFirebaseUrlInput" dir="ltr" placeholder="https://your-project-default-rtdb.firebaseio.com" />
+          <input type="url" class="input" id="adminFirebaseUrlInput" dir="ltr" placeholder="https://hamyar-api.liara.run" />
           <button class="btn btn-blue btn-sm" style="width:100%; margin-bottom:14px;" onclick="saveFirebaseUrlFromAdmin()">اتصال و همگام‌سازی زنده</button>
 
           <div style="font-weight:900; font-size:0.88rem; margin-bottom:6px;">🔑 تغییر رمز پنل مدیریت</div>
@@ -1367,7 +1367,7 @@
     let localAds = JSON.parse(localStorage.getItem('hj_ads') || 'null') || SAMPLE_ADS;
     let extra118Contacts = JSON.parse(localStorage.getItem('hj_extra_118') || '[]');
     let adminPassword = localStorage.getItem('hj_admin_pass') || '1234';
-    let firebaseUrl = (window.HAMYAR_FIREBASE && window.HAMYAR_FIREBASE.DATABASE_URL) || localStorage.getItem('hj_firebase_url') || '';
+    let apiBaseUrl = (window.HAMYAR_CONFIG && window.HAMYAR_CONFIG.API_URL) || (window.HAMYAR_FIREBASE && window.HAMYAR_FIREBASE.DATABASE_URL) || localStorage.getItem('hj_api_url') || '';
 
     let materialCart = {};
     let weatherDataCache = {};
@@ -1381,27 +1381,26 @@
     let adminLockUntil = 0;
     let lastInvoiceBlob = null;
 
-    // ================== FIREBASE REALTIME REST SYNC ==================
-    function getFirebaseBaseUrl() {
-      return (firebaseUrl || '').trim().replace(/\/+$/, '');
+    // ================== LIARA BACKEND API SYNC (NO VPN IN IRAN) ==================
+    function getApiBaseUrl() {
+      return (apiBaseUrl || '').trim().replace(/\/+$/, '');
     }
 
-    async function fbRequest(path, method = 'GET', bodyObj = null) {
-      const base = getFirebaseBaseUrl();
+    async function apiRequest(endpoint, method = 'GET', bodyObj = null, includeAdminPass = false) {
+      const base = getApiBaseUrl();
       if (!base) return null;
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 5500);
+      const timeout = setTimeout(() => controller.abort(), 7000);
       try {
-        const opts = {
-          method,
-          headers: { 'Content-Type': 'application/json' },
-          signal: controller.signal
-        };
+        const headers = { 'Content-Type': 'application/json' };
+        if (includeAdminPass) headers['x-admin-pass'] = adminPassword;
+        const opts = { method, headers, signal: controller.signal };
         if (bodyObj !== null) opts.body = JSON.stringify(bodyObj);
-        const res = await fetch(`${base}/hamyar_jonoob/${path}.json`, opts);
+        const res = await fetch(`${base}${endpoint}`, opts);
         clearTimeout(timeout);
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        return await res.json();
+        const data = await res.json().catch(() => null);
+        if (!res.ok) return { ok: false, status: res.status, error: data?.error || ('HTTP ' + res.status) };
+        return data;
       } catch (e) {
         clearTimeout(timeout);
         return null;
@@ -1410,16 +1409,17 @@
 
     async function syncFromCloud(manual = false) {
       const badge = document.getElementById('cloudSyncBadge');
-      if (!getFirebaseBaseUrl()) {
+      if (!getApiBaseUrl()) {
         badge.textContent = '📱 حافظه دستگاه';
         badge.classList.remove('online');
-        if (manual) showToast('دیتابیس ابری هنوز تنظیم نشده است (از پنل مدیریت یا firebase-config.js تنظیم کنید).');
+        if (manual) showToast('آدرس سرور لیارا هنوز تنظیم نشده است (در firebase-config.js یا پنل مدیریت وارد کنید).');
         return;
       }
 
       badge.textContent = '🔄 در حال همگام‌سازی...';
-      const cloud = await fbRequest('', 'GET');
-      if (cloud && typeof cloud === 'object') {
+      const resp = await apiRequest('/api/hamyar/state', 'GET');
+      if (resp && resp.ok && resp.data) {
+        const cloud = resp.data;
         if (cloud.powerSchedule) {
           powerSchedule = cloud.powerSchedule;
           localStorage.setItem('hj_power_schedule', JSON.stringify(powerSchedule));
@@ -1432,7 +1432,7 @@
           materialsConfig = cloud.materialsConfig;
           localStorage.setItem('hj_materials_cfg', JSON.stringify(materialsConfig));
         }
-        if (cloud.ads && typeof cloud.ads === 'object') {
+        if (cloud.ads && typeof cloud.ads === 'object' && Object.keys(cloud.ads).length > 0) {
           localAds = Object.values(cloud.ads).sort((a, b) => (b.ts || 0) - (a.ts || 0));
           localStorage.setItem('hj_ads', JSON.stringify(localAds));
         }
@@ -1440,19 +1440,15 @@
           extra118Contacts = Object.values(cloud.extra118);
           localStorage.setItem('hj_extra_118', JSON.stringify(extra118Contacts));
         }
-        if (cloud.adminPassword) {
-          adminPassword = cloud.adminPassword;
-          localStorage.setItem('hj_admin_pass', adminPassword);
-        }
 
-        badge.textContent = '🟢 آنلاین و زنده';
+        badge.textContent = '🟢 آنلاین (سرور ایران)';
         badge.classList.add('online');
         document.getElementById('expertNoteText').textContent = expertNote;
         renderPowerSection();
         renderDirectory();
         renderAdsList();
         renderMaterialsTab();
-        if (manual) showToast('اطلاعات با موفقیت از سرور ابری به‌روزرسانی شد.');
+        if (manual) showToast('اطلاعات با موفقیت از سرور ایران به‌روزرسانی شد.');
       } else {
         badge.textContent = '🟠 آفلاین (کش محلی)';
         badge.classList.remove('online');
@@ -1881,7 +1877,7 @@
       const entry = { id: 'c_' + Date.now(), n, p, c, r };
       extra118Contacts.unshift(entry);
       localStorage.setItem('hj_extra_118', JSON.stringify(extra118Contacts));
-      await fbRequest(`extra118/${entry.id}`, 'PUT', entry);
+      await apiRequest('/api/hamyar/118', 'POST', entry);
       closeModal('suggest118Modal');
       resetAndRenderDirectory();
       showToast('شماره با موفقیت به دفترچه ۱۱۸ اضافه شد.');
@@ -1976,7 +1972,7 @@
       };
       localAds.unshift(newAd);
       localStorage.setItem('hj_ads', JSON.stringify(localAds));
-      await fbRequest(`ads/${newAd.id}`, 'PUT', { ...newAd, isUserOwned: false });
+      const adRes = await apiRequest('/api/hamyar/ads', 'POST', newAd); if (adRes && adRes.ok && adRes.ad && adRes.ad.image) { newAd.image = adRes.ad.image; localStorage.setItem('hj_ads', JSON.stringify(localAds)); }
       closeModal('addAdModal');
       renderAdsList();
       showToast('آگهی شما منتشر شد.');
@@ -2009,7 +2005,7 @@
     async function deleteAd(adId) {
       localAds = localAds.filter(a => a.id !== adId);
       localStorage.setItem('hj_ads', JSON.stringify(localAds));
-      await fbRequest(`ads/${adId}`, 'DELETE');
+      await apiRequest(`/api/hamyar/ads/${adId}`, 'DELETE', null, true);
       closeModal('adDetailModal');
       renderAdsList();
       showToast('آگهی حذف شد.');
@@ -2284,18 +2280,41 @@
         return;
       }
       const pass = document.getElementById('adminPassInput').value;
-      if (pass !== adminPassword) {
-        adminFailedAttempts++;
-        if (adminFailedAttempts >= 5) {
-          adminLockUntil = Date.now() + 60000;
-          adminFailedAttempts = 0;
-          notice.textContent = '۵ بار رمز اشتباه وارد شد؛ پنل به مدت ۶۰ ثانیه قفل گردید.';
-        } else {
-          notice.textContent = `رمز مدیریت اشتباه است (تلاش ${adminFailedAttempts} از ۵).`;
-        }
-        notice.style.display = 'block';
+      if (getApiBaseUrl()) {
+        apiRequest('/api/hamyar/admin/login', 'POST', { password: pass }).then(res => {
+          if (res && res.ok) {
+            adminPassword = pass;
+            localStorage.setItem('hj_admin_pass', pass);
+            finishAdminLogin();
+          } else if (res && res.status === 403) {
+            handleAdminLoginFail(notice);
+          } else {
+            if (pass === adminPassword) finishAdminLogin();
+            else handleAdminLoginFail(notice);
+          }
+        });
         return;
       }
+      if (pass !== adminPassword) {
+        handleAdminLoginFail(notice);
+        return;
+      }
+      finishAdminLogin();
+    }
+
+    function handleAdminLoginFail(notice) {
+      adminFailedAttempts++;
+      if (adminFailedAttempts >= 5) {
+        adminLockUntil = Date.now() + 60000;
+        adminFailedAttempts = 0;
+        notice.textContent = '۵ بار رمز اشتباه وارد شد؛ پنل به مدت ۶۰ ثانیه قفل گردید.';
+      } else {
+        notice.textContent = `رمز مدیریت اشتباه است (تلاش ${adminFailedAttempts} از ۵).`;
+      }
+      notice.style.display = 'block';
+    }
+
+    function finishAdminLogin() {
       adminFailedAttempts = 0;
       document.getElementById('adminLoginSection').style.display = 'none';
       document.getElementById('adminPanelContent').style.display = 'block';
@@ -2362,7 +2381,7 @@
         : '<div style="font-size:0.76rem; color:#64748b;">شماره سفارشی جدیدی ثبت نشده است.</div>';
 
       // Cloud
-      document.getElementById('adminFirebaseUrlInput').value = firebaseUrl;
+      document.getElementById('adminFirebaseUrlInput').value = apiBaseUrl;
     }
 
     function setAdminTime(g, val) {
@@ -2423,8 +2442,8 @@
       document.getElementById('expertNoteText').textContent = expertNote;
       renderPowerSection();
 
-      await fbRequest('powerSchedule', 'PUT', powerSchedule);
-      await fbRequest('expertNote', 'PUT', expertNote);
+      const pwRes = await apiRequest('/api/hamyar/admin/power-weather', 'POST', { powerSchedule, expertNote }, true);
+      if (pwRes && !pwRes.ok) { alert(pwRes.error || 'خطا در ذخیره آنلاین'); return; }
       showToast('برنامه برق و نظر کارشناس ذخیره و منتشر شد.');
     }
 
@@ -2461,7 +2480,8 @@
       });
       localStorage.setItem('hj_materials_cfg', JSON.stringify(materialsConfig));
       renderMaterialsTab();
-      await fbRequest('materialsConfig', 'PUT', materialsConfig);
+      const mRes = await apiRequest('/api/hamyar/admin/materials', 'POST', { materialsConfig }, true);
+      if (mRes && !mRes.ok) { alert(mRes.error || 'خطا در ذخیره آنلاین'); return; }
       showToast('موجودی و قیمت مصالح ذخیره و منتشر شد.');
     }
 
@@ -2473,24 +2493,25 @@
     async function adminDelete118(idOrPhone) {
       extra118Contacts = extra118Contacts.filter(c => (c.id || c.p) !== idOrPhone);
       localStorage.setItem('hj_extra_118', JSON.stringify(extra118Contacts));
-      await fbRequest(`extra118/${idOrPhone}`, 'DELETE');
+      await apiRequest(`/api/hamyar/118/${idOrPhone}`, 'DELETE', null, true);
       renderDirectory();
       populateAdminPanel();
       showToast('شماره از لیست حذف شد.');
     }
 
     async function saveFirebaseUrlFromAdmin() {
-      firebaseUrl = document.getElementById('adminFirebaseUrlInput').value.trim();
-      localStorage.setItem('hj_firebase_url', firebaseUrl);
+      apiBaseUrl = document.getElementById('adminFirebaseUrlInput').value.trim();
+      localStorage.setItem('hj_api_url', apiBaseUrl);
       await syncFromCloud(true);
     }
 
     async function changeAdminPassword() {
       const np = document.getElementById('adminNewPassInput').value.trim();
       if (np.length < 6) { alert('رمز جدید باید حداقل ۶ کاراکتر باشد.'); return; }
+      const passRes = await apiRequest('/api/hamyar/admin/password', 'POST', { newPassword: np }, true);
+      if (passRes && !passRes.ok) { alert(passRes.error || 'خطا در تغییر رمز سرور'); return; }
       adminPassword = np;
       localStorage.setItem('hj_admin_pass', adminPassword);
-      await fbRequest('adminPassword', 'PUT', adminPassword);
       document.getElementById('adminNewPassInput').value = '';
       showToast('رمز مدیریت تغییر یافت.');
     }

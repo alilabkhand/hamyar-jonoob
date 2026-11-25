@@ -1,6 +1,4 @@
-// تنظیمات دیتابیس ابری مستقل همیار جنوب (Firebase Realtime Database)
-// پس از ساخت پروژه جدید در console.firebase.google.com، آدرس Realtime Database خود را پایین قرار دهید:
-// مثال: "https://hamyar-jonoob-default-rtdb.firebaseio.com"
-window.HAMYAR_FIREBASE = {
-  DATABASE_URL: ""
+// تنظیمات اتصال همیار جنوب به سرور ایران (لیارا - بدون نیاز به فیلترشکن)
+window.HAMYAR_CONFIG = {
+  API_URL: "https://hamyar.liara.run"
 };
