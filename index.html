@@ -2141,8 +2141,7 @@
       lines.push(`کرایه حمل: ${inv.deliveryFee ? formatToman(inv.deliveryFee) + ' تومان' : 'رایگان'}`);
       lines.push(`جمع کل فاکتور: ${formatToman(inv.grandTotal)} تومان`);
       lines.push('==============================');
-      return lines.join('
-');
+      return lines.join('\n');
     }
 
     function sendMaterialOrder(channel) {
@@ -2385,16 +2384,11 @@
       const raw = document.getElementById('adminRawPowerText').value;
       if (!raw.trim()) return;
       [
-        { key: 'A', regex: /گروه\s*الف\s*[:\-]?\s*([^
-|،]+)/ },
-        { key: 'B', regex: /گروه\s*ب\s*[:\-]?\s*([^
-|،]+)/ },
-        { key: 'C', regex: /گروه\s*ج\s*[:\-]?\s*([^
-|،]+)/ },
-        { key: 'D', regex: /گروه\s*د\s*[:\-]?\s*([^
-|،]+)/ },
-        { key: 'Y', regex: /گروه\s*ی\s*[:\-]?\s*([^
-|،]+)/ }
+        { key: 'A', regex: /گروه\s*الف\s*[:\-]?\s*([^\n|،]+)/ },
+        { key: 'B', regex: /گروه\s*ب\s*[:\-]?\s*([^\n|،]+)/ },
+        { key: 'C', regex: /گروه\s*ج\s*[:\-]?\s*([^\n|،]+)/ },
+        { key: 'D', regex: /گروه\s*د\s*[:\-]?\s*([^\n|،]+)/ },
+        { key: 'Y', regex: /گروه\s*ی\s*[:\-]?\s*([^\n|،]+)/ }
       ].forEach(p => {
         const m = raw.match(p.regex);
         if (m && m[1]) document.getElementById(`adminTime_${p.key}`).value = m[1].trim();
