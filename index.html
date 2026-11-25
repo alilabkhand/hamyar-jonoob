@@ -2096,8 +2096,7 @@
     }
 
     function parseMultiPhones(rawText) {
-      const parts = normalizeFa(rawText).split(/[
-,،;|]+/);
+      const parts = normalizeFa(rawText).split(/[\n,،;|]+/);
       const clean = [];
       for (const part of parts) {
         const num = part.replace(/[^0-9+]/g, '');
