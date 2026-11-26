@@ -747,6 +747,7 @@
         <button class="region-pill" data-region="jam">جم</button>
         <button class="region-pill" data-region="lamerd">لامرد</button>
         <button class="region-pill" data-region="asaluyeh">عسلویه</button>
+        <button class="region-pill" data-region="kangan">کنگان</button>
       </div>
     </header>
 
@@ -1027,6 +1028,7 @@
         <option value="jam">جم</option>
         <option value="lamerd">لامرد</option>
         <option value="asaluyeh">عسلویه</option>
+        <option value="kangan">کنگان</option>
       </select>
       <label style="font-size:0.76rem; font-weight:700;">دسته‌بندی:</label>
       <select class="select" id="newAdCategory">
@@ -1082,7 +1084,8 @@
         <option value="mohr_galledar_asir">شهرستان مُهر، گله‌دار و اسیر</option>
         <option value="jam">جم</option>
         <option value="lamerd">لامرد</option>
-        <option value="asaluyeh">عسلویه و کنگان</option>
+        <option value="asaluyeh">عسلویه</option>
+        <option value="kangan">کنگان</option>
         <option value="other">شیراز و شهرهای همجوار</option>
       </select>
       <input type="text" class="input" id="sug118SubRegion" placeholder="نام دقیق شهر یا روستا (مثلاً: گله‌دار، اسیر، جم، لامرد...)" />
@@ -1123,12 +1126,13 @@
         <option value="mohr_galledar_asir">شهرستان مُهر، گله‌دار و اسیر</option>
         <option value="jam">جم</option>
         <option value="lamerd">لامرد</option>
-        <option value="asaluyeh">عسلویه و کنگان</option>
+        <option value="asaluyeh">عسلویه</option>
+        <option value="kangan">کنگان</option>
         <option value="other">شیراز و شهرهای همجوار</option>
         <option value="universal">همگانی (نمایش در همه شهرها)</option>
       </select>
       <label style="font-size:0.75rem; font-weight:700;">برچسب شهر/روستا:</label>
-      <input type="text" class="input" id="admEdit118R" placeholder="مثلاً: گله‌دار و فال، اسیر و حومه، جم، لامرد..." />
+      <input type="text" class="input" id="admEdit118R" placeholder="نام دقیق شهر یا روستا (مثلاً: مُهر، وراوی، خوزی، گله‌دار، اسیر، فال، کنگان...)" />
       <label style="font-size:0.75rem; font-weight:700;">آدرس کوتاه — فقط شهر و خیابان (اختیاری):</label>
       <input type="text" class="input" id="admEdit118Addr" placeholder="مثلاً: مُهر، خیابان بهارستان یا گله‌دار، بلوار کوثر" />
       <div style="display:flex; gap:8px;">
@@ -1253,7 +1257,8 @@
               <option value="mohr_galledar_asir">مُهر، گله‌دار و اسیر</option>
               <option value="jam">جم</option>
               <option value="lamerd">لامرد</option>
-              <option value="asaluyeh">عسلویه و کنگان</option>
+              <option value="asaluyeh">عسلویه</option>
+              <option value="kangan">کنگان</option>
               <option value="other">شیراز و شهرهای همجوار</option>
               <option value="_edited">فقط ویرایش‌شده‌ها</option>
               <option value="_deleted">فقط حذف‌شده‌ها (برای بازیابی)</option>
@@ -1371,7 +1376,8 @@
       mohr_galledar_asir: { id: 'mohr_galledar_asir', name: 'شهرستان مُهر، گله‌دار و اسیر', shortName: 'مُهر، گله‌دار و اسیر', lat: 27.656, lon: 52.668, powerSupported: true },
       jam: { id: 'jam', name: 'شهرستان جم', shortName: 'جم', lat: 27.827, lon: 52.326, powerSupported: false },
       lamerd: { id: 'lamerd', name: 'شهرستان لامرد', shortName: 'لامرد', lat: 27.333, lon: 53.178, powerSupported: false },
-      asaluyeh: { id: 'asaluyeh', name: 'شهرستان عسلویه', shortName: 'عسلویه', lat: 27.476, lon: 52.607, powerSupported: false }
+      asaluyeh: { id: 'asaluyeh', name: 'شهرستان عسلویه', shortName: 'عسلویه', lat: 27.476, lon: 52.607, powerSupported: false },
+      kangan: { id: 'kangan', name: 'شهرستان کنگان', shortName: 'کنگان', lat: 27.834, lon: 52.062, powerSupported: false }
     };
 
     const FEEDERS_DATA = [
@@ -1429,7 +1435,7 @@
       }
     };
 
-    const DEFAULT_EXPERT_NOTE = 'با توجه به نقشه‌های جوی منطقه، طی روزهای آینده جوی نسبتاً پایدار در محور گله‌دار، اسیر، مُهر، جم و لامرد حاکم است. کشاورزان عزیز ساعات صبح که سرعت باد پایین است بهترین زمان برای محلول‌پاشی و تغذیه برگ را دارند.';
+    const DEFAULT_EXPERT_NOTE = 'با توجه به نقشه‌های جوی منطقه، طی روزهای آینده جوی نسبتاً پایدار در محور گله‌دار، اسیر، مُهر، جم، لامرد، عسلویه و کنگان حاکم است. کشاورزان عزیز ساعات صبح که سرعت باد پایین است بهترین زمان برای محلول‌پاشی و تغذیه برگ را دارند.';
 
     const DEFAULT_MATERIALS_CONFIG = {
       orderPhone: '+989923213245',
@@ -1560,6 +1566,7 @@
         badge.classList.add('online');
         document.getElementById('expertNoteText').textContent = expertNote;
         renderPowerSection();
+        updateDirectoryRegionDropdown(true);
         renderDirectory();
         renderAdsList();
         renderMaterialsTab();
@@ -1898,8 +1905,9 @@
 
     function inferRegionKeyFromLabel(rLabel) {
       const s = normalizeFa(rLabel || '');
-      if (s.includes('لامرد')) return 'lamerd';
-      if (s.includes('عسلویه') || s.includes('کنگان')) return 'asaluyeh';
+      if (s.includes('کنگان') || s.includes('سیراف') || s.includes('بنک') || s.includes('طاهری')) return 'kangan';
+      if (s.includes('عسلویه') || s.includes('نخل تقی') || s.includes('بیدخون') || s.includes('چاه مبارک') || s.includes('شیرینو')) return 'asaluyeh';
+      if (s.includes('لامرد') || s.includes('اشکنان') || s.includes('علامرودشت')) return 'lamerd';
       if (s.includes('جم')) return 'jam';
       if (s.includes('شیراز') || s.includes('همجوار')) return 'other';
       if (s.includes('سراسری')) return 'universal';
@@ -1980,25 +1988,88 @@
       return result;
     }
 
-    function updateDirectoryRegionDropdown() {
+    const REGION_SUBTOWN_ORDER = {
+      mohr_galledar_asir: [
+        'مُهر', 'وراوی', 'خوزی', 'گله‌دار', 'اسیر', 'فال', 'دهنو',
+        'شهرک امام', 'دارالمیزان', 'چاه کبکان',
+        'هرج', 'هورمه', 'دهشیخ', 'چاه محمدحاجی', 'سرگاه', 'زیغان',
+        'ارودان', 'چاه مزاج', 'چاه خالو', 'بهرستان', 'نوآباد', 'مزیجان', 'چاه دروا', 'کارون'
+      ],
+      kangan: ['کنگان', 'سیراف و طاهری', 'بنک', 'دیر'],
+      asaluyeh: ['عسلویه', 'نخل تقی', 'چاه مبارک', 'بیدخون', 'شیرینو'],
+      jam: ['جم', 'بهارستان جم', 'ریز', 'انارستان'],
+      lamerd: ['لامرد', 'اشکنان', 'علامرودشت', 'چاه شیخ']
+    };
+
+    function updateDirectoryRegionDropdown(preserveSelection = false) {
       const reg = REGIONS[currentRegion] || REGIONS.mohr_galledar_asir;
       const titleEl = document.getElementById('dirHeaderTitle');
       if (titleEl) titleEl.textContent = `📞 ۱۱۸ ${reg.shortName}`;
 
       const sel = document.getElementById('dirRegionFilter');
       if (!sel) return;
-      let opts = `<option value="current">📍 فقط ${escapeHtml(reg.shortName)}</option>`;
-      if (currentRegion === 'mohr_galledar_asir') {
-        opts += `
-          <option value="sub:گله‌دار و فال">↳ فقط گله‌دار، فال و دهنو</option>
-          <option value="sub:اسیر و حومه">↳ فقط اسیر، شهرک امام و حومه</option>
-          <option value="sub:مُهر و وراوی">↳ فقط مُهر، وراوی و خوزی</option>`;
+      const prevVal = preserveSelection ? sel.value : 'current';
+
+      // Count sub-towns strictly inside the CURRENTLY selected region (dedicated per-city filters!)
+      const all = getAll118Contacts(false);
+      const subCounts = {};
+      let regionTotal = 0;
+      for (const item of all) {
+        if (item.rk === currentRegion) {
+          regionTotal++;
+          const label = item.r || reg.shortName;
+          subCounts[label] = (subCounts[label] || 0) + 1;
+        }
+      }
+
+      const priorityList = REGION_SUBTOWN_ORDER[currentRegion] || [];
+      const coreAlwaysShow = currentRegion === 'mohr_galledar_asir'
+        ? new Set(['مُهر', 'وراوی', 'خوزی', 'گله‌دار', 'اسیر', 'فال', 'دهنو', 'شهرک امام', 'دارالمیزان', 'چاه کبکان'])
+        : new Set();
+
+      const orderedTowns = [];
+      const added = new Set();
+
+      // 1. Add priority towns (core towns always shown if >= 1; other priority villages if >= 3)
+      for (const t of priorityList) {
+        const cnt = subCounts[t] || 0;
+        if (cnt > 0 && (coreAlwaysShow.has(t) || cnt >= 3 || currentRegion !== 'mohr_galledar_asir')) {
+          orderedTowns.push([t, cnt]);
+          added.add(t);
+        }
+      }
+
+      // 2. Add any other village in this region with notable contacts (>= 3) not yet listed
+      const extraTowns = Object.entries(subCounts)
+        .filter(([t, cnt]) => !added.has(t) && t !== 'گله‌دار و حومه (عمومی)' && cnt >= 3)
+        .sort((a, b) => b[1] - a[1]);
+      for (const entry of extraTowns) {
+        orderedTowns.push(entry);
+        added.add(entry[0]);
+      }
+
+      // 3. Add general/unspecified bucket at the end of this region if present
+      if (subCounts['گله‌دار و حومه (عمومی)']) {
+        orderedTowns.push(['گله‌دار و حومه (عمومی)', subCounts['گله‌دار و حومه (عمومی)']]);
+      }
+
+      let opts = `<option value="current">📍 همه ${escapeHtml(reg.shortName)} (${regionTotal.toLocaleString('fa-IR')})</option>`;
+      // Only show sub-town items if there is more than 1 sub-town in this region
+      if (orderedTowns.length > 1 || currentRegion === 'mohr_galledar_asir') {
+        for (const [t, cnt] of orderedTowns) {
+          opts += `<option value="sub:${escapeHtml(t)}">↳ ${escapeHtml(t)} (${cnt.toLocaleString('fa-IR')})</option>`;
+        }
       }
       opts += `
-        <option value="all">🗺️ همه مناطق جنوب و همجوار</option>
+        <option value="all">🗺️ همه مناطق جنوب</option>
         <option value="rk:other">🏥 شیراز، لار، اوز و خنج</option>`;
+
       sel.innerHTML = opts;
-      sel.value = 'current';
+      if (preserveSelection && [...sel.options].some(o => o.value === prevVal)) {
+        sel.value = prevVal;
+      } else {
+        sel.value = 'current';
+      }
     }
 
     function resetAndRenderDirectory() {
@@ -2135,6 +2206,7 @@
       localStorage.setItem('hj_extra_118', JSON.stringify(extra118Contacts));
       await apiRequest('/api/hamyar/118', 'POST', entry);
       closeModal('suggest118Modal');
+      updateDirectoryRegionDropdown(true);
       resetAndRenderDirectory();
       showToast('شماره با موفقیت به دفترچه ۱۱۸ اضافه شد.');
     }
@@ -2813,14 +2885,15 @@
     function autoFillAdminSubRegion() {
       const rk = document.getElementById('admEdit118Rk').value;
       const map = {
-        mohr_galledar_asir: 'گله‌دار و حومه',
+        mohr_galledar_asir: 'گله‌دار',
         jam: 'جم',
         lamerd: 'لامرد',
-        asaluyeh: 'عسلویه و کنگان',
+        asaluyeh: 'عسلویه',
+        kangan: 'کنگان',
         other: 'شیراز و شهرهای همجوار',
         universal: 'سراسری (همه شهرها)'
       };
-      document.getElementById('admEdit118R').value = map[rk] || 'گله‌دار و حومه';
+      document.getElementById('admEdit118R').value = map[rk] || 'گله‌دار';
     }
 
     function openAdminAdd118() {
@@ -2880,6 +2953,7 @@
       }
 
       closeModal('adminEdit118Modal');
+      updateDirectoryRegionDropdown(true);
       renderDirectory();
       renderAdmin118List();
       showToast('تغییرات ۱۱۸ روی سرور ذخیره و منتشر شد.');
