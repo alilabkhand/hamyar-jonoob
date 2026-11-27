@@ -939,7 +939,6 @@
             <input type="checkbox" id="dirIncludeLegacy" onchange="resetAndRenderDirectory()" style="width:16px; height:16px;" />
             نمایش اطلاعات قدیمی و ثبت‌شده که هنوز منبعشان تأیید نشده است
           </label>
-          </div>
         </div>
 
         <div id="dirListContainer"></div>
@@ -1709,6 +1708,11 @@
       }
       const activeId = activePane ? activePane.id : '';
       document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === activeId));
+      const nav = document.querySelector('.bottom-nav');
+      if (nav) {
+        const visibleCount = APP_TABS.filter(tab => enabledTabs[tab.id] !== false).length;
+        nav.style.gridTemplateColumns = `repeat(${visibleCount}, minmax(0, 1fr))`;
+      }
     }
 
     function renderAdminTabsSettings() {
