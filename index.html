@@ -90,6 +90,10 @@
       .bottom-nav { max-width:900px; }
     }
 
+    .home-search-box { background:#fff; border:1px solid var(--border); border-radius:17px; padding:13px; box-shadow:var(--shadow); margin-bottom:13px; }
+    .home-search-actions { display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-top:5px; }
+    .home-search-actions button { border:0; border-radius:10px; padding:9px 6px; font-size:.73rem; font-weight:800; cursor:pointer; background:#0f766e; color:#fff; }
+    .home-search-actions button:last-child { background:#d97706; }
     /* Header */
     .top-header {
       background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
@@ -829,6 +833,15 @@
           <div class="home-status-row">
             <span class="home-status-chip" id="homeRegionChip">📍 شهرستان مُهر، گله‌دار و اسیر</span>
             <span class="home-status-chip" id="homeDateChip">📅 امروز</span>
+          </div>
+        </div>
+
+        <div class="home-search-box">
+          <div style="font-size:.84rem;font-weight:900;margin-bottom:8px;">🔎 دنبال چه چیزی می‌گردی؟</div>
+          <input type="search" class="input" id="homeUniversalSearch" placeholder="نام کسب‌وکار، خدمت یا آگهی..." aria-label="جستجوی خدمات و آگهی‌های جنوب" style="margin-bottom:3px;" />
+          <div class="home-search-actions">
+            <button onclick="searchHomeDirectory()">جستجو در شماره‌یاب</button>
+            <button onclick="searchHomeAds()">جستجو در آگهی‌ها</button>
           </div>
         </div>
 
@@ -1774,6 +1787,28 @@
       renderMaterialsTab();
       syncFromCloud(false);
     });
+
+    function searchHomeDirectory() {
+      const query = document.getElementById('homeUniversalSearch')?.value.trim() || '';
+      openHomeFeature('tab-118');
+      const field = document.getElementById('dirSearchInput');
+      if (field) {
+        field.value = query;
+        resetAndRenderDirectory();
+        field.focus();
+      }
+    }
+
+    function searchHomeAds() {
+      const query = document.getElementById('homeUniversalSearch')?.value.trim() || '';
+      openHomeFeature('tab-divar');
+      const field = document.getElementById('adSearchInput');
+      if (field) {
+        field.value = query;
+        renderAdsList();
+        field.focus();
+      }
+    }
 
     function openHomeFeature(tabId) {
       const button = document.querySelector(`.nav-btn[data-tab="${tabId}"]`);
