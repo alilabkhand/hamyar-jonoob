@@ -120,6 +120,32 @@
       background: rgba(16, 185, 129, 0.28);
       color: #d1fae5;
     }
+    .admin-access-btn {
+      border: 1px solid rgba(255,255,255,0.32);
+      background: rgba(255,255,255,0.16);
+      color: #fff;
+      border-radius: 10px;
+      padding: 5px 9px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .tab-pane.tab-disabled { display: none !important; }
+    .tab-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 11px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #f8fafc;
+      margin-bottom: 7px;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+    .tab-toggle-row input { width: 19px; height: 19px; accent-color: #0f766e; }
 
     .region-pills {
       display: flex;
@@ -674,7 +700,7 @@
 
     .admin-subtabs {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 5px;
       margin-bottom: 12px;
     }
@@ -739,6 +765,7 @@
         <div class="header-meta">
           <div class="date-badge" id="todayJalaliBadge">در حال بارگذاری تاریخ...</div>
           <div class="sync-badge" id="cloudSyncBadge" onclick="syncFromCloud(true)" title="بروزرسانی اطلاعات آنلاین">📱 حالت آفلاین</div>
+          <button class="admin-access-btn" type="button" onclick="openAdminModal()" title="ورود به مدیریت">⚙️ مدیریت</button>
         </div>
       </div>
 
@@ -884,15 +911,15 @@
         <div class="card" style="background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%); border-color: #67e8f9;">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
             <div>
-              <div style="font-weight: 900; font-size: 0.96rem; color: #155e75;" id="dirHeaderTitle">📞 بانک اطلاعاتی ۱۱۸ منطقه</div>
-              <div style="font-size: 0.75rem; color: #0e7490;" id="dirStatsText">در حال بارگذاری شماره‌ها...</div>
+              <div style="font-weight: 900; font-size: 0.96rem; color: #155e75;" id="dirHeaderTitle">📞 شماره‌یاب جنوب</div>
+              <div style="font-size: 0.75rem; color: #0e7490;" id="dirStatsText">فهرست تماس‌های عمومی مشاغل و خدمات منطقه</div>
             </div>
             <button class="btn btn-primary btn-sm" onclick="openSuggestContactModal()">+ ثبت شغل در ۱۱۸</button>
           </div>
         </div>
 
         <div class="card" style="padding:12px;">
-          <input type="text" class="input" id="dirSearchInput" placeholder="جستجوی شغل، نام، شهر، خیابان یا شماره (مثلاً: معاینه فنی، خیابان فضیلت، دکتر، وانت...)" oninput="resetAndRenderDirectory()" style="margin-bottom:8px;" />
+          <input type="text" class="input" id="dirSearchInput" placeholder="جستجوی کسب‌وکار، مرکز خدماتی، شهر یا شماره تماس..." oninput="resetAndRenderDirectory()" style="margin-bottom:8px;" />
           <div style="display:flex; gap:8px;">
             <select class="select" id="dirCategoryFilter" onchange="resetAndRenderDirectory()" style="margin-bottom:0;">
               <option value="all">همه مشاغل و خدمات</option>
@@ -908,6 +935,10 @@
             </select>
             <select class="select" id="dirRegionFilter" onchange="resetAndRenderDirectory()" style="margin-bottom:0;"></select>
           </div>
+          <label style="display:flex; align-items:center; gap:7px; font-size:0.73rem; color:#64748b; margin-top:9px; cursor:pointer;">
+            <input type="checkbox" id="dirIncludeLegacy" onchange="resetAndRenderDirectory()" style="width:16px; height:16px;" />
+            نمایش اطلاعات قدیمی و ثبت‌شده که هنوز منبعشان تأیید نشده است
+          </label>
         </div>
 
         <div id="dirListContainer"></div>
@@ -1178,6 +1209,7 @@
           <button class="admin-subtab" onclick="switchAdminSubtab('adm-mat', this)">🧱 مصالح</button>
           <button class="admin-subtab" onclick="switchAdminSubtab('adm-118', this)">📞 ۱۱۸</button>
           <button class="admin-subtab" onclick="switchAdminSubtab('adm-divar', this)">📢 دیوار</button>
+          <button class="admin-subtab" onclick="switchAdminSubtab('adm-tabs', this)">⚙️ تب‌ها</button>
           <button class="admin-subtab" onclick="switchAdminSubtab('adm-cloud', this)">☁️ سرور</button>
         </div>
 
@@ -1276,6 +1308,15 @@
           <div id="adminAdsList" style="margin-bottom:14px;"></div>
         </div>
 
+        <!-- Admin Subtab: App navigation visibility -->
+        <div class="admin-pane" id="adm-tabs" style="display:none;">
+          <div style="font-weight:900; font-size:0.9rem; margin-bottom:6px;">⚙️ مدیریت نمایش بخش‌های برنامه</div>
+          <p style="font-size:0.76rem; color:#64748b; margin-bottom:10px;">هر بخشی را خاموش کنی از نوار پایین و صفحهٔ اصلی کاربران پنهان می‌شود. دست‌کم یک بخش باید روشن بماند.</p>
+          <div id="adminTabsVisibilityList"></div>
+          <button class="btn btn-primary" style="width:100%; margin-top:8px;" onclick="saveAdminTabVisibility()">💾 ذخیره و اعمال برای کاربران</button>
+          <p style="font-size:0.7rem; color:#64748b; margin-top:8px;">در صورت اتصال سرور، این تنظیم برای همهٔ کاربران همگام می‌شود؛ در غیر این صورت فقط روی همین مرورگر ذخیره خواهد شد.</p>
+        </div>
+
         <!-- Admin Subtab 4: Cloud & Password -->
         <div class="admin-pane" id="adm-cloud" style="display:none;">
           <div style="font-weight:900; font-size:0.88rem; margin-bottom:6px;">☁️ اتصال آنلاین به سرور ایران (لیارا)</div>
@@ -1296,6 +1337,7 @@
   <!-- Optional external config & 118 data files (work gracefully even if absent) -->
   <script src="./firebase-config.js"></script>
   <script src="./contacts-118.js"></script>
+  <script src="./contacts-public.js"></script>
 
   <script>
     // ================== UTILITIES ==================
@@ -1483,8 +1525,25 @@
     let extra118Contacts = JSON.parse(localStorage.getItem('hj_extra_118') || '[]');
     let overrides118 = JSON.parse(localStorage.getItem('hj_overrides_118') || '{}');
     let adm118VisibleCount = 30;
+    const APP_TABS = [
+      { id: 'tab-weather', label: 'هوا و کشت', icon: '🌤️' },
+      { id: 'tab-power', label: 'قطعی برق', icon: '⚡' },
+      { id: 'tab-118', label: 'شماره‌یاب جنوب', icon: '📞' },
+      { id: 'tab-divar', label: 'دیوار محلی', icon: '📢' },
+      { id: 'tab-materials', label: 'مصالح ساختمانی', icon: '🧱' }
+    ];
+    function sanitizeTabVisibility(value) {
+      const clean = {};
+      APP_TABS.forEach(tab => clean[tab.id] = value && typeof value[tab.id] === 'boolean' ? value[tab.id] : true);
+      if (!APP_TABS.some(tab => clean[tab.id])) clean[APP_TABS[0].id] = true;
+      return clean;
+    }
     let adminPassword = localStorage.getItem('hj_admin_pass') || '1234';
     let apiBaseUrl = (window.HAMYAR_CONFIG && window.HAMYAR_CONFIG.API_URL) || (window.HAMYAR_FIREBASE && window.HAMYAR_FIREBASE.DATABASE_URL) || localStorage.getItem('hj_api_url') || '';
+    let enabledTabs = (() => {
+      try { return sanitizeTabVisibility(JSON.parse(localStorage.getItem('hj_enabled_tabs') || 'null')); }
+      catch (e) { return sanitizeTabVisibility(null); }
+    })();
 
     let materialCart = {};
     let weatherDataCache = {};
@@ -1561,6 +1620,12 @@
           overrides118 = cloud.overrides118;
           localStorage.setItem('hj_overrides_118', JSON.stringify(overrides118));
         }
+        if (cloud.enabledTabs && typeof cloud.enabledTabs === 'object') {
+          enabledTabs = sanitizeTabVisibility(cloud.enabledTabs);
+          localStorage.setItem('hj_enabled_tabs', JSON.stringify(enabledTabs));
+          applyTabVisibility();
+          if (document.getElementById('adminPanelContent').style.display !== 'none') renderAdminTabsSettings();
+        }
 
         badge.textContent = '🟢 آنلاین (سرور ایران)';
         badge.classList.add('online');
@@ -1583,6 +1648,7 @@
       // Fixed, clean Persian Date
       const jDate = getCleanJalaliDate(new Date());
       document.getElementById('todayJalaliBadge').textContent = jDate.formatted;
+      applyTabVisibility();
 
       // Register Service Worker for PWA/Offline
       if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
@@ -1615,11 +1681,72 @@
     });
 
     function switchTab(tabId, btnEl) {
+      if (!enabledTabs[tabId]) { showToast('این بخش در حال حاضر غیرفعال است.'); return; }
       document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       if (btnEl) btnEl.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function applyTabVisibility() {
+      APP_TABS.forEach(tab => {
+        const nav = document.querySelector(`.nav-btn[data-tab="${tab.id}"]`);
+        const pane = document.getElementById(tab.id);
+        const visible = enabledTabs[tab.id] !== false;
+        if (nav) nav.style.display = visible ? '' : 'none';
+        if (pane) pane.classList.toggle('tab-disabled', !visible);
+      });
+      let activePane = document.querySelector('.tab-pane.active');
+      if (!activePane || enabledTabs[activePane.id] === false) {
+        const nextTab = APP_TABS.find(tab => enabledTabs[tab.id] !== false);
+        if (nextTab) {
+          document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+          activePane = document.getElementById(nextTab.id);
+          if (activePane) activePane.classList.add('active');
+        }
+      }
+      const activeId = activePane ? activePane.id : '';
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === activeId));
+      const nav = document.querySelector('.bottom-nav');
+      if (nav) {
+        const visibleCount = APP_TABS.filter(tab => enabledTabs[tab.id] !== false).length;
+        nav.style.gridTemplateColumns = `repeat(${visibleCount}, minmax(0, 1fr))`;
+      }
+    }
+
+    function renderAdminTabsSettings() {
+      const box = document.getElementById('adminTabsVisibilityList');
+      if (!box) return;
+      box.innerHTML = APP_TABS.map(tab => `
+        <label class="tab-toggle-row" for="adminTab-${tab.id}">
+          <span>${tab.icon} ${escapeHtml(tab.label)}</span>
+          <input type="checkbox" id="adminTab-${tab.id}" ${enabledTabs[tab.id] !== false ? 'checked' : ''} />
+        </label>`).join('');
+    }
+
+    async function saveAdminTabVisibility() {
+      const next = {};
+      APP_TABS.forEach(tab => {
+        const input = document.getElementById(`adminTab-${tab.id}`);
+        next[tab.id] = !!(input && input.checked);
+      });
+      if (!APP_TABS.some(tab => next[tab.id])) {
+        alert('حداقل یک بخش باید فعال باشد.');
+        renderAdminTabsSettings();
+        return;
+      }
+      enabledTabs = sanitizeTabVisibility(next);
+      localStorage.setItem('hj_enabled_tabs', JSON.stringify(enabledTabs));
+      applyTabVisibility();
+      const result = await apiRequest('/api/hamyar/admin/tabs', 'POST', { enabledTabs }, true);
+      if (result && result.ok) {
+        showToast('تنظیم تب‌ها برای همهٔ کاربران ذخیره شد.');
+      } else if (result && !result.ok) {
+        showToast('روی این دستگاه ذخیره شد؛ انتشار همگانی پس از به‌روزرسانی سرور انجام می‌شود.');
+      } else {
+        showToast('روی این دستگاه ذخیره شد؛ برای اعمال همگانی اتصال سرور لازم است.');
+      }
     }
 
     function selectRegion(regionKey) {
@@ -1927,7 +2054,11 @@
         r,
         rk,
         a: (item.a || '').trim(),
-        sourceType
+        sourceType,
+        publicStatus: item.publicStatus || (sourceType === "public" ? "verified" : "unverified"),
+        source: item.source || "",
+        sourceUrl: item.sourceUrl || "",
+        verifiedAt: item.verifiedAt || ""
       };
     }
 
@@ -1947,7 +2078,14 @@
         rawList.push(normalizeContactRecord(it, it.id || ('b_' + (idx + 1)), 'base'));
       });
 
-      // 3. Builtin universal emergency numbers
+      // 3. Public-facing business contacts from independently checked map/directory listings
+      const publicExternal = Array.isArray(window.PUBLIC_DIRECTORY_118) ? window.PUBLIC_DIRECTORY_118 : [];
+      publicExternal.forEach((it, idx) => {
+        if (!it || !it.n) return;
+        rawList.push(normalizeContactRecord(it, it.id || ("pub_" + (idx + 1)), "public"));
+      });
+
+      // 4. Builtin universal emergency numbers
       BUILTIN_ESSENTIAL_118.forEach(it => {
         rawList.push(normalizeContactRecord(it, it.id, 'builtin'));
       });
@@ -2004,14 +2142,14 @@
     function updateDirectoryRegionDropdown(preserveSelection = false) {
       const reg = REGIONS[currentRegion] || REGIONS.mohr_galledar_asir;
       const titleEl = document.getElementById('dirHeaderTitle');
-      if (titleEl) titleEl.textContent = `📞 ۱۱۸ ${reg.shortName}`;
+      if (titleEl) titleEl.textContent = `📞 شماره‌یاب ${reg.shortName}`;
 
       const sel = document.getElementById('dirRegionFilter');
       if (!sel) return;
       const prevVal = preserveSelection ? sel.value : 'current';
 
       // Count sub-towns strictly inside the CURRENTLY selected region (dedicated per-city filters!)
-      const all = getAll118Contacts(false);
+      const all = getAll118Contacts(false).filter(item => item.sourceType === 'public' || item.sourceType === 'builtin');
       const subCounts = {};
       let regionTotal = 0;
       for (const item of all) {
@@ -2083,7 +2221,8 @@
     }
 
     function renderDirectory() {
-      const all = getAll118Contacts(false);
+      const includeLegacy = !!document.getElementById('dirIncludeLegacy')?.checked;
+      const all = getAll118Contacts(false).filter(item => includeLegacy || item.sourceType === 'public' || item.sourceType === 'builtin');
       const q = normalizeFa(document.getElementById('dirSearchInput').value);
       const cat = document.getElementById('dirCategoryFilter').value;
       const regFilter = document.getElementById('dirRegionFilter').value || 'current';
@@ -2154,6 +2293,7 @@
               <div>
                 <div style="font-weight:800; font-size:0.88rem;">${escapeHtml(item.n)}</div>
                 <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">🏷️ ${escapeHtml(item.c)} • 📍 ${escapeHtml(item.a || item.r)} ${item.ps.length > 1 ? `• <span style="color:#0f766e; font-weight:800;">${item.ps.length} شماره</span>` : ''}</div>
+                ${item.sourceType === 'public' ? `<div style="font-size:0.68rem; color:#0f766e; margin-top:5px;">🌐 منبع عمومی: ${escapeHtml(item.source || 'فهرست عمومی')} ${item.sourceUrl ? `• <a href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener" style="color:#0f766e; text-decoration:underline;">مشاهده منبع</a>` : ''} ${item.verifiedAt ? `• بررسی: ${escapeHtml(item.verifiedAt)}` : ''} </div>` : item.sourceType === 'builtin' ? `<div style="font-size:0.68rem; color:#0f766e; margin-top:5px;">شماره ضروری عمومی</div>` : `<div style="font-size:0.68rem; color:#b45309; margin-top:5px;">اطلاعات قدیمی / ثبت‌شده — منبع عمومی هنوز بررسی نشده</div>`}
               </div>
             </div>
             ${phoneRowsHtml}
@@ -2708,6 +2848,7 @@
 
       // Cloud
       document.getElementById('adminFirebaseUrlInput').value = apiBaseUrl;
+      renderAdminTabsSettings();
     }
 
     function setAdminTime(g, val) {
