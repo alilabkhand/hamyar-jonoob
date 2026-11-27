@@ -925,6 +925,17 @@
           </div>
         </div>
 
+
+        <div class="card" id="marineWeatherCard" style="border:1px solid #bae6fd;background:linear-gradient(145deg,#f0f9ff,#fff);margin:14px 0;">
+          <div class="card-title" style="color:#075985;"><span>🌊 وضعیت دریا و ماهیگیری | عسلویه</span><span id="marineUpdatedAt" style="font-size:.68rem;color:#64748b;">پیش‌بینی دریایی</span></div>
+          <div id="marineStatusSummary" style="font-size:.86rem;line-height:1.9;color:#334155;">در حال دریافت پیش‌بینی موج و باد دریایی...</div>
+          <div id="marineMetrics" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:10px 0;"></div>
+          <div style="font-weight:900;font-size:.8rem;color:#075985;margin:12px 0 6px;">شرایط ساعت‌های آینده</div>
+          <div id="marineHourly" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;"></div>
+          <div id="fishingAdvice" style="font-size:.76rem;line-height:1.9;color:#475569;margin-top:10px;padding:9px;background:#fff;border-radius:10px;"></div>
+          <div style="font-size:.68rem;line-height:1.8;color:#64748b;margin-top:8px;">این ارزیابی صرفاً راهنمای عمومی بر پایه پیش‌بینی باد و موج است؛ جایگزین هشدارهای رسمی دریایی، نظر صیادان محلی و بررسی تجهیزات ایمنی نیست. در صورت هشدار یا تردید، به دریا نروید. شرایط مناسب جوی نیز صید را تضمین نمی‌کند.</div>
+        </div>
+
         <div class="expert-box">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
             <span style="font-weight: 900; font-size: 0.88rem; color: #065f46;">🎙️ نظر کارشناس بومی هواشناسی</span>
@@ -1781,6 +1792,7 @@
 
       document.getElementById('expertNoteText').textContent = expertNote;
       selectRegion(currentRegion);
+      loadMarineWeather();
       renderCropsList();
       renderDirectory();
       renderAdsList();
@@ -1928,6 +1940,88 @@
       updateDirectoryRegionDropdown();
       resetAndRenderDirectory();
       renderAdsList();
+    }
+
+
+    // ================== ASALUYEH MARINE WEATHER ==================
+    let marineWeatherCache = null;
+    async function loadMarineWeather() {
+      const summary = document.getElementById('marineStatusSummary');
+      if (!summary) return;
+      summary.textContent = 'در حال دریافت پیش‌بینی موج و باد دریایی عسلویه...';
+      try {
+        const lat = 27.476, lon = 52.607;
+        const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&hourly=wave_height,wave_direction,wave_period,wind_wave_height,swell_wave_height&timezone=Asia%2FTehran&forecast_days=3`;
+        const windUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=wind_speed_10m,wind_direction_10m,precipitation_probability,weather_code&timezone=Asia%2FTehran&forecast_days=3`;
+        const responses = await Promise.all([fetch(marineUrl), fetch(windUrl)]);
+        if (!responses.every(r => r.ok)) throw new Error('Marine forecast unavailable');
+        const [marine, weather] = await Promise.all(responses.map(r => r.json()));
+        if (!marine.hourly?.time?.length || !weather.hourly?.time?.length) throw new Error('Incomplete marine forecast');
+        marineWeatherCache = { marine, weather };
+        renderMarineWeather(marineWeatherCache);
+      } catch (error) {
+        summary.textContent = 'اطلاعات پیش‌بینی دریایی در حال حاضر در دسترس نیست؛ لطفاً بعداً دوباره بررسی کنید.';
+        document.getElementById('marineMetrics').innerHTML = '';
+        document.getElementById('marineHourly').innerHTML = '';
+        document.getElementById('fishingAdvice').textContent = 'تا زمان دریافت داده معتبر موج و باد، وضعیت برای رفتن به دریا قابل ارزیابی نیست.';
+      }
+    }
+
+    function marineDirection(degrees) {
+      if (!Number.isFinite(degrees)) return 'نامشخص';
+      const names = ['شمال','شمال‌شرق','شرق','جنوب‌شرق','جنوب','جنوب‌غرب','غرب','شمال‌غرب'];
+      return names[Math.round(degrees / 45) % 8];
+    }
+
+    function renderMarineWeather(bundle) {
+      const m = bundle.marine.hourly, w = bundle.weather.hourly;
+      const now = new Date();
+      const tehranHour = Number(new Intl.DateTimeFormat('en-GB', { hour:'2-digit', hourCycle:'h23', timeZone:'Asia/Tehran' }).format(now));
+      const tehranDate = new Intl.DateTimeFormat('en-CA', { timeZone:'Asia/Tehran', year:'numeric', month:'2-digit', day:'2-digit' }).format(now);
+      let start = m.time.findIndex(t => t.startsWith(tehranDate + 'T') && Number(t.slice(11,13)) >= tehranHour);
+      if (start < 0) start = 0;
+      const rows = [];
+      for (let i=start; i<Math.min(start+12,m.time.length); i+=2) {
+        const wi = w.time.indexOf(m.time[i]);
+        if (wi < 0) continue;
+        const wave = Number(m.wave_height?.[i]);
+        const wind = Number(w.wind_speed_10m?.[wi]);
+        const rain = Number(w.precipitation_probability?.[wi] || 0);
+        const code = Number(w.weather_code?.[wi] || 0);
+        if (!Number.isFinite(wave) || !Number.isFinite(wind)) continue;
+        const storm = [95,96,99].includes(code);
+        let level = 'با احتیاط', color = '#b45309';
+        if (storm || wave > 1 || wind > 20) { level = 'نامناسب'; color = '#b91c1c'; }
+        else if (wave <= .5 && wind <= 10 && rain < 30) { level = 'شرایط آرام‌تر'; color = '#047857'; }
+        rows.push({time:m.time[i],wave,wind,rain,direction:m.wave_direction?.[i],windDirection:w.wind_direction_10m?.[wi],period:m.wave_period?.[i],level,color,storm});
+      }
+      if (!rows.length) {
+        document.getElementById('marineStatusSummary').textContent = 'داده کافی برای ارزیابی ساعات آینده دریافت نشد.';
+        return;
+      }
+      const worst = rows.reduce((a,b) => (b.level === 'نامناسب' ? b : a.level === 'نامناسب' ? a : b.wave > a.wave || b.wind > a.wind ? b : a), rows[0]);
+      const favorable = rows.filter(r => r.level === 'شرایط آرام‌تر').length;
+      const overall = rows.some(r => r.level === 'نامناسب') ? 'نامناسب در بعضی ساعات' : favorable >= Math.ceil(rows.length*.6) ? 'نسبتاً آرام در بیشتر ساعات' : 'نیازمند احتیاط';
+      document.getElementById('marineStatusSummary').innerHTML = `<strong style="color:${worst.color}">${overall}</strong><br>بررسی ۱۲ ساعت آینده در محدوده ساحلی عسلویه؛ وضعیت موج و باد ممکن است در طول روز تغییر کند.`;
+      const metric = (label,value) => `<div style="background:#fff;border:1px solid #e0f2fe;border-radius:10px;padding:8px;text-align:center;"><div style="font-size:.68rem;color:#64748b;">${label}</div><div style="font-size:.95rem;font-weight:900;color:#0c4a6e;">${value}</div></div>`;
+      document.getElementById('marineMetrics').innerHTML =
+        metric('ارتفاع موج در بازه','تا ' + Math.max(...rows.map(r=>r.wave)).toFixed(1) + ' متر') +
+        metric('بیشترین سرعت باد',Math.round(Math.max(...rows.map(r=>r.wind))) + ' km/h') +
+        metric('جهت غالب موج',marineDirection(rows[Math.floor(rows.length/2)].direction));
+      document.getElementById('marineHourly').innerHTML = rows.slice(0,6).map(r => `
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:9px;padding:7px;text-align:center;">
+          <div style="font-size:.7rem;color:#64748b;">${r.time.slice(11,16)}</div>
+          <div style="font-size:.82rem;font-weight:900;color:#0c4a6e;">🌊 ${r.wave.toFixed(1)} m</div>
+          <div style="font-size:.7rem;">💨 ${Math.round(r.wind)} km/h</div>
+          <div style="font-size:.68rem;color:${r.color};font-weight:800;">${r.level}</div>
+        </div>`).join('');
+      const fishing = rows.some(r=>r.level==='نامناسب') ?
+        'برای خروج با قایق، شرایط در برخی ساعات مناسب ارزیابی نمی‌شود. برنامه را به تعویق بیندازید و هشدارهای رسمی را بررسی کنید.' :
+        favorable >= Math.ceil(rows.length*.6) ?
+        'از نظر پیش‌بینی موج و باد، بیشتر ساعات آرام‌ترند؛ با این حال پیش از حرکت وضعیت لحظه‌ای و هشدارهای دریایی را بررسی کنید.' :
+        'شرایط یکنواخت و آرام نیست؛ پیش از هر تصمیم، وضعیت لحظه‌ای در محل و نظر افراد باتجربه محلی را بررسی کنید.';
+      document.getElementById('fishingAdvice').textContent = '🎣 راهنمای ماهیگیری و خروج: ' + fishing + ' این شاخص فقط شرایط جوی را می‌سنجد و درباره فراوانی یا زمان فعالیت ماهی‌ها پیش‌بینی نمی‌کند.';
+      document.getElementById('marineUpdatedAt').textContent = 'به‌روزرسانی: ' + new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Tehran'}).format(now);
     }
 
     // ================== WEATHER & AGRICULTURE ==================
