@@ -919,7 +919,7 @@
         </div>
 
         <div class="card" style="padding:12px;">
-          <input type="text" class="input" id="dirSearchInput" placeholder="جستجوی شغل، نام، شهر، خیابان یا شماره (مثلاً: معاینه فنی، خیابان فضیلت، دکتر، وانت...)" oninput="resetAndRenderDirectory()" style="margin-bottom:8px;" />
+          <input type="text" class="input" id="dirSearchInput" placeholder="جستجوی کسب‌وکار، مرکز خدماتی، شهر یا شماره تماس..." oninput="resetAndRenderDirectory()" style="margin-bottom:8px;" />
           <div style="display:flex; gap:8px;">
             <select class="select" id="dirCategoryFilter" onchange="resetAndRenderDirectory()" style="margin-bottom:0;">
               <option value="all">همه مشاغل و خدمات</option>
@@ -934,6 +934,11 @@
               <option value="سایر / عمومی">سایر / عمومی</option>
             </select>
             <select class="select" id="dirRegionFilter" onchange="resetAndRenderDirectory()" style="margin-bottom:0;"></select>
+          </div>
+          <label style="display:flex; align-items:center; gap:7px; font-size:0.73rem; color:#64748b; margin-top:9px; cursor:pointer;">
+            <input type="checkbox" id="dirIncludeLegacy" onchange="resetAndRenderDirectory()" style="width:16px; height:16px;" />
+            نمایش اطلاعات قدیمی و ثبت‌شده که هنوز منبعشان تأیید نشده است
+          </label>
           </div>
         </div>
 
@@ -1333,6 +1338,7 @@
   <!-- Optional external config & 118 data files (work gracefully even if absent) -->
   <script src="./firebase-config.js"></script>
   <script src="./contacts-118.js"></script>
+  <script src="./contacts-public.js"></script>
 
   <script>
     // ================== UTILITIES ==================
@@ -2044,7 +2050,11 @@
         r,
         rk,
         a: (item.a || '').trim(),
-        sourceType
+        sourceType,
+        publicStatus: item.publicStatus || (sourceType === "public" ? "verified" : "unverified"),
+        source: item.source || "",
+        sourceUrl: item.sourceUrl || "",
+        verifiedAt: item.verifiedAt || ""
       };
     }
 
@@ -2064,7 +2074,14 @@
         rawList.push(normalizeContactRecord(it, it.id || ('b_' + (idx + 1)), 'base'));
       });
 
-      // 3. Builtin universal emergency numbers
+      // 3. Public-facing business contacts from independently checked map/directory listings
+      const publicExternal = Array.isArray(window.PUBLIC_DIRECTORY_118) ? window.PUBLIC_DIRECTORY_118 : [];
+      publicExternal.forEach((it, idx) => {
+        if (!it || !it.n) return;
+        rawList.push(normalizeContactRecord(it, it.id || ("pub_" + (idx + 1)), "public"));
+      });
+
+      // 4. Builtin universal emergency numbers
       BUILTIN_ESSENTIAL_118.forEach(it => {
         rawList.push(normalizeContactRecord(it, it.id, 'builtin'));
       });
@@ -2128,7 +2145,7 @@
       const prevVal = preserveSelection ? sel.value : 'current';
 
       // Count sub-towns strictly inside the CURRENTLY selected region (dedicated per-city filters!)
-      const all = getAll118Contacts(false);
+      const all = getAll118Contacts(false).filter(item => item.sourceType === 'public' || item.sourceType === 'builtin');
       const subCounts = {};
       let regionTotal = 0;
       for (const item of all) {
@@ -2200,7 +2217,8 @@
     }
 
     function renderDirectory() {
-      const all = getAll118Contacts(false);
+      const includeLegacy = !!document.getElementById('dirIncludeLegacy')?.checked;
+      const all = getAll118Contacts(false).filter(item => includeLegacy || item.sourceType === 'public' || item.sourceType === 'builtin');
       const q = normalizeFa(document.getElementById('dirSearchInput').value);
       const cat = document.getElementById('dirCategoryFilter').value;
       const regFilter = document.getElementById('dirRegionFilter').value || 'current';
@@ -2271,6 +2289,7 @@
               <div>
                 <div style="font-weight:800; font-size:0.88rem;">${escapeHtml(item.n)}</div>
                 <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">🏷️ ${escapeHtml(item.c)} • 📍 ${escapeHtml(item.a || item.r)} ${item.ps.length > 1 ? `• <span style="color:#0f766e; font-weight:800;">${item.ps.length} شماره</span>` : ''}</div>
+                ${item.sourceType === 'public' ? `<div style="font-size:0.68rem; color:#0f766e; margin-top:5px;">🌐 منبع عمومی: ${escapeHtml(item.source || 'فهرست عمومی')} ${item.sourceUrl ? `• <a href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener" style="color:#0f766e; text-decoration:underline;">مشاهده منبع</a>` : ''} ${item.verifiedAt ? `• بررسی: ${escapeHtml(item.verifiedAt)}` : ''} </div>` : item.sourceType === 'builtin' ? `<div style="font-size:0.68rem; color:#0f766e; margin-top:5px;">شماره ضروری عمومی</div>` : `<div style="font-size:0.68rem; color:#b45309; margin-top:5px;">اطلاعات قدیمی / ثبت‌شده — منبع عمومی هنوز بررسی نشده</div>`}
               </div>
             </div>
             ${phoneRowsHtml}
