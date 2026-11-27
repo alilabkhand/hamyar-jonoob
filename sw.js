@@ -1,11 +1,12 @@
-const CACHE_NAME = 'hamyar-jonoob-v1';
+const CACHE_NAME = 'hamyar-jonoob-v2';
 const CORE_ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon.svg',
   './firebase-config.js',
-  './contacts-118.js'
+  './contacts-118.js',
+  './contacts-public.js'
 ];
 
 self.addEventListener('install', (event) => {
