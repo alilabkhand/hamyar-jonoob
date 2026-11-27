@@ -50,6 +50,50 @@
       background: var(--bg-page);
     }
 
+
+    /* Super-app home dashboard */
+    .home-hero {
+      position: relative; overflow: hidden; border-radius: 24px;
+      padding: 21px 18px; margin-bottom: 14px; color: #fff;
+      background: radial-gradient(circle at 12% 15%, rgba(255,255,255,.2), transparent 34%),
+                  linear-gradient(135deg, #0f766e 0%, #115e59 58%, #134e4a 100%);
+      box-shadow: 0 14px 30px rgba(15,118,110,.2);
+    }
+    .home-hero:after { content:""; position:absolute; width:190px; height:190px; border:1px solid rgba(255,255,255,.12); border-radius:50%; left:-65px; bottom:-120px; box-shadow:0 0 0 22px rgba(255,255,255,.035),0 0 0 45px rgba(255,255,255,.025); }
+    .home-kicker { font-size:.72rem; opacity:.82; font-weight:700; }
+    .home-heading { font-size:1.55rem; font-weight:900; line-height:1.5; margin:4px 0; }
+    .home-description { font-size:.79rem; opacity:.9; max-width:330px; }
+    .home-status-row { display:flex; flex-wrap:wrap; gap:7px; margin-top:15px; position:relative; z-index:1; }
+    .home-status-chip { padding:5px 10px; border-radius:999px; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.2); font-size:.69rem; font-weight:800; }
+    .home-section-title { display:flex; justify-content:space-between; align-items:center; gap:8px; margin:17px 2px 10px; font-size:.92rem; font-weight:900; }
+    .home-feature-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .home-feature {
+      border:1px solid #e2e8f0; border-radius:17px; padding:13px 12px;
+      background:#fff; box-shadow:var(--shadow); text-align:right; cursor:pointer;
+      min-height:112px; display:flex; flex-direction:column; justify-content:space-between;
+      color:var(--text-main); transition:transform .15s,border-color .15s;
+    }
+    .home-feature:active { transform:scale(.98); }
+    .home-feature-icon { width:38px; height:38px; display:grid; place-items:center; border-radius:13px; background:#f0fdfa; font-size:1.3rem; }
+    .home-feature strong { display:block; font-size:.82rem; margin-top:8px; }
+    .home-feature small { display:block; color:#64748b; font-size:.68rem; margin-top:2px; line-height:1.6; }
+    .home-shortcuts { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+    .home-shortcut { border:1px solid #dbeafe; background:#eff6ff; color:#1e40af; border-radius:13px; padding:10px 6px; font-size:.72rem; font-weight:800; cursor:pointer; }
+    .home-info-card { background:#fff; border:1px solid var(--border); border-radius:16px; padding:13px; box-shadow:var(--shadow); margin-top:12px; }
+    .home-info-line { display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:.76rem; padding:6px 0; border-bottom:1px solid #f1f5f9; }
+    .home-info-line:last-child { border-bottom:0; }
+    .home-info-value { font-weight:900; color:#0f766e; }
+    @media(min-width:700px) {
+      .app-container { max-width:900px; }
+      .section-wrap { padding:18px; }
+      .home-feature-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+      .bottom-nav { max-width:900px; }
+    }
+
+    .home-search-box { background:#fff; border:1px solid var(--border); border-radius:17px; padding:13px; box-shadow:var(--shadow); margin-bottom:13px; }
+    .home-search-actions { display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-top:5px; }
+    .home-search-actions button { border:0; border-radius:10px; padding:9px 6px; font-size:.73rem; font-weight:800; cursor:pointer; background:#0f766e; color:#fff; }
+    .home-search-actions button:last-child { background:#d97706; }
     /* Header */
     .top-header {
       background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
@@ -780,7 +824,66 @@
 
     <main class="section-wrap">
       <!-- ==================== TAB 1: WEATHER & AGRICULTURE ==================== -->
-      <section class="tab-pane active" id="tab-weather">
+      <!-- ==================== HOME DASHBOARD ==================== -->
+      <section class="tab-pane active" id="tab-home">
+        <div class="home-hero">
+          <div class="home-kicker">همراه هوشمند زندگی در جنوب</div>
+          <div class="home-heading">جنوب‌یار 🌴</div>
+          <div class="home-description">خدمات و اطلاعات موردنیاز منطقه؛ یک‌جا، سریع و همیشه در دسترس</div>
+          <div class="home-status-row">
+            <span class="home-status-chip" id="homeRegionChip">📍 شهرستان مُهر، گله‌دار و اسیر</span>
+            <span class="home-status-chip" id="homeDateChip">📅 امروز</span>
+          </div>
+        </div>
+
+        <div class="home-search-box">
+          <div style="font-size:.84rem;font-weight:900;margin-bottom:8px;">🔎 دنبال چه چیزی می‌گردی؟</div>
+          <input type="search" class="input" id="homeUniversalSearch" placeholder="نام کسب‌وکار، خدمت یا آگهی..." aria-label="جستجوی خدمات و آگهی‌های جنوب" style="margin-bottom:3px;" />
+          <div class="home-search-actions">
+            <button onclick="searchHomeDirectory()">جستجو در شماره‌یاب</button>
+            <button onclick="searchHomeAds()">جستجو در آگهی‌ها</button>
+          </div>
+        </div>
+
+        <div class="home-section-title"><span>دسترسی سریع به خدمات</span><span style="font-size:.68rem;color:#64748b;font-weight:600;">۵ خدمت اصلی</span></div>
+        <div class="home-feature-grid">
+          <button class="home-feature" onclick="openHomeFeature('tab-weather')">
+            <span class="home-feature-icon">🌤️</span><span><strong>هواشناسی و کشاورزی</strong><small>وضعیت هوا، پیش‌بینی و تقویم کشت</small></span>
+          </button>
+          <button class="home-feature" onclick="openHomeFeature('tab-power')">
+            <span class="home-feature-icon">⚡</span><span><strong>برنامه قطعی برق</strong><small>گروه‌بندی و زمان‌بندی خاموشی‌ها</small></span>
+          </button>
+          <button class="home-feature" onclick="openHomeFeature('tab-118')">
+            <span class="home-feature-icon">📞</span><span><strong>شماره‌یاب جنوب</strong><small>جستجوی مشاغل و خدمات عمومی</small></span>
+          </button>
+          <button class="home-feature" onclick="openHomeFeature('tab-divar')">
+            <span class="home-feature-icon">📢</span><span><strong>بازار محلی</strong><small>آگهی‌های خرید، فروش و خدمات</small></span>
+          </button>
+          <button class="home-feature" onclick="openHomeFeature('tab-materials')">
+            <span class="home-feature-icon">🧱</span><span><strong>مصالح ساختمانی</strong><small>موجودی، برآورد و فاکتور سفارش</small></span>
+          </button>
+          <button class="home-feature" onclick="openHomeFeature('tab-118')">
+            <span class="home-feature-icon">🤝</span><span><strong>خدمات منطقه</strong><small>پیدا کردن راه ارتباط با کسب‌وکارها</small></span>
+          </button>
+        </div>
+
+        <div class="home-section-title"><span>میان‌برها</span></div>
+        <div class="home-shortcuts">
+          <button class="home-shortcut" onclick="openHomeFeature('tab-divar'); setTimeout(openAddAdModal,120)">＋ ثبت آگهی</button>
+          <button class="home-shortcut" onclick="openHomeFeature('tab-118'); setTimeout(openSuggestContactModal,120)">＋ ثبت کسب‌وکار</button>
+          <button class="home-shortcut" onclick="openHomeFeature('tab-power')">📍 انتخاب محله برق</button>
+        </div>
+
+        <div class="home-info-card">
+          <div style="font-weight:900;font-size:.86rem;margin-bottom:5px;">وضعیت سرویس‌ها</div>
+          <div class="home-info-line"><span>اتصال به سرور</span><span class="home-info-value" id="homeCloudStatus">در حال بررسی…</span></div>
+          <div class="home-info-line"><span>شماره‌یاب</span><span class="home-info-value">آماده جستجو</span></div>
+          <div class="home-info-line"><span>اطلاعات و تنظیمات</span><span class="home-info-value">ذخیره روی دستگاه / ابر</span></div>
+        </div>
+        <div style="text-align:center;color:#94a3b8;font-size:.67rem;padding:16px 0 4px;">جنوب‌یار؛ برای زندگی آسان‌تر در جنوب</div>
+      </section>
+
+      <section class="tab-pane" id="tab-weather">
         <div class="weather-hero theme-sunny" id="weatherHeroCard">
           <div class="rain-drops"></div>
           <div class="theme-test-bar">
@@ -1021,7 +1124,11 @@
 
     <!-- BOTTOM NAVIGATION -->
     <nav class="bottom-nav">
-      <button class="nav-btn active" data-tab="tab-weather" onclick="switchTab('tab-weather', this)">
+      <button class="nav-btn active" data-tab="tab-home" onclick="switchTab('tab-home', this)">
+        <span class="nav-icon">🏠</span>
+        <span>خانه</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-weather" onclick="switchTab('tab-weather', this)">
         <span class="nav-icon">🌤️</span>
         <span>هوا و کشت</span>
       </button>
@@ -1649,6 +1756,7 @@
       const jDate = getCleanJalaliDate(new Date());
       document.getElementById('todayJalaliBadge').textContent = jDate.formatted;
       applyTabVisibility();
+      refreshHomeDashboard();
 
       // Register Service Worker for PWA/Offline
       if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
@@ -1680,8 +1788,50 @@
       syncFromCloud(false);
     });
 
+    function searchHomeDirectory() {
+      const query = document.getElementById('homeUniversalSearch')?.value.trim() || '';
+      openHomeFeature('tab-118');
+      const field = document.getElementById('dirSearchInput');
+      if (field) {
+        field.value = query;
+        resetAndRenderDirectory();
+        field.focus();
+      }
+    }
+
+    function searchHomeAds() {
+      const query = document.getElementById('homeUniversalSearch')?.value.trim() || '';
+      openHomeFeature('tab-divar');
+      const field = document.getElementById('adSearchInput');
+      if (field) {
+        field.value = query;
+        renderAdsList();
+        field.focus();
+      }
+    }
+
+    function openHomeFeature(tabId) {
+      const button = document.querySelector(`.nav-btn[data-tab="${tabId}"]`);
+      switchTab(tabId, button);
+    }
+
+    function refreshHomeDashboard() {
+      const region = document.getElementById('headerRegionSubtitle')?.textContent || 'جنوب ایران';
+      const regionChip = document.getElementById('homeRegionChip');
+      const dateChip = document.getElementById('homeDateChip');
+      const cloudBadge = document.getElementById('cloudSyncBadge');
+      const cloudStatus = document.getElementById('homeCloudStatus');
+      if (regionChip) regionChip.textContent = '📍 ' + region;
+      if (dateChip) dateChip.textContent = '📅 ' + (document.getElementById('todayJalaliBadge')?.textContent || 'امروز');
+      if (cloudStatus) {
+        const online = cloudBadge?.classList.contains('online');
+        cloudStatus.textContent = online ? 'متصل' : 'حافظه دستگاه';
+        cloudStatus.style.color = online ? '#059669' : '#b45309';
+      }
+    }
+
     function switchTab(tabId, btnEl) {
-      if (!enabledTabs[tabId]) { showToast('این بخش در حال حاضر غیرفعال است.'); return; }
+      if (enabledTabs[tabId] === false) { showToast('این بخش در حال حاضر غیرفعال است.'); return; }
       document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -1707,10 +1857,11 @@
         }
       }
       const activeId = activePane ? activePane.id : '';
+      refreshHomeDashboard();
       document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === activeId));
       const nav = document.querySelector('.bottom-nav');
       if (nav) {
-        const visibleCount = APP_TABS.filter(tab => enabledTabs[tab.id] !== false).length;
+        const visibleCount = 1 + APP_TABS.filter(tab => enabledTabs[tab.id] !== false).length;
         nav.style.gridTemplateColumns = `repeat(${visibleCount}, minmax(0, 1fr))`;
       }
     }
