@@ -937,7 +937,7 @@
           </div>
           <label style="display:flex; align-items:center; gap:7px; font-size:0.73rem; color:#64748b; margin-top:9px; cursor:pointer;">
             <input type="checkbox" id="dirIncludeLegacy" onchange="resetAndRenderDirectory()" style="width:16px; height:16px;" />
-            نمایش اطلاعات قدیمی و ثبت‌شده که هنوز منبعشان تأیید نشده است
+            فقط نمایش شماره‌های دارای منبع عمومی مشخص
           </label>
         </div>
 
@@ -2149,7 +2149,7 @@
       const prevVal = preserveSelection ? sel.value : 'current';
 
       // Count sub-towns strictly inside the CURRENTLY selected region (dedicated per-city filters!)
-      const all = getAll118Contacts(false).filter(item => item.sourceType === 'public' || item.sourceType === 'builtin');
+      const all = getAll118Contacts(false);
       const subCounts = {};
       let regionTotal = 0;
       for (const item of all) {
@@ -2221,8 +2221,8 @@
     }
 
     function renderDirectory() {
-      const includeLegacy = !!document.getElementById('dirIncludeLegacy')?.checked;
-      const all = getAll118Contacts(false).filter(item => includeLegacy || item.sourceType === 'public' || item.sourceType === 'builtin');
+      const onlyPublic = !!document.getElementById('dirIncludeLegacy')?.checked;
+      const all = getAll118Contacts(false).filter(item => !onlyPublic || item.sourceType === 'public' || item.sourceType === 'builtin');
       const q = normalizeFa(document.getElementById('dirSearchInput').value);
       const cat = document.getElementById('dirCategoryFilter').value;
       const regFilter = document.getElementById('dirRegionFilter').value || 'current';
